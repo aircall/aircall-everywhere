@@ -1,4 +1,4 @@
-var webpackConfig = require('./webpack/webpack-test.js');
+var webpackConfig = require('./webpack/webpack.test.js');
 const path = require('path');
 
 module.exports = function(config) {
@@ -11,7 +11,7 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
-    files: ['../spec/**/*_spec.js'],
+    files: ['../spec/tests.js'],
 
     // list of files to exclude
     exclude: [],
@@ -19,7 +19,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '../spec/**/*_spec.js': ['webpack']
+      '../spec/tests.js': ['webpack']
     },
 
     webpack: webpackConfig,
@@ -71,7 +71,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['ChromeHeadless'],
+    browsers: ['Chrome'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

@@ -7,9 +7,10 @@
     "precommit": "pretty-quick --staged",
     "start": "./scripts/development.sh",
     "build": "./scripts/build.sh",
-    "test": "karma start --singleRun true",
-    "test-watch": "karma start",
-    "coverage": "karma start --singleRun true --reporters coverage-istanbul"
+    "test": "karma start --singleRun true scripts/karma.conf.js",
+    "test-watch": "karma start scripts/karma.conf.js",
+    "coverage":
+      "karma start --singleRun true --reporters dots,coverage-istanbul scripts/karma.conf.js"
   },
   "repository": {
     "type": "git",
@@ -25,12 +26,15 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-istanbul": "^4.1.6",
+    "babel-plugin-rewire": "^1.1.0",
     "husky": "^0.14.3",
     "jasmine-core": "^3.1.0",
     "karma": "^2.0.2",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
     "karma-coverage-istanbul-reporter": "^2.0.0",
+    "karma-jasmine": "^1.1.2",
+    "karma-webpack": "^3.0.0",
     "pretty-quick": "^1.5.0",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3",
