@@ -1,5 +1,3 @@
-const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
-
 class AircallPhone {
   constructor(opts = {}) {
     // internal vars
@@ -8,8 +6,12 @@ class AircallPhone {
     this.eventsRegistered = {};
     // options passed
     if (opts) {
+      const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
+
       this.phoneUrl =
-        opts.phoneUrl && URL_REGEX.test(opts.phoneUrl) ? opts.phoneUrl : 'https://phone.aircall.io';
+        opts.phoneUrl !== undefined && URL_REGEX.test(opts.phoneUrl) === true
+          ? opts.phoneUrl
+          : 'https://phone.aircall.io';
       this.domToLoadPhone = opts.domToLoadPhone || null;
       this.integrationToLoad = opts.integrationToLoad || null;
       this.afterPhoneLoaded = opts.afterPhoneLoaded || null;
