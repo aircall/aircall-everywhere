@@ -9,8 +9,7 @@
     "build": "./scripts/build.sh",
     "test": "karma start --singleRun true scripts/karma.conf.js",
     "test-watch": "karma start scripts/karma.conf.js",
-    "coverage":
-      "karma start --singleRun true --reporters dots,coverage-istanbul scripts/karma.conf.js"
+    "coverage": "karma start --singleRun true --reporters coverage-istanbul scripts/karma.conf.js"
   },
   "repository": {
     "type": "git",
@@ -27,13 +26,18 @@
     "babel-loader": "^7.1.4",
     "babel-plugin-istanbul": "^4.1.6",
     "babel-plugin-rewire": "^1.1.0",
+    "babel-preset-env": "^1.7.0",
+    "html-webpack-plugin": "^3.2.0",
     "husky": "^0.14.3",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "jasmine-core": "^3.1.0",
     "karma": "^2.0.2",
+    "karma-babel-preprocessor": "^7.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
     "karma-coverage-istanbul-reporter": "^2.0.0",
     "karma-jasmine": "^1.1.2",
+    "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.0",
     "pretty-quick": "^1.5.0",
     "webpack": "^4.8.3",

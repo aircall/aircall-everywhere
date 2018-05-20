@@ -1,29 +1,45 @@
 const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
-const DEFAULT_URL = 'https://phone.aircall.io';
 
-class Aircall {
+class AircallPhone {
   constructor(opts = {}) {
-    // class vars
+    // internal vars
     this.phoneWindow = null;
     this.integrationSettings = null;
     this.eventsRegistered = {};
-    this.integrationToLoad = opts.integrationToLoad || null;
-    this.afterPhoneLoaded = opts.afterPhoneLoaded;
-
-    this.messageListener();
-  }
-
-  getUrlToLoad(phoneUrl) {
-    if (phoneUrl && URL_REGEX.test(phoneUrl)) {
-      return phoneUrl + '?integration=generic';
+    // options passed
+    if (opts) {
+      this.phoneUrl =
+        opts.phoneUrl && URL_REGEX.test(opts.phoneUrl) ? opts.phoneUrl : 'https://phone.aircall.io';
+      this.domToLoadPhone = opts.domToLoadPhone || null;
+      this.integrationToLoad = opts.integrationToLoad || null;
+      this.afterPhoneLoaded = opts.afterPhoneLoaded || null;
     }
-    return DEFAULT_URL + '?integration=generic';
+
+    // launch postmessage listener
+    this._messageListener();
+
+    // load phone in specified dom
+    if (this.domToLoadPhone) {
+      this._createPhoneIframe();
+    }
   }
 
-  messageListener() {
+  _createPhoneIframe() {
+    // we get the passed dom
+    try {
+      const el = document.querySelector(this.domToLoadPhone);
+      el.innerHTML = `<iframe allow="microphone" src="${this.getUrlToLoad()}" style="width:100%; height:100%;"></iframe>`;
+    } catch (e) {
+      // couldnt query the dom wanted
+      console.error(this.domToLoadPhone + ' could not be found. Error: ', e);
+    }
+  }
+
+  _messageListener() {
     window.addEventListener(
       'message',
       event => {
+        console.log('received event', event);
         // we test if our format object is present. if not, we stop
         if (!event.data.name) {
           return;
@@ -31,7 +47,7 @@ class Aircall {
 
         // initialisation message
         if (event.data.name === 'apm_phone_loaded') {
-          this.handleInitMessage(event);
+          this._handleInitMessage(event);
           return;
         }
 
@@ -57,7 +73,7 @@ class Aircall {
     );
   }
 
-  handleInitMessage(event) {
+  _handleInitMessage(event) {
     // we keep the source
     this.phoneWindow = {
       source: event.source,
@@ -81,6 +97,10 @@ class Aircall {
     }
   }
 
+  getUrlToLoad() {
+    return this.phoneUrl + '?integration=generic';
+  }
+
   getSetting(settingName) {
     return this.integrationSettings[settingName];
   }
@@ -97,4 +117,4 @@ class Aircall {
   }
 }
 
-export default Aircall;
+export default AircallPhone;

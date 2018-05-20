@@ -11,7 +11,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: [path.resolve(__dirname, '../src')],
+        include: [path.resolve(__dirname, '../../src')],
         enforce: 'pre',
 
         loader: 'babel-loader',
@@ -22,7 +22,7 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        include: [path.resolve(__dirname, '../src')],
+        include: [path.resolve(__dirname, '../../src')],
         enforce: 'pre',
 
         loader: 'istanbul-instrumenter-loader',
