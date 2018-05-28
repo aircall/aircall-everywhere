@@ -1,6 +1,6 @@
 /* tests index */
 import AircallPhone from '../../src/javascripts/aircallPhone.js';
-import { querySpy } from '../mocks.js';
+import { HTMLElements, querySpy } from '../mocks.js';
 
 describe('Aircall SDK Library', () => {
   beforeEach(() => {
@@ -12,10 +12,6 @@ describe('Aircall SDK Library', () => {
   });
 
   describe('constructor', () => {
-    afterEach(() => {
-      __rewire_reset_all__();
-    });
-
     it('should set the options passed', () => {
       const ap = new AircallPhone({
         phoneUrl: 'https://phone.aircall-staging.com',
@@ -50,6 +46,72 @@ describe('Aircall SDK Library', () => {
         phoneUrl: 'https://toto.toto.com'
       });
       expect(ap.phoneUrl).toEqual('https://toto.toto.com');
+    });
+  });
+
+  describe('_createPhoneIframe function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap._createPhoneIframe).toBeDefined();
+    });
+
+    it('should set an iframe inside the specified dom', () => {
+      ap.domToLoadPhone = '#phone';
+      ap._createPhoneIframe();
+      expect(HTMLElements['#phone'].innerHTML).toEqual(
+        '<iframe allow="microphone autoplay" src="https://phone.aircall.io?integration=generic" style="width:100%; height:100%;"></iframe>'
+      );
+    });
+
+    it('should throw an error if dom doesnt exist', () => {
+      ap.domToLoadPhone = '#phone';
+      document.querySelector = () => {
+        return null;
+      };
+      expect(ap._createPhoneIframe).toThrow();
+    });
+  });
+
+  describe('getUrlToLoad function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap.getUrlToLoad).toBeDefined();
+    });
+  });
+
+  describe('getSetting function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap.getSetting).toBeDefined();
+    });
+  });
+
+  describe('on function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap.on).toBeDefined();
+    });
+  });
+
+  describe('send function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap.send).toBeDefined();
     });
   });
 });

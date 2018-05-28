@@ -5,17 +5,15 @@ class AircallPhone {
     this.integrationSettings = null;
     this.eventsRegistered = {};
     // options passed
-    if (opts) {
-      const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
+    const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 
-      this.phoneUrl =
-        opts.phoneUrl !== undefined && URL_REGEX.test(opts.phoneUrl) === true
-          ? opts.phoneUrl
-          : 'https://phone.aircall.io';
-      this.domToLoadPhone = opts.domToLoadPhone || null;
-      this.integrationToLoad = opts.integrationToLoad || null;
-      this.afterPhoneLoaded = opts.afterPhoneLoaded || null;
-    }
+    this.phoneUrl =
+      opts.phoneUrl !== undefined && URL_REGEX.test(opts.phoneUrl) === true
+        ? opts.phoneUrl
+        : 'https://phone.aircall.io';
+    this.domToLoadPhone = opts.domToLoadPhone || null;
+    this.integrationToLoad = opts.integrationToLoad || null;
+    this.afterPhoneLoaded = opts.afterPhoneLoaded || null;
 
     // launch postmessage listener
     this._messageListener();
@@ -30,7 +28,7 @@ class AircallPhone {
     // we get the passed dom
     try {
       const el = document.querySelector(this.domToLoadPhone);
-      el.innerHTML = `<iframe allow="microphone" src="${this.getUrlToLoad()}" style="width:100%; height:100%;"></iframe>`;
+      el.innerHTML = `<iframe allow="microphone autoplay" src="${this.getUrlToLoad()}" style="width:100%; height:100%;"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
       console.error(this.domToLoadPhone + ' could not be found. Error: ', e);
