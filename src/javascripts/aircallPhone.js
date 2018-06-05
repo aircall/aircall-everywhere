@@ -6,6 +6,7 @@ class AircallPhone {
     this.eventsRegistered = {};
     // options passed
     const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
+    this.phoneStarted = false;
 
     this.phoneUrl =
       opts.phoneUrl !== undefined && URL_REGEX.test(opts.phoneUrl) === true
@@ -13,7 +14,12 @@ class AircallPhone {
         : 'https://phone.aircall.io';
     this.domToLoadPhone = opts.domToLoadPhone || null;
     this.integrationToLoad = opts.integrationToLoad || null;
-    this.afterPhoneLoaded = opts.afterPhoneLoaded || null;
+    this.afterPhoneLoaded = () => {
+      if (this.phoneStarted === false && opts.afterPhoneLoaded) {
+        this.phoneStarted = true;
+        opts.afterPhoneLoaded();
+      }
+    };
     this.w = opts.window || window;
 
     // launch postmessage listener
@@ -29,7 +35,7 @@ class AircallPhone {
     // we get the passed dom
     try {
       const el = document.querySelector(this.domToLoadPhone);
-      el.innerHTML = `<iframe allow="microphone autoplay" src="${this.getUrlToLoad()}" style="width:100%; height:100%;"></iframe>`;
+      el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="width:100%; height:100%;"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
       console.error(this.domToLoadPhone + ' could not be found. Error: ', e);
@@ -56,9 +62,7 @@ class AircallPhone {
         if (event.data.name === 'apm_phone_integration_settings') {
           this.integrationSettings = event.data.value;
           // init callback after settings received
-          if (typeof this.afterPhoneLoaded === 'function') {
-            this.afterPhoneLoaded();
-          }
+          this.afterPhoneLoaded();
           return;
         }
 
@@ -92,9 +96,7 @@ class AircallPhone {
       );
     } else {
       // init callback now if present
-      if (typeof this.afterPhoneLoaded === 'function') {
-        this.afterPhoneLoaded();
-      }
+      this.afterPhoneLoaded();
     }
   }
 
