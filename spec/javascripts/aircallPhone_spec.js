@@ -62,7 +62,7 @@ describe('Aircall SDK Library', () => {
       ap.domToLoadPhone = '#phone';
       ap._createPhoneIframe();
       expect(HTMLElements['#phone'].innerHTML).toEqual(
-        '<iframe allow="microphone; autoplay" src="https://phone.aircall.io?integration=generic" style="width:100%; height:100%;"></iframe>'
+        '<iframe allow="microphone; autoplay" src="https://phone.aircall.io?integration=generic" style="height:666px; width:376px;"></iframe>'
       );
     });
 
