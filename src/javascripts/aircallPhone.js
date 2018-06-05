@@ -35,7 +35,7 @@ class AircallPhone {
     // we get the passed dom
     try {
       const el = document.querySelector(this.domToLoadPhone);
-      el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="width:100%; height:100%;"></iframe>`;
+      el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="height:666px; width:376px;"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
       console.error(this.domToLoadPhone + ' could not be found. Error: ', e);
