@@ -273,6 +273,11 @@ describe('Aircall SDK Library', () => {
     it('should exists', () => {
       expect(ap.on).toBeDefined();
     });
+
+    it('should register callback for a specific name', () => {
+      ap.on('my_event', () => {});
+      expect(ap.eventsRegistered['my_event']).toEqual(jasmine.any(Function));
+    });
   });
 
   describe('send function', () => {
@@ -282,6 +287,20 @@ describe('Aircall SDK Library', () => {
     });
     it('should exists', () => {
       expect(ap.send).toBeDefined();
+    });
+
+    it('should send a postMessage with the right event name', done => {
+      ap.phoneWindow = {
+        origin: '*',
+        source: {
+          postMessage: (event, target) => {
+            if (event.name === 'apm_app_my_event' && event.value.foo === 'bar') {
+              done();
+            }
+          }
+        }
+      };
+      ap.send('my_event', { foo: 'bar' });
     });
   });
 });
