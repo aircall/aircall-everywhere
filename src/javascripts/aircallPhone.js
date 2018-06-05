@@ -14,6 +14,7 @@ class AircallPhone {
     this.domToLoadPhone = opts.domToLoadPhone || null;
     this.integrationToLoad = opts.integrationToLoad || null;
     this.afterPhoneLoaded = opts.afterPhoneLoaded || null;
+    this.w = opts.window || window;
 
     // launch postmessage listener
     this._messageListener();
@@ -36,13 +37,13 @@ class AircallPhone {
   }
 
   _messageListener() {
-    window.addEventListener(
+    this.w.addEventListener(
       'message',
       event => {
         console.log('received event', event);
         // we test if our format object is present. if not, we stop
         if (!event.data.name) {
-          return;
+          return false;
         }
 
         // initialisation message

@@ -76,36 +76,155 @@ describe('Aircall SDK Library', () => {
   });
 
   describe('_messageListener function', () => {
+    beforeEach(() => {
+      jasmine.clock().install();
+    });
+
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
+    it('should exists', () => {
+      const ap = new AircallPhone();
+      expect(ap._messageListener).toBeDefined();
+    });
+
+    it('should add an event listener', () => {
+      const win = {
+        addEventListener: (type, callback, bool) => {}
+      };
+
+      spyOn(win, 'addEventListener');
+
+      const ap = new AircallPhone({ window: win });
+      expect(win.addEventListener).toHaveBeenCalled();
+    });
+
+    it('should return if event received is not in specified format', done => {
+      const win = {
+        addEventListener: (type, callback, bool) => {
+          setTimeout(() => {
+            if (callback({ data: 'toto' }) === false) {
+              done();
+            }
+          }, 100);
+        }
+      };
+
+      const ap = new AircallPhone({ window: win });
+      jasmine.clock().tick(101);
+    });
+
+    it('should launch _handleInitMessage if init message received', () => {
+      const win = {
+        addEventListener: (type, callback, bool) => {
+          setTimeout(() => {
+            callback({ data: { name: 'apm_phone_loaded' } });
+          }, 100);
+        }
+      };
+
+      const ap = new AircallPhone({ window: win });
+      spyOn(ap, '_handleInitMessage');
+      jasmine.clock().tick(101);
+      expect(ap._handleInitMessage).toHaveBeenCalled();
+    });
+
+    it('should set integration settings if settings event received', () => {
+      const win = {
+        addEventListener: (type, callback, bool) => {
+          setTimeout(() => {
+            callback({ data: { name: 'apm_phone_integration_settings', value: { foo: 'bar' } } });
+          }, 100);
+        }
+      };
+
+      const ap = new AircallPhone({ window: win });
+      jasmine.clock().tick(101);
+      expect(ap.integrationSettings).toEqual({ foo: 'bar' });
+    });
+
+    it('should launch afterPhoneLoaded callback if defined after integration settings received', done => {
+      const win = {
+        addEventListener: (type, callback, bool) => {
+          setTimeout(() => {
+            callback({ data: { name: 'apm_phone_integration_settings', value: { foo: 'bar' } } });
+          }, 100);
+        }
+      };
+
+      const ap = new AircallPhone({
+        window: win,
+        afterPhoneLoaded: () => {
+          done();
+        }
+      });
+      jasmine.clock().tick(101);
+    });
+
+    it('should loop on registered events and trigger registered callback if event is a match', done => {
+      const win = {
+        addEventListener: (type, callback, bool) => {
+          setTimeout(() => {
+            callback({ data: { name: 'apm_phone_my_event' } });
+          }, 100);
+        }
+      };
+      const ap = new AircallPhone({ window: win });
+      ap.eventsRegistered = {
+        my_event: () => {
+          done();
+        }
+      };
+      jasmine.clock().tick(101);
+    });
+  });
+
+  describe('_handleInitMessage function', () => {
     let ap;
     beforeEach(() => {
       ap = new AircallPhone();
     });
     it('should exists', () => {
-      expect(ap._messageListener).toBeDefined();
+      expect(ap._handleInitMessage).toBeDefined();
     });
 
-    it('should add an event listener', () => {
-      expect(ap._messageListener).toBeDefined();
+    it('should send a postmessage that it is ready', done => {
+      ap._handleInitMessage({
+        origin: '*',
+        source: {
+          postMessage: (event, target) => {
+            if (event.name === 'apm_app_isready') {
+              done();
+            }
+          }
+        }
+      });
     });
 
-    it('should return if event received is not in specified format', () => {
-      expect(ap._messageListener).toBeDefined();
+    it('should ask for integration settings if there is an integration to load', done => {
+      ap.integrationToLoad = 'salesforce';
+      ap._handleInitMessage({
+        origin: '*',
+        source: {
+          postMessage: (event, target) => {
+            if (event.name === 'apm_app_get_settings' && event.value === 'salesforce') {
+              done();
+            }
+          }
+        }
+      });
     });
 
-    it('should launch _handleInitMessage if init message received', () => {
-      expect(ap._messageListener).toBeDefined();
-    });
-
-    it('should set integration settings if settings event received', () => {
-      expect(ap._messageListener).toBeDefined();
-    });
-
-    it('should launch afterPhoneLoaded callback if defined after integration settings received', () => {
-      expect(ap._messageListener).toBeDefined();
-    });
-
-    it('should loop on registered events and trigger registered callback if event is a match', () => {
-      expect(ap._messageListener).toBeDefined();
+    it('should launch afterPhoneLoaded callback if there is no integration to load', done => {
+      ap.afterPhoneLoaded = () => {
+        done();
+      };
+      ap._handleInitMessage({
+        origin: '*',
+        source: {
+          postMessage: (event, target) => {}
+        }
+      });
     });
   });
 
