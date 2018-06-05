@@ -2,7 +2,7 @@ class AircallPhone {
   constructor(opts = {}) {
     // internal vars
     this.phoneWindow = null;
-    this.integrationSettings = null;
+    this.integrationSettings = {};
     this.eventsRegistered = {};
     // options passed
     const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;

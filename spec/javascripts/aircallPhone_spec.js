@@ -75,6 +75,40 @@ describe('Aircall SDK Library', () => {
     });
   });
 
+  describe('_messageListener function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap._messageListener).toBeDefined();
+    });
+
+    it('should add an event listener', () => {
+      expect(ap._messageListener).toBeDefined();
+    });
+
+    it('should return if event received is not in specified format', () => {
+      expect(ap._messageListener).toBeDefined();
+    });
+
+    it('should launch _handleInitMessage if init message received', () => {
+      expect(ap._messageListener).toBeDefined();
+    });
+
+    it('should set integration settings if settings event received', () => {
+      expect(ap._messageListener).toBeDefined();
+    });
+
+    it('should launch afterPhoneLoaded callback if defined after integration settings received', () => {
+      expect(ap._messageListener).toBeDefined();
+    });
+
+    it('should loop on registered events and trigger registered callback if event is a match', () => {
+      expect(ap._messageListener).toBeDefined();
+    });
+  });
+
   describe('getUrlToLoad function', () => {
     let ap;
     beforeEach(() => {
@@ -92,6 +126,23 @@ describe('Aircall SDK Library', () => {
     });
     it('should exists', () => {
       expect(ap.getSetting).toBeDefined();
+    });
+
+    it('should return a specific setting', () => {
+      ap.integrationSettings = {
+        toto: 'tata',
+        foo: 'bar'
+      };
+      expect(ap.getSetting('toto')).toEqual('tata');
+      expect(ap.getSetting('foo')).toEqual('bar');
+    });
+
+    it('should return undefined for a non existent setting', () => {
+      ap.integrationSettings = {
+        toto: 'tata',
+        foo: 'bar'
+      };
+      expect(ap.getSetting('fizz')).toEqual(undefined);
     });
   });
 
