@@ -85,3 +85,13 @@ myCRM.on('phone_button_clicked_event', number => {
 ```
 
 more events to come...
+
+# Development
+
+You can run the demo webpage with:
+`npm start`
+
+tests are available:
+`npm run test`
+`npm run test-watch`
+`npm run coverage`
