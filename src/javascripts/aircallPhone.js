@@ -4,10 +4,11 @@ class AircallPhone {
     this.phoneWindow = null;
     this.integrationSettings = {};
     this.eventsRegistered = {};
-    // options passed
+
     const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
     this.phoneStarted = false;
 
+    // options passed
     this.phoneUrl =
       opts.phoneUrl !== undefined && URL_REGEX.test(opts.phoneUrl) === true
         ? opts.phoneUrl
@@ -38,7 +39,7 @@ class AircallPhone {
       el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="height:666px; width:376px;"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
-      console.error(this.domToLoadPhone + ' could not be found. Error: ', e);
+      console.error('[AircallSDK] ' + this.domToLoadPhone + ' could not be found. Error: ', e);
     }
   }
 
@@ -46,7 +47,7 @@ class AircallPhone {
     this.w.addEventListener(
       'message',
       event => {
-        console.log('received event', event);
+        console.log('[AircallSDK] received event', event);
         // we test if our format object is present. if not, we stop
         if (!event.data.name) {
           return false;
