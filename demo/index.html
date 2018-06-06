@@ -24,7 +24,7 @@
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
       <a class="navbar-brand" href="#">
         <img src="https://aircall.io/images/icons/aircall-logo-e62bdb99.svg" width="30" height="30" alt="">
       </a>
@@ -78,7 +78,6 @@
             <h4>Load Aircall phone in a div:</h4>
               <pre><code>const ap = new AircallPhone({
   domToLoadPhone: '#phone',
-  phoneUrl: 'https://phone.aircall-staging.com',
   afterPhoneLoaded: () => {
     loadedPhoneAlert.classList.remove('d-none');
     notLoadedPhoneAlert.classList.add('d-none');
