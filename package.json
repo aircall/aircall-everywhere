@@ -1,7 +1,7 @@
 {
-  "name": "aircall-embed-sdk",
+  "name": "aircall-everywhere",
   "version": "0.0.1",
-  "description": "SDK to embed and communicate aircall-phone in any webpage",
+  "description": "Library to embed and communicate with aircall-phone in any webpage",
   "main": "index.js",
   "scripts": {
     "precommit": "pretty-quick --staged",

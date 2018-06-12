@@ -1,21 +1,21 @@
-# How to use the Aircall SDK in any CRM ?
+# How to use the Aircall Everywhere in any CRM ?
 
 ## Include this project in your dependency
 
-`npm install aircall-sdk`
+`npm install aircall-everywhere`
 
 ## Constructor & getUrlToLoad
 
 You need to create an instance to use the library. The constructor has a settings argument:
 
-* `afterPhoneLoaded`: Callback function after the phone is fully loaded and the connexion between the phone and the CRM is established
-* `integrationToLoad`: You can specify a CRM from which specific settings can be retrieved. Only `zendesk` available for now.
-* `domToLoadPhone`: You must specify in which element you want to load the phone. Query selector string.
+- `afterPhoneLoaded`: Callback function after the phone is fully loaded and the connexion between the phone and the CRM is established
+- `integrationToLoad`: You can specify a CRM from which specific settings can be retrieved. Only `zendesk` available for now.
+- `domToLoadPhone`: You must specify in which element you want to load the phone. Query selector string.
 
 Example:
 
 ```javascript
-import AircallPhone from 'aircall-sdk';
+import AircallPhone from 'aircall-everywhere';
 
 const aircallPhone = new AircallPhone({
   afterPhoneLoaded: () => {
@@ -46,9 +46,9 @@ You can send messages to the phone and listen messages coming from it.
 
 ### events from the phone:
 
-* `incoming_call`: the phone is ringing
-* `call_end_ringtone`: the ringtone has ended. It can mean the incoming call was taken or missed.
-* `redirect_event`: event coming from specific CRM settings if it has been enabled in the Aircall Dashboard. Only `zendesk` is supported for now. This event data has this schema:
+- `incoming_call`: the phone is ringing
+- `call_end_ringtone`: the ringtone has ended. It can mean the incoming call was taken or missed.
+- `redirect_event`: event coming from specific CRM settings if it has been enabled in the Aircall Dashboard. Only `zendesk` is supported for now. This event data has this schema:
   ```javascript
   {
     type: 'Zendesk::User' | 'Zendesk::Ticket'
@@ -58,13 +58,13 @@ You can send messages to the phone and listen messages coming from it.
 
 ### events the phone listens to:
 
-* `dial_number`: with `{phone_number: <number>}` argument, you can ask the phone to dial the number.
-* `exit_keyboard`: with no argument, you can ask the phone to exit the keyboard view if it is on.
+- `dial_number`: with `{phone_number: <number>}` argument, you can ask the phone to dial the number.
+- `exit_keyboard`: with no argument, you can ask the phone to exit the keyboard view if it is on.
 
 Full Example:
 
 ```javascript
-import Aircall from 'aircall-sdk';
+import Aircall from 'aircall-everywhere';
 
 const aircallPhone = new AircallPhone({
   afterPhoneLoaded: () => {
