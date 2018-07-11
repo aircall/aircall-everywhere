@@ -1,6 +1,6 @@
 {
   "name": "aircall-everywhere",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Library to embed and communicate with aircall-phone in any webpage",
   "main": "index.js",
   "scripts": {
