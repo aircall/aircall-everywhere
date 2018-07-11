@@ -7,6 +7,7 @@
     "precommit": "pretty-quick --staged",
     "start": "./scripts/development.sh",
     "build": "./scripts/build.sh",
+    "prepublishOnly": "./scripts/publish.sh",
     "test": "karma start --singleRun true scripts/karma.conf.js",
     "test-watch": "karma start scripts/karma.conf.js",
     "coverage": "karma start --singleRun true --reporters coverage-istanbul scripts/karma.conf.js"

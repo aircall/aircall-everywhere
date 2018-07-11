@@ -7,7 +7,8 @@ module.exports = () => {
   let _output = null;
 
   const _entry = {
-    demo: [path.join(__dirname, '../../demo/demo.js')]
+    demo: [path.join(__dirname, '../../demo/demo.js')],
+    'aircall-everywhere': [path.join(__dirname, '../../index.js')]
   };
 
   const _devtool = 'source-map';
@@ -17,7 +18,7 @@ module.exports = () => {
   const _context = __dirname;
 
   const _resolve = {
-    modules: ['node_modules', path.resolve(__dirname, '../../src/javascripts')],
+    modules: ['node_modules', './'],
     extensions: ['.js']
   };
 
@@ -61,7 +62,7 @@ module.exports = () => {
 
   _output = {
     path: path.resolve(__dirname, '../../demo_dist'),
-    filename: 'main.js'
+    filename: '[name].js'
   };
 
   _mode = 'development';
