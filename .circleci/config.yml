@@ -1,0 +1,62 @@
+version: 2.0
+jobs:
+  tests:
+    docker:
+      - image: circleci/node:8.9.4-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: everywhere-cache-v1-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
+      - save_cache:
+          key: everywhere-cache-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Run tests
+          command: |
+            npm run test
+  coverage:
+    docker:
+      - image: circleci/node:8.9.4-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install System Dependencies
+          command: |
+            sudo apt-get update -qq \
+            && sudo apt-get install -y build-essential python-pip \
+            && sudo apt-get install python-dev \
+            && sudo apt-get install bc
+            pip install --user awscli
+      - restore_cache:
+          key: everywhere-cache-v1-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
+      - save_cache:
+          key: everywhere-cache-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Run coverage
+          command: |
+            npm run coverage
+      - run:
+          name: Upload coverage
+          command: |
+            export PATH="$PATH:~/.local/bin"
+            aws s3 sync coverage/ s3://aircall-coverage/everywhere/${CIRCLE_BRANCH}/
+workflows:
+  version: 2
+  commit-workflow:
+    jobs:
+      - tests
+      - coverage:
+          filters:
+            branches:
+              only: master

@@ -4,7 +4,7 @@
 
 `npm install aircall-everywhere`
 
-## Constructor & getUrlToLoad
+## Constructor
 
 You need to create an instance to use the library. The constructor has a settings argument:
 
@@ -25,10 +25,6 @@ const aircallPhone = new AircallPhone({
   domToLoadPhone: '#phone',
   integrationToLoad: 'zendesk'
 });
-
-const url = aircallPhone.getUrlToLoad();
-
-renderPhoneView(url);
 ```
 
 ## getSetting

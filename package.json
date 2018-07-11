@@ -1,6 +1,6 @@
 {
   "name": "aircall-everywhere",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Library to embed and communicate with aircall-phone in any webpage",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aircall/aircall-embed-sdk.git"
+    "url": "git+https://github.com/aircall/aircall-everywhere.git"
   },
   "author": "",
   "license": "ISC",
