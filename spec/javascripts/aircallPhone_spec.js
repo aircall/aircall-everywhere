@@ -173,6 +173,9 @@ describe('Aircall SDK Library', () => {
       ap.eventsRegistered = {
         my_event: () => {
           done();
+        },
+        my_other_event: () => {
+          done();
         }
       };
       jasmine.clock().tick(101);
@@ -278,6 +281,18 @@ describe('Aircall SDK Library', () => {
       ap.on('my_event', () => {});
       expect(ap.eventsRegistered['my_event']).toEqual(jasmine.any(Function));
     });
+
+    it('should throw an error if empty string is specified as event', () => {
+      expect(() => {
+        ap.on('', () => {});
+      }).toThrow();
+    });
+
+    it('should throw an error if callback is not a function', () => {
+      expect(() => {
+        ap.on('my_event', 'toto');
+      }).toThrow();
+    });
   });
 
   describe('send function', () => {
@@ -301,6 +316,18 @@ describe('Aircall SDK Library', () => {
         }
       };
       ap.send('my_event', { foo: 'bar' });
+    });
+
+    it('should throw an error if eventName is an empty string', () => {
+      expect(() => {
+        ap.send('');
+      }).toThrow();
+    });
+
+    it('should throw an error if eventName is null', () => {
+      expect(() => {
+        ap.send(null, { foo: 'bar' });
+      }).toThrow();
     });
   });
 });
