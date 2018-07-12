@@ -2,5 +2,9 @@
 
 npx webpack --config scripts/webpack/webpack.dev.js
 
-# deploy to gh-pages
+# deploy doc to gh-pages
 gh-pages -d demo_dist
+
+# deploy tests to gh-pages
+npm run coverage
+gh-pages -d coverage -e tests
