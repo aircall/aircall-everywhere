@@ -58,4 +58,10 @@ workflows:
   commit-workflow:
     jobs:
       - tests
+          branches:
+            ignore:
+              - gh-pages
       - coverage
+          branches:
+            ignore:
+              - gh-pages
