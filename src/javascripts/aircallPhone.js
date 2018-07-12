@@ -1,6 +1,7 @@
 class AircallPhone {
   constructor(opts = {}) {
     // internal vars
+    // window object of loaded aircall phone
     this.phoneWindow = null;
     this.integrationSettings = {};
     this.eventsRegistered = {};
@@ -13,21 +14,22 @@ class AircallPhone {
       opts.phoneUrl !== undefined && URL_REGEX.test(opts.phoneUrl) === true
         ? opts.phoneUrl
         : 'https://phone.aircall.io';
-    this.domToLoadPhone = opts.domToLoadPhone || null;
-    this.integrationToLoad = opts.integrationToLoad || null;
+    this.domToLoadPhone = opts.domToLoadPhone;
+    this.integrationToLoad = opts.integrationToLoad;
     this.afterPhoneLoaded = () => {
-      if (this.phoneStarted === false && opts.afterPhoneLoaded) {
+      if (this.phoneStarted === false && typeof opts.afterPhoneLoaded === 'function') {
         this.phoneStarted = true;
         opts.afterPhoneLoaded();
       }
     };
+    // local window
     this.w = opts.window || window;
 
     // launch postmessage listener
     this._messageListener();
 
     // load phone in specified dom
-    if (this.domToLoadPhone) {
+    if (!!this.domToLoadPhone) {
       this._createPhoneIframe();
     }
   }
@@ -39,7 +41,7 @@ class AircallPhone {
       el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="height:666px; width:376px;"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
-      console.error('[AircallSDK] ' + this.domToLoadPhone + ' could not be found. Error: ', e);
+      console.error(`[AircallSDK] ${this.domToLoadPhone} not be found. Error:`, e);
     }
   }
 
@@ -49,7 +51,8 @@ class AircallPhone {
       event => {
         console.log('[AircallSDK] received event', event);
         // we test if our format object is present. if not, we stop
-        if (!event.data.name) {
+        const matchPrefixRegex = /^apm_phone_/;
+        if (!event.data || !event.data.name || !matchPrefixRegex.test(event.data.name)) {
           return false;
         }
 
@@ -60,7 +63,7 @@ class AircallPhone {
         }
 
         // integration settings sent by phone
-        if (event.data.name === 'apm_phone_integration_settings') {
+        if (event.data.name === 'apm_phone_integration_settings' && !!event.data.value) {
           this.integrationSettings = event.data.value;
           // init callback after settings received
           this.afterPhoneLoaded();
@@ -68,8 +71,8 @@ class AircallPhone {
         }
 
         // loop over events registered
-        for (var eventName in this.eventsRegistered) {
-          if (event.data.name === 'apm_phone_' + eventName) {
+        for (const eventName in this.eventsRegistered) {
+          if (event.data.name === `apm_phone_${eventName}`) {
             // event triggered => we execute callback
             this.eventsRegistered[eventName](event.data.value);
           }
@@ -90,7 +93,7 @@ class AircallPhone {
     this.phoneWindow.source.postMessage({ name: 'apm_app_isready' }, this.phoneWindow.origin);
 
     // we ask for integration settings
-    if (this.integrationToLoad) {
+    if (!!this.integrationToLoad) {
       this.phoneWindow.source.postMessage(
         { name: 'apm_app_get_settings', value: this.integrationToLoad },
         this.phoneWindow.origin
@@ -102,7 +105,7 @@ class AircallPhone {
   }
 
   getUrlToLoad() {
-    return this.phoneUrl + '?integration=generic';
+    return `${this.phoneUrl}?integration=generic`;
   }
 
   getSetting(settingName) {
@@ -110,12 +113,22 @@ class AircallPhone {
   }
 
   on(eventName, callback) {
+    if (!eventName || typeof callback !== 'function') {
+      throw new Error(
+        '[AircallEverywhere] Invalid parameters format. Expected non empty string and function'
+      );
+    }
     this.eventsRegistered[eventName] = callback;
   }
 
   send(eventName, data) {
+    if (!eventName) {
+      throw new Error(
+        '[AircallEverywhere] Invalid parameter eventName. Expected an non empty string'
+      );
+    }
     this.phoneWindow.source.postMessage(
-      { name: 'apm_app_' + eventName, value: data },
+      { name: `apm_app_${eventName}`, value: data },
       this.phoneWindow.origin
     );
   }
