@@ -19,9 +19,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aircall/aircall-embed-sdk/issues"
+    "url": "https://github.com/aircall/aircall-everywhere/issues"
   },
-  "homepage": "https://github.com/aircall/aircall-embed-sdk#readme",
+  "homepage": "https://github.com/aircall/aircall-everywhere#readme",
   "dependencies": {
     "babel-core": "6.26.3",
     "babel-loader": "7.1.5",
