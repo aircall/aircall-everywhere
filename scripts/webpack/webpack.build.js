@@ -1,15 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const extractStyles = new ExtractTextPlugin('main.[md5:contenthash:hex:20].css');
 
 module.exports = () => {
   let _mode = null;
   let _output = null;
 
-  const _entry = ['../../src/javascripts/index.js'];
+  const _entry = [path.join(__dirname, '../../index.js')];
 
   const _devtool = 'source-map';
 

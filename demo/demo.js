@@ -1,5 +1,5 @@
 /* demo.js */
-import AircallPhone from 'aircallPhone';
+import AircallPhone from 'aircall-everywhere';
 
 console.log('demo time!');
 
