@@ -57,11 +57,11 @@ workflows:
   version: 2
   commit-workflow:
     jobs:
-      - tests
+      - tests:
           branches:
             ignore:
               - gh-pages
-      - coverage
+      - coverage:
           branches:
             ignore:
               - gh-pages
