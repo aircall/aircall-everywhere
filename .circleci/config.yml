@@ -27,7 +27,8 @@ jobs:
       - run:
           name: Install System Dependencies
           command: |
-            sudo apt-get install jq
+            sudo apt-get install jq \
+            && sudo apt-get install bc
       - restore_cache:
           key: everywhere-cache-v1-{{ checksum "package.json" }}
       - run:

@@ -73,7 +73,7 @@ rm ${PULL_REQUESTS_OUT} # We don't need this file anymore
 
 
 # Get the current coverage of master branch
-MASTER_COVERAGE_RATIO=$(git show origin/gh-pages:tests/coverage-summary.json - | jq '.total.statements.pct')
+MASTER_COVERAGE_RATIO=$(git show origin/gh-pages:tests/coverage-summary.json | jq '.total.statements.pct')
 echo "Coverage master: ${MASTER_COVERAGE_RATIO}"
 
 
