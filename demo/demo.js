@@ -9,6 +9,7 @@ loadPhoneButton.addEventListener(
   () => {
     let loadedPhoneAlert = document.querySelector('#phone-loaded');
     let notLoadePhoneAlert = document.querySelector('#phone-not-loaded');
+    loadPhoneButton.disabled = true;
     const ap = new AircallPhone({
       domToLoadPhone: '#phone',
       afterPhoneLoaded: () => {
