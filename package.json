@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/aircall/aircall-everywhere/issues"
   },
-  "homepage": "https://github.com/aircall/aircall-everywhere#readme",
+  "homepage": "https://aircall.github.io/aircall-everywhere/",
   "dependencies": {
     "babel-core": "6.26.3",
     "babel-loader": "7.1.5",
