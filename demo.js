@@ -107,6 +107,7 @@ loadPhoneButton.addEventListener(
   () => {
     let loadedPhoneAlert = document.querySelector('#phone-loaded');
     let notLoadePhoneAlert = document.querySelector('#phone-not-loaded');
+    loadPhoneButton.disabled = true;
     const ap = new aircall_everywhere__WEBPACK_IMPORTED_MODULE_0__["default"]({
       domToLoadPhone: '#phone',
       afterPhoneLoaded: () => {
