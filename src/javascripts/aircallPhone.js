@@ -135,7 +135,7 @@ class AircallPhone {
       errorMessage = 'Invalid parameter eventName. Expected an non empty string';
       console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
       if (typeof callback === 'function') {
-        callback(false, errorMessage);
+        callback(false, { errorMessage });
       }
     }
 
@@ -154,8 +154,23 @@ class AircallPhone {
         // we have a response, we remove listener and return the callback
         this.removeListener(`${eventName}_response`);
         clearTimeout(responseTimeout);
-        if (typeof callback === 'function') {
-          callback(true, response);
+        // we evaluate response
+        if (response && response.success === false) {
+          if (typeof callback === 'function') {
+            console.error(`[AircallEverywhere] [send function] ${response.errorMessage}`);
+            callback(false, { errorMessage: response.errorMessage });
+          }
+        } else if (response && response.success === true) {
+          if (typeof callback === 'function') {
+            callback(true, response.data);
+          }
+        } else {
+          if (typeof callback === 'function') {
+            errorMessage =
+              'Invalid response from the phone. Contact aircall developers dev@aircall.io';
+            console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
+            callback(false, { errorMessage });
+          }
         }
       });
 
@@ -166,7 +181,7 @@ class AircallPhone {
         errorMessage = 'No answer from the phone. Check if the phone is logged in';
         console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
         if (typeof callback === 'function') {
-          callback(false, errorMessage);
+          callback(false, { errorMessage });
         }
       }, timeoutLimit);
     } else {
@@ -174,7 +189,7 @@ class AircallPhone {
         'Aircall Phone has not been identified yet or is not ready. Wait for "afterPhoneLoaded" callback';
       console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
       if (typeof callback === 'function') {
-        callback(false, errorMessage);
+        callback(false, { errorMessage });
       }
     }
   }
