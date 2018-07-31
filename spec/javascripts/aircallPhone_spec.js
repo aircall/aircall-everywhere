@@ -330,4 +330,24 @@ describe('Aircall SDK Library', () => {
       }).toThrow();
     });
   });
+
+  describe('removeListener function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap.removeListener).toBeDefined();
+    });
+  });
+
+  describe('isLoggedIn function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap.isLoggedIn).toBeDefined();
+    });
+  });
 });

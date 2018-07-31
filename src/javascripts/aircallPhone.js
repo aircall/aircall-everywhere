@@ -41,7 +41,10 @@ class AircallPhone {
       el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="height:666px; width:376px;"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
-      console.error(`[AircallSDK] ${this.domToLoadPhone} not be found. Error:`, e);
+      console.error(
+        `[AircallEverywhere] [iframe creation] ${this.domToLoadPhone} not be found. Error:`,
+        e
+      );
     }
   }
 
@@ -49,7 +52,7 @@ class AircallPhone {
     this.w.addEventListener(
       'message',
       event => {
-        console.log('[AircallSDK] received event', event);
+        console.info('[AircallEverywhere] [event listener] received event', event);
         // we test if our format object is present. if not, we stop
         const matchPrefixRegex = /^apm_phone_/;
         if (!event.data || !event.data.name || !matchPrefixRegex.test(event.data.name)) {
@@ -115,22 +118,78 @@ class AircallPhone {
   on(eventName, callback) {
     if (!eventName || typeof callback !== 'function') {
       throw new Error(
-        '[AircallEverywhere] Invalid parameters format. Expected non empty string and function'
+        '[AircallEverywhere] [on function] Invalid parameters format. Expected non empty string and function'
       );
     }
     this.eventsRegistered[eventName] = callback;
   }
 
-  send(eventName, data) {
-    if (!eventName) {
-      throw new Error(
-        '[AircallEverywhere] Invalid parameter eventName. Expected an non empty string'
-      );
+  send(eventName, data, callback) {
+    let errorMessage = null;
+    if (typeof data === 'function' && !callback) {
+      callback = data;
+      data = undefined;
     }
-    this.phoneWindow.source.postMessage(
-      { name: `apm_app_${eventName}`, value: data },
-      this.phoneWindow.origin
-    );
+
+    if (!eventName) {
+      errorMessage = 'Invalid parameter eventName. Expected an non empty string';
+      console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
+      if (typeof callback === 'function') {
+        callback(false, errorMessage);
+      }
+    }
+
+    if (!!this.phoneWindow && !!this.phoneWindow.source) {
+      let responseTimeout = null;
+      let timeoutLimit = 500;
+
+      // we send the message
+      this.phoneWindow.source.postMessage(
+        { name: `apm_app_${eventName}`, value: data },
+        this.phoneWindow.origin
+      );
+
+      // we wait for a response to this message
+      this.on(`${eventName}_response`, response => {
+        // we have a response, we remove listener and return the callback
+        this.removeListener(`${eventName}_response`);
+        clearTimeout(responseTimeout);
+        if (typeof callback === 'function') {
+          callback(true, response);
+        }
+      });
+
+      responseTimeout = setTimeout(() => {
+        // if no response, we remove listener
+        this.removeListener(`${eventName}_response`);
+
+        errorMessage = 'No answer from the phone. Check if the phone is logged in';
+        console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
+        if (typeof callback === 'function') {
+          callback(false, errorMessage);
+        }
+      }, timeoutLimit);
+    } else {
+      errorMessage =
+        'Aircall Phone has not been identified yet or is not ready. Wait for "afterPhoneLoaded" callback';
+      console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
+      if (typeof callback === 'function') {
+        callback(false, errorMessage);
+      }
+    }
+  }
+
+  removeListener(eventName) {
+    if (!!this.eventsRegistered[eventName]) {
+      return false;
+    }
+
+    this.eventsRegistered = this.eventsRegistered.filter(e => e !== eventName);
+    return true;
+  }
+
+  isLoggedIn(callback) {
+    // we simply send an event and send its result
   }
 }
 

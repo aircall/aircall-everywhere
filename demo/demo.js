@@ -25,6 +25,7 @@ loadPhoneButton.addEventListener(
     });
 
     ap.on('call_end_ringtone', () => {
+      console.log('end ringtone');
       inCallAlert.classList.add('d-none');
       notInCallAlert.classList.remove('d-none');
     });
