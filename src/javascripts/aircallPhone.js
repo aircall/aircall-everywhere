@@ -124,19 +124,59 @@ class AircallPhone {
     this.eventsRegistered[eventName] = callback;
   }
 
+  _handleSendError(error, callback) {
+    if (!error || !error.code) {
+      // should not happen, unknown error
+      error = {
+        code: 'unknown_error'
+      };
+    }
+
+    // errors sent by the phone for specific events are not handled since they should have their code AND message
+    if (!!error && !error.message) {
+      switch (error.code) {
+        case 'unknown_error':
+          error.message = 'Unknown error. Contact aircall developers dev@aircall.io';
+          break;
+        case 'no_event_name':
+          error.message = 'Invalid parameter eventName. Expected an non empty string';
+          break;
+        case 'not_ready':
+          error.message =
+            'Aircall Phone has not been identified yet or is not ready. Wait for "afterPhoneLoaded" callback';
+          break;
+        case 'no_answer':
+          error.message = 'No answer from the phone. Check if the phone is logged in';
+          break;
+        case 'invalid_response':
+          error.message =
+            'Invalid response from the phone. Contact aircall developers dev@aircall.io';
+          break;
+        default:
+          // specific error without a message. Should not happen
+          error.message = 'Generic error';
+          break;
+      }
+    }
+
+    // we log the error
+    console.error(`[AircallEverywhere] [send function] ${error.message}`);
+
+    // we send the callback with the error
+    if (typeof callback === 'function') {
+      callback(false, error);
+    }
+  }
+
   send(eventName, data, callback) {
-    let errorMessage = null;
     if (typeof data === 'function' && !callback) {
       callback = data;
       data = undefined;
     }
 
     if (!eventName) {
-      errorMessage = 'Invalid parameter eventName. Expected an non empty string';
-      console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
-      if (typeof callback === 'function') {
-        callback(false, { errorMessage });
-      }
+      this._handleSendError({ code: 'no_event_name' }, callback);
+      return;
     }
 
     if (!!this.phoneWindow && !!this.phoneWindow.source) {
@@ -156,21 +196,19 @@ class AircallPhone {
         clearTimeout(responseTimeout);
         // we evaluate response
         if (response && response.success === false) {
-          if (typeof callback === 'function') {
-            console.error(`[AircallEverywhere] [send function] ${response.errorMessage}`);
-            callback(false, { errorMessage: response.errorMessage });
-          }
+          // phone answers with an error
+          this._handleSendError(
+            { code: response.errorCode, message: response.errorMessage },
+            callback
+          );
         } else if (response && response.success === true) {
+          // phone answer a succes with its response
           if (typeof callback === 'function') {
             callback(true, response.data);
           }
         } else {
-          if (typeof callback === 'function') {
-            errorMessage =
-              'Invalid response from the phone. Contact aircall developers dev@aircall.io';
-            console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
-            callback(false, { errorMessage });
-          }
+          // phone answer is invalid
+          this._handleSendError({ code: 'invalid_response' }, callback);
         }
       });
 
@@ -178,19 +216,11 @@ class AircallPhone {
         // if no response, we remove listener
         this.removeListener(`${eventName}_response`);
 
-        errorMessage = 'No answer from the phone. Check if the phone is logged in';
-        console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
-        if (typeof callback === 'function') {
-          callback(false, { errorMessage });
-        }
+        this._handleSendError({ code: 'no_answer' }, callback);
       }, timeoutLimit);
     } else {
-      errorMessage =
-        'Aircall Phone has not been identified yet or is not ready. Wait for "afterPhoneLoaded" callback';
-      console.error(`[AircallEverywhere] [send function] ${errorMessage}`);
-      if (typeof callback === 'function') {
-        callback(false, { errorMessage });
-      }
+      this._handleSendError({ code: 'not_ready' }, callback);
+      return;
     }
   }
 
