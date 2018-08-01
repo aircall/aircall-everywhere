@@ -295,6 +295,86 @@ describe('Aircall SDK Library', () => {
     });
   });
 
+  describe('_handleSendError function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+      spyOn(console, 'error');
+    });
+    it('should exists', () => {
+      expect(ap._handleSendError).toBeDefined();
+    });
+
+    it('should log correct standard error message for error code no_event_name', () => {
+      ap._handleSendError({ code: 'no_event_name' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Invalid parameter eventName. Expected an non empty string'
+      );
+    });
+
+    it('should log correct standard error message for error code not_ready', () => {
+      ap._handleSendError({ code: 'not_ready' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Aircall Phone has not been identified yet or is not ready. Wait for "afterPhoneLoaded" callback'
+      );
+    });
+
+    it('should log correct standard error message for error code no_answer', () => {
+      ap._handleSendError({ code: 'no_answer' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] No answer from the phone. Check if the phone is logged in'
+      );
+    });
+
+    it('should log correct standard error message for error code invalid_response', () => {
+      ap._handleSendError({ code: 'invalid_response' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Invalid response from the phone. Contact aircall developers dev@aircall.io'
+      );
+    });
+
+    it('should log an error message even with no error code', () => {
+      ap._handleSendError({});
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Unknown error. Contact aircall developers dev@aircall.io'
+      );
+    });
+
+    it('should log an error message even with no error', () => {
+      ap._handleSendError();
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Unknown error. Contact aircall developers dev@aircall.io'
+      );
+    });
+
+    it('should log an error message with a full specific error provided', () => {
+      ap._handleSendError({ code: 'my_code', message: 'My specific message' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] My specific message'
+      );
+    });
+
+    it('should log a genericerror message with a specific error without message', () => {
+      ap._handleSendError({ code: 'my_code' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Generic error message'
+      );
+    });
+
+    it('should execute callback with false and the error object as parameters', done => {
+      ap._handleSendError({ code: 'not_ready' }, (success, data) => {
+        if (
+          success === false &&
+          data.code === 'not_ready' &&
+          data.message ===
+            'Aircall Phone has not been identified yet or is not ready. Wait for "afterPhoneLoaded" callback'
+        ) {
+          done();
+        }
+      });
+    });
+  });
+
   describe('send function', () => {
     let ap;
     beforeEach(() => {
@@ -317,18 +397,6 @@ describe('Aircall SDK Library', () => {
       };
       ap.send('my_event', { foo: 'bar' });
     });
-
-    it('should throw an error if eventName is an empty string', () => {
-      expect(() => {
-        ap.send('');
-      }).toThrow();
-    });
-
-    it('should throw an error if eventName is null', () => {
-      expect(() => {
-        ap.send(null, { foo: 'bar' });
-      }).toThrow();
-    });
   });
 
   describe('removeListener function', () => {
@@ -338,6 +406,27 @@ describe('Aircall SDK Library', () => {
     });
     it('should exists', () => {
       expect(ap.removeListener).toBeDefined();
+    });
+
+    it('should return false if listener to remove doesnt exists', () => {
+      expect(ap.removeListener('fake_event')).toBe(false);
+    });
+
+    it('should return true if listener to remove exists', () => {
+      ap.eventsRegistered = {
+        toto: () => {},
+        tata: () => {}
+      };
+      expect(ap.removeListener('toto')).toBe(true);
+    });
+
+    it('should remove the listener if it exists', () => {
+      ap.eventsRegistered = {
+        toto: 1,
+        tata: 2
+      };
+      ap.removeListener('toto');
+      expect(ap.eventsRegistered).toEqual({ tata: 2 });
     });
   });
 

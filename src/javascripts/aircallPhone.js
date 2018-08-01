@@ -131,7 +131,6 @@ class AircallPhone {
         code: 'unknown_error'
       };
     }
-
     // errors sent by the phone for specific events are not handled since they should have their code AND message
     if (!!error && !error.message) {
       switch (error.code) {
@@ -154,7 +153,7 @@ class AircallPhone {
           break;
         default:
           // specific error without a message. Should not happen
-          error.message = 'Generic error';
+          error.message = 'Generic error message';
           break;
       }
     }
@@ -225,16 +224,18 @@ class AircallPhone {
   }
 
   removeListener(eventName) {
-    if (!!this.eventsRegistered[eventName]) {
+    if (!this.eventsRegistered[eventName]) {
       return false;
     }
 
-    this.eventsRegistered = this.eventsRegistered.filter(e => e !== eventName);
+    Object.keys(this.eventsRegistered)
+      .filter(key => key === eventName)
+      .forEach(key => delete this.eventsRegistered[key]);
     return true;
   }
 
   isLoggedIn(callback) {
-    // we simply send an event and send its result
+    // we simply send an event and send its result. todo
   }
 }
 
