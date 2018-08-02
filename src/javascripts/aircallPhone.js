@@ -4,6 +4,7 @@ class AircallPhone {
     // window object of loaded aircall phone
     this.phoneWindow = null;
     this.integrationSettings = {};
+    this.userSettings = {};
     this.eventsRegistered = {};
 
     const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
@@ -16,10 +17,11 @@ class AircallPhone {
         : 'https://phone.aircall.io';
     this.domToLoadPhone = opts.domToLoadPhone;
     this.integrationToLoad = opts.integrationToLoad;
+
     this.afterPhoneLoaded = () => {
       if (this.phoneStarted === false && typeof opts.afterPhoneLoaded === 'function') {
         this.phoneStarted = true;
-        opts.afterPhoneLoaded();
+        opts.afterPhoneLoaded(this.userSettings);
       }
     };
     // local window
@@ -91,6 +93,10 @@ class AircallPhone {
       source: event.source,
       origin: event.origin
     };
+
+    if (!!event.data.value) {
+      this.userSettings = event.data.value;
+    }
 
     // we answer init
     this.phoneWindow.source.postMessage({ name: 'apm_app_isready' }, this.phoneWindow.origin);
