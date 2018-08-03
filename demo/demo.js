@@ -47,7 +47,7 @@ loadPhoneButton.addEventListener(
           if (success) {
             dialSuccessAlert.classList.remove('d-none');
           } else {
-            //dialErrorAlert.textContent = `Error : ${data.message}`;
+            dialErrorAlert.textContent = 'Error : ' + data.message;
             dialErrorAlert.classList.remove('d-none');
           }
 

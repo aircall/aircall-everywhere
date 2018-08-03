@@ -155,7 +155,7 @@ ap.on('call_end_ringtone', () => {
       if (success) {
         dialSuccessAlert.classList.remove('d-none');
       } else {
-        dialErrorAlert.textContent = 'Error : ' + error.message;
+        dialErrorAlert.textContent = 'Error : ' + data.message;
         dialErrorAlert.classList.remove('d-none');
       }
 
