@@ -20,7 +20,6 @@ class AircallPhone {
     this.integrationToLoad = opts.integrationToLoad;
 
     this.onLogin = () => {
-      console.log('onlogin', this.userSettings);
       if (typeof opts.onLogin === 'function' && this.phoneLoginState === false) {
         this.phoneLoginState = true;
         const data = {
@@ -124,7 +123,6 @@ class AircallPhone {
     };
 
     if (!!event.data.value) {
-      console.log('toto');
       this.userSettings = event.data.value;
     }
 
