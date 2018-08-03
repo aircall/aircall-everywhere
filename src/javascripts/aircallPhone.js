@@ -7,8 +7,9 @@ class AircallPhone {
     this.userSettings = {};
     this.eventsRegistered = {};
 
+    this.phoneLoginState = false;
+
     const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
-    this.phoneStarted = false;
 
     // options passed
     this.phoneUrl =
@@ -18,10 +19,22 @@ class AircallPhone {
     this.domToLoadPhone = opts.domToLoadPhone;
     this.integrationToLoad = opts.integrationToLoad;
 
-    this.afterPhoneLoaded = () => {
-      if (this.phoneStarted === false && typeof opts.afterPhoneLoaded === 'function') {
-        this.phoneStarted = true;
-        opts.afterPhoneLoaded(this.userSettings);
+    this.onLogin = () => {
+      if (typeof opts.onLogin === 'function' && this.phoneLoginState === false) {
+        this.phoneLoginState = true;
+        const data = {
+          user: this.userSettings
+        };
+        if (Object.keys(this.integrationSettings).length > 0) {
+          data.settings = this.integrationSettings;
+        }
+        opts.onLogin(data);
+      }
+    };
+
+    this.onLogout = () => {
+      if (typeof opts.onLogout === 'function') {
+        opts.onLogout();
       }
     };
     // local window
@@ -34,6 +47,13 @@ class AircallPhone {
     if (!!this.domToLoadPhone) {
       this._createPhoneIframe();
     }
+  }
+
+  _resetData() {
+    this.phoneWindow = null;
+    this.integrationSettings = {};
+    this.userSettings = {};
+    this.phoneLoginState = false;
   }
 
   _createPhoneIframe() {
@@ -71,7 +91,15 @@ class AircallPhone {
         if (event.data.name === 'apm_phone_integration_settings' && !!event.data.value) {
           this.integrationSettings = event.data.value;
           // init callback after settings received
-          this.afterPhoneLoaded();
+          this.onLogin();
+          return;
+        }
+
+        // phone logout
+        if (event.data.name === 'apm_phone_logout') {
+          // we clean data related to user
+          this._resetData();
+          this.onLogout();
           return;
         }
 
@@ -109,7 +137,7 @@ class AircallPhone {
       );
     } else {
       // init callback now if present
-      this.afterPhoneLoaded();
+      this.onLogin();
     }
   }
 
@@ -148,7 +176,7 @@ class AircallPhone {
           break;
         case 'not_ready':
           error.message =
-            'Aircall Phone has not been identified yet or is not ready. Wait for "afterPhoneLoaded" callback';
+            'Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback';
           break;
         case 'no_answer':
           error.message = 'No answer from the phone. Check if the phone is logged in';
@@ -241,7 +269,10 @@ class AircallPhone {
   }
 
   isLoggedIn(callback) {
-    // we simply send an event and send its result. todo
+    // we simply send an event and send its result.
+    this.send('is_logged_in', success => {
+      callback(success);
+    });
   }
 }
 
