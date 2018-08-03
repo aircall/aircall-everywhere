@@ -20,6 +20,7 @@ class AircallPhone {
     this.integrationToLoad = opts.integrationToLoad;
 
     this.onLogin = () => {
+      console.log('onlogin', this.userSettings);
       if (typeof opts.onLogin === 'function' && this.phoneLoginState === false) {
         this.phoneLoginState = true;
         const data = {
@@ -123,6 +124,7 @@ class AircallPhone {
     };
 
     if (!!event.data.value) {
+      console.log('toto');
       this.userSettings = event.data.value;
     }
 
@@ -143,10 +145,6 @@ class AircallPhone {
 
   getUrlToLoad() {
     return `${this.phoneUrl}?integration=generic`;
-  }
-
-  getSetting(settingName) {
-    return this.integrationSettings[settingName];
   }
 
   on(eventName, callback) {
@@ -209,7 +207,7 @@ class AircallPhone {
 
     if (!eventName) {
       this._handleSendError({ code: 'no_event_name' }, callback);
-      return;
+      return false;
     }
 
     if (!!this.phoneWindow && !!this.phoneWindow.source) {
@@ -253,7 +251,7 @@ class AircallPhone {
       }, timeoutLimit);
     } else {
       this._handleSendError({ code: 'not_ready' }, callback);
-      return;
+      return false;
     }
   }
 
