@@ -17,14 +17,16 @@ describe('Aircall SDK Library', () => {
         phoneUrl: 'https://phone.aircall-staging.com',
         domToLoadPhone: '#phone',
         integrationToLoad: 'zendesk',
-        afterPhoneLoaded: () => {
+        onLogin: () => {
           console.log('loaded');
+        },
+        onLogout: () => {
+          console.log('logged out');
         }
       });
       expect(ap.phoneUrl).toBeDefined();
       expect(ap.domToLoadPhone).toBeDefined();
       expect(ap.integrationToLoad).toBeDefined();
-      expect(ap.afterPhoneLoaded).toBeDefined();
     });
 
     it('should launch _messageListener', () => {
@@ -143,7 +145,7 @@ describe('Aircall SDK Library', () => {
       expect(ap.integrationSettings).toEqual({ foo: 'bar' });
     });
 
-    it('should launch afterPhoneLoaded callback if defined after integration settings received', done => {
+    it('should launch onLogin callback if defined after integration settings received', done => {
       const win = {
         addEventListener: (type, callback, bool) => {
           setTimeout(() => {
@@ -154,7 +156,7 @@ describe('Aircall SDK Library', () => {
 
       const ap = new AircallPhone({
         window: win,
-        afterPhoneLoaded: () => {
+        onLogin: () => {
           done();
         }
       });
@@ -193,6 +195,7 @@ describe('Aircall SDK Library', () => {
 
     it('should send a postmessage that it is ready', done => {
       ap._handleInitMessage({
+        data: {},
         origin: '*',
         source: {
           postMessage: (event, target) => {
@@ -207,6 +210,7 @@ describe('Aircall SDK Library', () => {
     it('should ask for integration settings if there is an integration to load', done => {
       ap.integrationToLoad = 'salesforce';
       ap._handleInitMessage({
+        data: {},
         origin: '*',
         source: {
           postMessage: (event, target) => {
@@ -219,10 +223,11 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should launch afterPhoneLoaded callback if there is no integration to load', done => {
-      ap.afterPhoneLoaded = () => {
+      ap.onLogin = () => {
         done();
       };
       ap._handleInitMessage({
+        data: {},
         origin: '*',
         source: {
           postMessage: (event, target) => {}
@@ -315,7 +320,7 @@ describe('Aircall SDK Library', () => {
     it('should log correct standard error message for error code not_ready', () => {
       ap._handleSendError({ code: 'not_ready' });
       expect(console.error).toHaveBeenCalledWith(
-        '[AircallEverywhere] [send function] Aircall Phone has not been identified yet or is not ready. Wait for "afterPhoneLoaded" callback'
+        '[AircallEverywhere] [send function] Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback'
       );
     });
 
@@ -367,7 +372,7 @@ describe('Aircall SDK Library', () => {
           success === false &&
           data.code === 'not_ready' &&
           data.message ===
-            'Aircall Phone has not been identified yet or is not ready. Wait for "afterPhoneLoaded" callback'
+            'Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback'
         ) {
           done();
         }
