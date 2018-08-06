@@ -224,13 +224,13 @@ class AircallPhone {
         this.removeListener(`${eventName}_response`);
         clearTimeout(responseTimeout);
         // we evaluate response
-        if (response && response.success === false) {
+        if (!!response && response.success === false) {
           // phone answers with an error
           this._handleSendError(
             { code: response.errorCode, message: response.errorMessage },
             callback
           );
-        } else if (response && response.success === true) {
+        } else if (!!response && response.success === true) {
           // phone answer a succes with its response
           if (typeof callback === 'function') {
             callback(true, response.data);

@@ -433,6 +433,12 @@ describe('Aircall SDK Library', () => {
     beforeEach(() => {
       jasmine.clock().install();
       ap = new AircallPhone();
+      ap.phoneWindow = {
+        origin: '*',
+        source: {
+          postMessage: (event, target) => {}
+        }
+      };
     });
     it('should exists', () => {
       expect(ap.send).toBeDefined();
@@ -453,23 +459,11 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should listen for a response to the sent event', () => {
-      ap.phoneWindow = {
-        origin: '*',
-        source: {
-          postMessage: (event, target) => {}
-        }
-      };
       ap.send('my_event', { foo: 'bar' });
       expect(ap.eventsRegistered.my_event_response).toBeDefined();
     });
 
     it('should timeout if no response sent by the phone', () => {
-      ap.phoneWindow = {
-        origin: '*',
-        source: {
-          postMessage: (event, target) => {}
-        }
-      };
       ap.send('my_event', { foo: 'bar' });
       spyOn(ap, '_handleSendError');
       jasmine.clock().tick(501);
@@ -477,24 +471,12 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should remove listener for response after timeout', () => {
-      ap.phoneWindow = {
-        origin: '*',
-        source: {
-          postMessage: (event, target) => {}
-        }
-      };
       ap.send('my_event', { foo: 'bar' });
       jasmine.clock().tick(501);
       expect(ap.eventsRegistered.my_event_response).not.toBeDefined();
     });
 
     it('should remove listener on event response', () => {
-      ap.phoneWindow = {
-        origin: '*',
-        source: {
-          postMessage: (event, target) => {}
-        }
-      };
       ap.send('my_event', { foo: 'bar' });
       ap.eventsRegistered.my_event_response();
 
@@ -502,12 +484,6 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should call _handleSendError on errorful event response', () => {
-      ap.phoneWindow = {
-        origin: '*',
-        source: {
-          postMessage: (event, target) => {}
-        }
-      };
       ap.send('my_event', { foo: 'bar' });
       spyOn(ap, '_handleSendError');
       ap.eventsRegistered.my_event_response({
@@ -522,12 +498,6 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should call _handleSendError on malformed event response', () => {
-      ap.phoneWindow = {
-        origin: '*',
-        source: {
-          postMessage: (event, target) => {}
-        }
-      };
       ap.send('my_event', { foo: 'bar' });
       spyOn(ap, '_handleSendError');
       ap.eventsRegistered.my_event_response({ foo: 'bar' });
@@ -535,12 +505,6 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should launch calbback on successful event response', done => {
-      ap.phoneWindow = {
-        origin: '*',
-        source: {
-          postMessage: (event, target) => {}
-        }
-      };
       ap.send('my_event', { toto: 'tata' }, (success, res) => {
         if (success === true && res.foo === 'bar') {
           done();
