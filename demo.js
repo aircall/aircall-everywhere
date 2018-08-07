@@ -107,14 +107,22 @@ loadPhoneButton.addEventListener(
   () => {
     let loadedPhoneAlert = document.querySelector('#phone-loaded');
     let notLoadePhoneAlert = document.querySelector('#phone-not-loaded');
+    let userInfoText = document.querySelector('#user-info');
     loadPhoneButton.disabled = true;
     const ap = new aircall_everywhere__WEBPACK_IMPORTED_MODULE_0__["default"]({
       domToLoadPhone: '#phone',
-      afterPhoneLoaded: () => {
+      onLogin: settings => {
+        userInfoText.textContent = JSON.stringify(settings, null, 4);
         loadedPhoneAlert.classList.remove('d-none');
         notLoadePhoneAlert.classList.add('d-none');
+      },
+      onLogout: () => {
+        loadedPhoneAlert.classList.add('d-none');
+        notLoadePhoneAlert.classList.remove('d-none');
+        userInfoText.textContent = ' ';
       }
     });
+
     let inCallAlert = document.querySelector('#in-call');
     let notInCallAlert = document.querySelector('#not-in-call');
     ap.on('incoming_call', () => {
@@ -128,10 +136,43 @@ loadPhoneButton.addEventListener(
     });
 
     let dialButton = document.querySelector('#dial-button');
+    let dialSuccessAlert = document.querySelector('#dial-number-success');
+    let dialErrorAlert = document.querySelector('#dial-number-error');
     dialButton.addEventListener(
       'click',
       () => {
-        ap.send('dial_number', { phone_number: '+33123456789' });
+        ap.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
+          if (success) {
+            dialSuccessAlert.classList.remove('d-none');
+          } else {
+            dialErrorAlert.textContent = 'Error : ' + data.message;
+            dialErrorAlert.classList.remove('d-none');
+          }
+
+          setTimeout(() => {
+            dialSuccessAlert.classList.add('d-none');
+            dialErrorAlert.classList.add('d-none');
+          }, 2000);
+        });
+      },
+      false
+    );
+
+    let isLoginButton = document.querySelector('#is-login-button');
+    let isLoggedInAlert = document.querySelector('#is-logged-in');
+    let isLoggedOutAlert = document.querySelector('#is-logged-out');
+    isLoginButton.addEventListener(
+      'click',
+      () => {
+        ap.isLoggedIn(res => {
+          res
+            ? isLoggedInAlert.classList.remove('d-none')
+            : isLoggedOutAlert.classList.remove('d-none');
+          setTimeout(() => {
+            isLoggedInAlert.classList.add('d-none');
+            isLoggedOutAlert.classList.add('d-none');
+          }, 2000);
+        });
       },
       false
     );
@@ -174,10 +215,12 @@ class AircallPhone {
     // window object of loaded aircall phone
     this.phoneWindow = null;
     this.integrationSettings = {};
+    this.userSettings = {};
     this.eventsRegistered = {};
 
+    this.phoneLoginState = false;
+
     const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
-    this.phoneStarted = false;
 
     // options passed
     this.phoneUrl =
@@ -186,10 +229,23 @@ class AircallPhone {
         : 'https://phone.aircall.io';
     this.domToLoadPhone = opts.domToLoadPhone;
     this.integrationToLoad = opts.integrationToLoad;
-    this.afterPhoneLoaded = () => {
-      if (this.phoneStarted === false && typeof opts.afterPhoneLoaded === 'function') {
-        this.phoneStarted = true;
-        opts.afterPhoneLoaded();
+
+    this.onLogin = () => {
+      if (typeof opts.onLogin === 'function' && this.phoneLoginState === false) {
+        this.phoneLoginState = true;
+        const data = {
+          user: this.userSettings
+        };
+        if (Object.keys(this.integrationSettings).length > 0) {
+          data.settings = this.integrationSettings;
+        }
+        opts.onLogin(data);
+      }
+    };
+
+    this.onLogout = () => {
+      if (typeof opts.onLogout === 'function') {
+        opts.onLogout();
       }
     };
     // local window
@@ -204,6 +260,13 @@ class AircallPhone {
     }
   }
 
+  _resetData() {
+    this.phoneWindow = null;
+    this.integrationSettings = {};
+    this.userSettings = {};
+    this.phoneLoginState = false;
+  }
+
   _createPhoneIframe() {
     // we get the passed dom
     try {
@@ -211,7 +274,10 @@ class AircallPhone {
       el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="height:666px; width:376px;"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
-      console.error(`[AircallSDK] ${this.domToLoadPhone} not be found. Error:`, e);
+      console.error(
+        `[AircallEverywhere] [iframe creation] ${this.domToLoadPhone} not be found. Error:`,
+        e
+      );
     }
   }
 
@@ -219,7 +285,7 @@ class AircallPhone {
     this.w.addEventListener(
       'message',
       event => {
-        console.log('[AircallSDK] received event', event);
+        console.info('[AircallEverywhere] [event listener] received event', event);
         // we test if our format object is present. if not, we stop
         const matchPrefixRegex = /^apm_phone_/;
         if (!event.data || !event.data.name || !matchPrefixRegex.test(event.data.name)) {
@@ -236,7 +302,15 @@ class AircallPhone {
         if (event.data.name === 'apm_phone_integration_settings' && !!event.data.value) {
           this.integrationSettings = event.data.value;
           // init callback after settings received
-          this.afterPhoneLoaded();
+          this.onLogin();
+          return;
+        }
+
+        // phone logout
+        if (event.data.name === 'apm_phone_logout') {
+          // we clean data related to user
+          this._resetData();
+          this.onLogout();
           return;
         }
 
@@ -259,6 +333,10 @@ class AircallPhone {
       origin: event.origin
     };
 
+    if (!!event.data.value) {
+      this.userSettings = event.data.value;
+    }
+
     // we answer init
     this.phoneWindow.source.postMessage({ name: 'apm_app_isready' }, this.phoneWindow.origin);
 
@@ -270,7 +348,7 @@ class AircallPhone {
       );
     } else {
       // init callback now if present
-      this.afterPhoneLoaded();
+      this.onLogin();
     }
   }
 
@@ -278,29 +356,130 @@ class AircallPhone {
     return `${this.phoneUrl}?integration=generic`;
   }
 
-  getSetting(settingName) {
-    return this.integrationSettings[settingName];
-  }
-
   on(eventName, callback) {
     if (!eventName || typeof callback !== 'function') {
       throw new Error(
-        '[AircallEverywhere] Invalid parameters format. Expected non empty string and function'
+        '[AircallEverywhere] [on function] Invalid parameters format. Expected non empty string and function'
       );
     }
     this.eventsRegistered[eventName] = callback;
   }
 
-  send(eventName, data) {
-    if (!eventName) {
-      throw new Error(
-        '[AircallEverywhere] Invalid parameter eventName. Expected an non empty string'
-      );
+  _handleSendError(error, callback) {
+    if (!error || !error.code) {
+      // should not happen, unknown error
+      error = {
+        code: 'unknown_error'
+      };
     }
-    this.phoneWindow.source.postMessage(
-      { name: `apm_app_${eventName}`, value: data },
-      this.phoneWindow.origin
-    );
+    // errors sent by the phone for specific events are not handled since they should have their code AND message
+    if (!!error && !error.message) {
+      switch (error.code) {
+        case 'unknown_error':
+          error.message = 'Unknown error. Contact aircall developers dev@aircall.io';
+          break;
+        case 'no_event_name':
+          error.message = 'Invalid parameter eventName. Expected an non empty string';
+          break;
+        case 'not_ready':
+          error.message =
+            'Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback';
+          break;
+        case 'no_answer':
+          error.message = 'No answer from the phone. Check if the phone is logged in';
+          break;
+        case 'invalid_response':
+          error.message =
+            'Invalid response from the phone. Contact aircall developers dev@aircall.io';
+          break;
+        default:
+          // specific error without a message. Should not happen
+          error.message = 'Generic error message';
+          break;
+      }
+    }
+
+    // we log the error
+    console.error(`[AircallEverywhere] [send function] ${error.message}`);
+
+    // we send the callback with the error
+    if (typeof callback === 'function') {
+      callback(false, error);
+    }
+  }
+
+  send(eventName, data, callback) {
+    if (typeof data === 'function' && !callback) {
+      callback = data;
+      data = undefined;
+    }
+
+    if (!eventName) {
+      this._handleSendError({ code: 'no_event_name' }, callback);
+      return false;
+    }
+
+    if (!!this.phoneWindow && !!this.phoneWindow.source) {
+      let responseTimeout = null;
+      let timeoutLimit = 500;
+
+      // we send the message
+      this.phoneWindow.source.postMessage(
+        { name: `apm_app_${eventName}`, value: data },
+        this.phoneWindow.origin
+      );
+
+      // we wait for a response to this message
+      this.on(`${eventName}_response`, response => {
+        // we have a response, we remove listener and return the callback
+        this.removeListener(`${eventName}_response`);
+        clearTimeout(responseTimeout);
+        // we evaluate response
+        if (!!response && response.success === false) {
+          // phone answers with an error
+          this._handleSendError(
+            { code: response.errorCode, message: response.errorMessage },
+            callback
+          );
+        } else if (!!response && response.success === true) {
+          // phone answer a succes with its response
+          if (typeof callback === 'function') {
+            callback(true, response.data);
+          }
+        } else {
+          // phone answer is invalid
+          this._handleSendError({ code: 'invalid_response' }, callback);
+        }
+      });
+
+      responseTimeout = setTimeout(() => {
+        // if no response, we remove listener
+        this.removeListener(`${eventName}_response`);
+
+        this._handleSendError({ code: 'no_answer' }, callback);
+      }, timeoutLimit);
+    } else {
+      this._handleSendError({ code: 'not_ready' }, callback);
+      return false;
+    }
+  }
+
+  removeListener(eventName) {
+    if (!this.eventsRegistered[eventName]) {
+      return false;
+    }
+
+    Object.keys(this.eventsRegistered)
+      .filter(key => key === eventName)
+      .forEach(key => delete this.eventsRegistered[key]);
+    return true;
+  }
+
+  isLoggedIn(callback) {
+    // we simply send an event and send its result.
+    this.send('is_logged_in', success => {
+      callback(success);
+    });
   }
 }
 
