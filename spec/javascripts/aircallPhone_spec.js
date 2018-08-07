@@ -17,14 +17,16 @@ describe('Aircall SDK Library', () => {
         phoneUrl: 'https://phone.aircall-staging.com',
         domToLoadPhone: '#phone',
         integrationToLoad: 'zendesk',
-        afterPhoneLoaded: () => {
+        onLogin: () => {
           console.log('loaded');
+        },
+        onLogout: () => {
+          console.log('logged out');
         }
       });
       expect(ap.phoneUrl).toBeDefined();
       expect(ap.domToLoadPhone).toBeDefined();
       expect(ap.integrationToLoad).toBeDefined();
-      expect(ap.afterPhoneLoaded).toBeDefined();
     });
 
     it('should launch _messageListener', () => {
@@ -46,6 +48,32 @@ describe('Aircall SDK Library', () => {
         phoneUrl: 'https://toto.toto.com'
       });
       expect(ap.phoneUrl).toEqual('https://toto.toto.com');
+    });
+  });
+
+  describe('_resetData function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap._resetData).toBeDefined();
+    });
+
+    it('should reset specific data about phone instance', () => {
+      ap.phoneWindow = {};
+      ap.integrationSettings = {
+        toto: 'tata'
+      };
+      ap.userSettings = {
+        email: 'toto@toto.fr'
+      };
+      ap.phoneLoginState = true;
+      ap._resetData();
+      expect(ap.phoneWindow).toBe(null);
+      expect(ap.integrationSettings).toEqual({});
+      expect(ap.userSettings).toEqual({});
+      expect(ap.phoneLoginState).toBe(false);
     });
   });
 
@@ -143,7 +171,7 @@ describe('Aircall SDK Library', () => {
       expect(ap.integrationSettings).toEqual({ foo: 'bar' });
     });
 
-    it('should launch afterPhoneLoaded callback if defined after integration settings received', done => {
+    it('should launch onLogin callback if defined after integration settings received, with integration data', done => {
       const win = {
         addEventListener: (type, callback, bool) => {
           setTimeout(() => {
@@ -154,7 +182,44 @@ describe('Aircall SDK Library', () => {
 
       const ap = new AircallPhone({
         window: win,
-        afterPhoneLoaded: () => {
+        onLogin: data => {
+          if (data.settings.foo === 'bar') {
+            done();
+          }
+        }
+      });
+      jasmine.clock().tick(101);
+    });
+
+    it('should launch _resetData function if logout event received', () => {
+      const win = {
+        addEventListener: (type, callback, bool) => {
+          setTimeout(() => {
+            callback({ data: { name: 'apm_phone_logout' } });
+          }, 100);
+        }
+      };
+
+      const ap = new AircallPhone({
+        window: win
+      });
+      spyOn(ap, '_resetData');
+      jasmine.clock().tick(101);
+      expect(ap._resetData).toHaveBeenCalled();
+    });
+
+    it('should launch onLogout callback if logout event received', done => {
+      const win = {
+        addEventListener: (type, callback, bool) => {
+          setTimeout(() => {
+            callback({ data: { name: 'apm_phone_logout' } });
+          }, 100);
+        }
+      };
+
+      const ap = new AircallPhone({
+        window: win,
+        onLogout: () => {
           done();
         }
       });
@@ -193,6 +258,7 @@ describe('Aircall SDK Library', () => {
 
     it('should send a postmessage that it is ready', done => {
       ap._handleInitMessage({
+        data: {},
         origin: '*',
         source: {
           postMessage: (event, target) => {
@@ -207,6 +273,7 @@ describe('Aircall SDK Library', () => {
     it('should ask for integration settings if there is an integration to load', done => {
       ap.integrationToLoad = 'salesforce';
       ap._handleInitMessage({
+        data: {},
         origin: '*',
         source: {
           postMessage: (event, target) => {
@@ -218,11 +285,21 @@ describe('Aircall SDK Library', () => {
       });
     });
 
-    it('should launch afterPhoneLoaded callback if there is no integration to load', done => {
-      ap.afterPhoneLoaded = () => {
-        done();
-      };
-      ap._handleInitMessage({
+    it('should launch onLogin callback if there is no integration to load, with user data', done => {
+      const app = new AircallPhone({
+        onLogin: settings => {
+          if (settings.user.email === 'toto@toto.fr') {
+            done();
+          }
+        }
+      });
+
+      app._handleInitMessage({
+        data: {
+          value: {
+            email: 'toto@toto.fr'
+          }
+        },
         origin: '*',
         source: {
           postMessage: (event, target) => {}
@@ -238,33 +315,6 @@ describe('Aircall SDK Library', () => {
     });
     it('should exists', () => {
       expect(ap.getUrlToLoad).toBeDefined();
-    });
-  });
-
-  describe('getSetting function', () => {
-    let ap;
-    beforeEach(() => {
-      ap = new AircallPhone();
-    });
-    it('should exists', () => {
-      expect(ap.getSetting).toBeDefined();
-    });
-
-    it('should return a specific setting', () => {
-      ap.integrationSettings = {
-        toto: 'tata',
-        foo: 'bar'
-      };
-      expect(ap.getSetting('toto')).toEqual('tata');
-      expect(ap.getSetting('foo')).toEqual('bar');
-    });
-
-    it('should return undefined for a non existent setting', () => {
-      ap.integrationSettings = {
-        toto: 'tata',
-        foo: 'bar'
-      };
-      expect(ap.getSetting('fizz')).toEqual(undefined);
     });
   });
 
@@ -295,10 +345,100 @@ describe('Aircall SDK Library', () => {
     });
   });
 
-  describe('send function', () => {
+  describe('_handleSendError function', () => {
     let ap;
     beforeEach(() => {
       ap = new AircallPhone();
+      spyOn(console, 'error');
+    });
+    it('should exists', () => {
+      expect(ap._handleSendError).toBeDefined();
+    });
+
+    it('should log correct standard error message for error code no_event_name', () => {
+      ap._handleSendError({ code: 'no_event_name' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Invalid parameter eventName. Expected an non empty string'
+      );
+    });
+
+    it('should log correct standard error message for error code not_ready', () => {
+      ap._handleSendError({ code: 'not_ready' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback'
+      );
+    });
+
+    it('should log correct standard error message for error code no_answer', () => {
+      ap._handleSendError({ code: 'no_answer' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] No answer from the phone. Check if the phone is logged in'
+      );
+    });
+
+    it('should log correct standard error message for error code invalid_response', () => {
+      ap._handleSendError({ code: 'invalid_response' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Invalid response from the phone. Contact aircall developers dev@aircall.io'
+      );
+    });
+
+    it('should log an error message even with no error code', () => {
+      ap._handleSendError({});
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Unknown error. Contact aircall developers dev@aircall.io'
+      );
+    });
+
+    it('should log an error message even with no error', () => {
+      ap._handleSendError();
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Unknown error. Contact aircall developers dev@aircall.io'
+      );
+    });
+
+    it('should log an error message with a full specific error provided', () => {
+      ap._handleSendError({ code: 'my_code', message: 'My specific message' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] My specific message'
+      );
+    });
+
+    it('should log a genericerror message with a specific error without message', () => {
+      ap._handleSendError({ code: 'my_code' });
+      expect(console.error).toHaveBeenCalledWith(
+        '[AircallEverywhere] [send function] Generic error message'
+      );
+    });
+
+    it('should execute callback with false and the error object as parameters', done => {
+      ap._handleSendError({ code: 'not_ready' }, (success, data) => {
+        if (
+          success === false &&
+          data.code === 'not_ready' &&
+          data.message ===
+            'Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback'
+        ) {
+          done();
+        }
+      });
+    });
+  });
+
+  describe('send function', () => {
+    let ap;
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
+    beforeEach(() => {
+      jasmine.clock().install();
+      ap = new AircallPhone();
+      ap.phoneWindow = {
+        origin: '*',
+        source: {
+          postMessage: (event, target) => {}
+        }
+      };
     });
     it('should exists', () => {
       expect(ap.send).toBeDefined();
@@ -318,16 +458,134 @@ describe('Aircall SDK Library', () => {
       ap.send('my_event', { foo: 'bar' });
     });
 
-    it('should throw an error if eventName is an empty string', () => {
-      expect(() => {
-        ap.send('');
-      }).toThrow();
+    it('should listen for a response to the sent event', () => {
+      ap.send('my_event', { foo: 'bar' });
+      expect(ap.eventsRegistered.my_event_response).toBeDefined();
     });
 
-    it('should throw an error if eventName is null', () => {
-      expect(() => {
-        ap.send(null, { foo: 'bar' });
-      }).toThrow();
+    it('should timeout if no response sent by the phone', () => {
+      ap.send('my_event', { foo: 'bar' });
+      spyOn(ap, '_handleSendError');
+      jasmine.clock().tick(501);
+      expect(ap._handleSendError).toHaveBeenCalledWith({ code: 'no_answer' }, undefined);
+    });
+
+    it('should remove listener for response after timeout', () => {
+      ap.send('my_event', { foo: 'bar' });
+      jasmine.clock().tick(501);
+      expect(ap.eventsRegistered.my_event_response).not.toBeDefined();
+    });
+
+    it('should remove listener on event response', () => {
+      ap.send('my_event', { foo: 'bar' });
+      ap.eventsRegistered.my_event_response();
+
+      expect(ap.eventsRegistered.my_event_response).not.toBeDefined();
+    });
+
+    it('should call _handleSendError on errorful event response', () => {
+      ap.send('my_event', { foo: 'bar' });
+      spyOn(ap, '_handleSendError');
+      ap.eventsRegistered.my_event_response({
+        success: false,
+        errorCode: 'tata',
+        errorMessage: 'error message'
+      });
+      expect(ap._handleSendError).toHaveBeenCalledWith(
+        { code: 'tata', message: 'error message' },
+        undefined
+      );
+    });
+
+    it('should call _handleSendError on malformed event response', () => {
+      ap.send('my_event', { foo: 'bar' });
+      spyOn(ap, '_handleSendError');
+      ap.eventsRegistered.my_event_response({ foo: 'bar' });
+      expect(ap._handleSendError).toHaveBeenCalledWith({ code: 'invalid_response' }, undefined);
+    });
+
+    it('should launch calbback on successful event response', done => {
+      ap.send('my_event', { toto: 'tata' }, (success, res) => {
+        if (success === true && res.foo === 'bar') {
+          done();
+        }
+      });
+      ap.eventsRegistered.my_event_response({ success: true, data: { foo: 'bar' } });
+    });
+
+    it('should return and call _handleSendError without eventName', () => {
+      spyOn(ap, '_handleSendError');
+      expect(ap.send(null)).toBe(false);
+      expect(ap._handleSendError).toHaveBeenCalledWith({ code: 'no_event_name' }, undefined);
+    });
+
+    it('should return and call _handleSendError without phoneWindow defined', () => {
+      spyOn(ap, '_handleSendError');
+      ap.phoneWindow = {};
+      expect(ap.send('toto')).toBe(false);
+      expect(ap._handleSendError).toHaveBeenCalledWith({ code: 'not_ready' }, undefined);
+    });
+
+    it('should use second argument as callback if it is a function and no 3rd one', done => {
+      ap.phoneWindow = {};
+      ap.send('toto', () => {
+        done();
+      });
+    });
+  });
+
+  describe('removeListener function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap.removeListener).toBeDefined();
+    });
+
+    it('should return false if listener to remove doesnt exists', () => {
+      expect(ap.removeListener('fake_event')).toBe(false);
+    });
+
+    it('should return true if listener to remove exists', () => {
+      ap.eventsRegistered = {
+        toto: () => {},
+        tata: () => {}
+      };
+      expect(ap.removeListener('toto')).toBe(true);
+    });
+
+    it('should remove the listener if it exists', () => {
+      ap.eventsRegistered = {
+        toto: 1,
+        tata: 2
+      };
+      ap.removeListener('toto');
+      expect(ap.eventsRegistered).toEqual({ tata: 2 });
+    });
+  });
+
+  describe('isLoggedIn function', () => {
+    let ap;
+    beforeEach(() => {
+      ap = new AircallPhone();
+    });
+    it('should exists', () => {
+      expect(ap.isLoggedIn).toBeDefined();
+    });
+
+    it('should send an event to the phone', () => {
+      let cb = () => {};
+      spyOn(ap, 'send');
+      ap.isLoggedIn(cb);
+      expect(ap.send).toHaveBeenCalledWith('is_logged_in', jasmine.any(Function));
+    });
+
+    it('should execute callback with response from the phone', done => {
+      let cb = () => {
+        done();
+      };
+      ap.isLoggedIn(cb);
     });
   });
 });

@@ -9,11 +9,13 @@ module.exports = {
         test: /\.jsx?$/,
         include: [path.resolve(__dirname, '../../src')],
         enforce: 'pre',
+        enforce: 'post',
 
         loader: 'babel-loader',
 
         options: {
-          plugins: ['babel-plugin-rewire']
+          plugins: ['babel-plugin-rewire'],
+          presets: ['env']
         }
       },
       {
@@ -30,7 +32,6 @@ module.exports = {
   },
 
   mode: 'development',
-
   resolve: {
     modules: ['node_modules', path.resolve(__dirname, '../../src/javascripts')],
     extensions: ['.js']
