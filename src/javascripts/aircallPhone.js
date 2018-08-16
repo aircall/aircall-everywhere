@@ -118,7 +118,7 @@ class AircallPhone {
   _handleInitMessage(event) {
     // we return if we already have a source defined
     if (!!this.phoneWindow) {
-      return;
+      return false;
     }
 
     // we keep the source
