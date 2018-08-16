@@ -256,6 +256,20 @@ describe('Aircall SDK Library', () => {
       expect(ap._handleInitMessage).toBeDefined();
     });
 
+    it('should return if a source windows is already defined', () => {
+      ap.phoneWindow = {
+        source: 'foo',
+        origin: 'bar'
+      };
+      const res = ap._handleInitMessage({
+        data: {},
+        origin: '*',
+        source: 'toto'
+      });
+
+      expect(res).toBe(false);
+    });
+
     it('should send a postmessage that it is ready', done => {
       ap._handleInitMessage({
         data: {},
