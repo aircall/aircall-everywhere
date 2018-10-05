@@ -66,39 +66,25 @@ import AircallPhone from 'aircall-everywhere'</code></pre>
         <div class="left bg-grey">
           <h3>Load Aircall phone</h3>
           <p>Click on the button to load the Aircall phone. You will be able to toggle it via the phone icon in the
-            header.<br><br>Informations about the user logged in are retrieved on load.<br><br></p>
+            header.<br>Informations about the user logged in are retrieved on load.<br><br></p>
 
           <button class="button" id="load-phone-button">Load phone</button>
           <br><br>
-          <pre class="prettyprint"><code id="user-info">user settings...</code></pre>
+          <pre class="prettyprint"><code id="user-info">//user informations</code></pre>
 
           <div class="alert alert-danger" id="phone-loading">
             Phone is not loaded or logged in
           </div>
         </div>
         <div class="right">
-          <pre class="prettyprint"><code>const setStatusMessage = (selector, type, message) => {
-  const statusBox = document.querySelector(selector);
-  statusBox.classList.remove('alert-danger', 'alert-success');
-  statusBox.classList.add('alert-' + type);
-  statusBox.textContent = message;
-};
-
-const setStatusData = (selector, data) => {
-  const dataBox = document.querySelector(selector);
-  dataBox.innerHTML = JSON.stringify(data, null, 2));
-};
-
-const ap = new AircallPhone({
+          <pre class="prettyprint"><code>const ap = new AircallPhone({
   domToLoadPhone: '#phone',
   onLogin: settings => {
-    // we set data and status
-    setStatusData('#user-info', settings);
+    setStatusData('#user-info', settings, '//user informations');
     setStatusMessage('#phone-loading', 'success', 'Phone is loaded and ready to use!');
   },
   onLogout: () => {
-    // we reset data and status
-    setStatusData('#user-info', 'user settings...');
+    setStatusData('#user-info', '', '//user informations');
     setStatusMessage('#phone-loading', 'danger', 'Phone is not loaded or logged in');
   }
 });</code></pre>
@@ -106,27 +92,61 @@ const ap = new AircallPhone({
       </div>
 
       <div class="row">
-        <div class="left">
-          <h3>Phone events</h3>
-          <div class="alert alert-success d-none" role="alert" id="in-call">
-            Incoming call !
+        <div class="left bg-grey">
+          <h3>Call events</h3>
+          <p>There are multiple events happening during the lifecycle of a phone call. Try making an outgoing or ingoing call to see what happens!</p>
+          <br><br>
+          <div class="d-flex">
+            <pre class="prettyprint"><code id="call-info">call informations...</code></pre>
+            <pre id="call-info-logs">logging started</pre>
           </div>
-          <div class="alert alert-danger" role="alert" id="not-in-call">
-            No incoming call
+          
+          <div class="alert alert-warning" id="call-events">
+            Not in a call
           </div>
-
-          <p>Aircall user information</p>
-          <pre><code id="user-info"> </code></pre>
         </div>
         <div class="right">
-          <pre class="prettyprint"><code>ap.on('incoming_call', () => {
-  inCallAlert.classList.remove('d-none');
-  notInCallAlert.classList.add('d-none');
+          <pre class="prettyprint"><code>ap.on('incoming_call', callInfos => {
+  setPhoneVisibility(true);
+  setStatusData('#call-info', callInfos, '// Incoming call');
+  const message = 'Incoming call from ' + callInfos.from + ' to ' + callInfos.to + ' ringing!';
+  addLogLine('#call-info-logs', message);
+  setStatusMessage('#call-events', 'success', message);
 });
 
-ap.on('call_end_ringtone', () => {
-  inCallAlert.classList.add('d-none');
-  notInCallAlert.classList.remove('d-none');
+ap.on('call_end_ringtone', callInfos => {
+  setStatusData('#call-info', callInfos, '// Ringing ended');
+  const message = 'Ringing ended. call was ' + callInfos.answer_status;
+  addLogLine('#call-info-logs', message);
+  setStatusMessage('#call-events', callInfos.answer_status === 'answered' ? 'success' : 'warning' , message);
+});
+
+ap.on('call_ended', callInfos => {
+  setStatusData('#call-info', callInfos, '// Call ended');
+  const message = 'Call ended. Lasted ' + callInfos.duration + ' seconds';
+  addLogLine('#call-info-logs', message);
+  setStatusMessage('#call-events', 'warning', message);
+});
+
+ap.on('comment_saved', callInfos => {
+  setStatusData('#call-info', callInfos, '// Comment on call');
+  const message = 'Comment about the last call saved';
+  addLogLine('#call-info-logs', message);
+  setStatusMessage('#call-events', 'success', message);
+});
+
+ap.on('outgoing_call', callInfos => {
+  setStatusData('#call-info', callInfos, '// Outgoing call');
+  const message = 'Outgoing call from ' + callInfos.from + ' to ' + callInfos.to + '...';
+  addLogLine('#call-info-logs', message);
+  setStatusMessage('#call-events', 'success', message);
+});
+
+ap.on('outgoing_answered', callInfos => {
+  setStatusData('#call-info', callInfos, '// Outgoing call');
+  const message = 'Outgoing call answered!';
+  addLogLine('#call-info-logs', message);
+  setStatusMessage('#call-events', 'success', message);
 });</code></pre>
         </div>
       </div>

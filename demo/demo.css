@@ -334,13 +334,10 @@ h3 {
 }
 
 .alert {
-  padding: 10px 3vw;
+  padding: 10px 20px;
   font-size: 18px;
   color: #ffffff;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  margin-top: 20px;
 }
 .alert.alert-success {
   background-color: #4ac420;
@@ -348,6 +345,10 @@ h3 {
 
 .alert.alert-danger {
   background-color: #f96772;
+}
+
+.alert.alert-warning {
+  background-color: #f7bd42;
 }
 
 #phone-container {
@@ -386,15 +387,39 @@ h3 {
   display: none !important;
 }
 
-pre.prettyprint {
+.d-flex {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.d-flex > pre:first-child {
+  margin-right: 20px !important;
+}
+
+pre {
   font-family: monospace;
+}
+
+pre.prettyprint {
   width: 100% !important;
   margin: 0 !important;
-  padding: 2em !important;
+  padding: 30px !important;
   border-radius: 0 !important;
   background-color: transparent !important;
 }
 
 .left pre.prettyprint {
   background-color: #666666 !important;
+  width: auto !important;
+  flex-grow: 1;
+}
+
+#call-info-logs {
+  background-color: #666666;
+  padding: 30px;
+  color: #ffffff;
+  width: auto;
+  flex-grow: 2;
+  white-space: pre-wrap;
 }

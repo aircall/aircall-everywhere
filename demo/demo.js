@@ -23,14 +23,21 @@ const togglePhoneVisibility = () => {
 
 const setStatusMessage = (selector, type, message) => {
   const statusBox = document.querySelector(selector);
-  statusBox.classList.remove('alert-danger', 'alert-success');
+  statusBox.classList.remove('alert-danger', 'alert-success', 'alert-warning');
   statusBox.classList.add(`alert-${type}`);
   statusBox.textContent = message;
 };
 
-const setStatusData = (selector, data) => {
+const setStatusData = (selector, data, label) => {
   const dataBox = document.querySelector(selector);
-  dataBox.innerHTML = window.PR.prettyPrintOne(JSON.stringify(data, null, 2));
+  const toPrettify = `${label}\n${JSON.stringify(data, null, 2)}`;
+  dataBox.innerHTML = window.PR.prettyPrintOne(toPrettify);
+};
+
+const addLogLine = (selector, log) => {
+  const logBox = document.querySelector(selector);
+  const currentTime = new Date(Date.now());
+  logBox.textContent = `${logBox.textContent}\n${currentTime.toLocaleTimeString()} - ${log}`;
 };
 
 const loadPhoneButton = document.querySelector('#load-phone-button');
@@ -55,34 +62,64 @@ loadPhoneButton.addEventListener(
 
     const ap = new AircallPhone({
       domToLoadPhone: '#phone',
+      phoneUrl: 'https://deploy-preview-2609--phone-preview.netlify.com/',
       onLogin: settings => {
         // we set data and status
-        setStatusData('#user-info', settings);
+        setStatusData('#user-info', settings, '//user informations');
         setStatusMessage('#phone-loading', 'success', 'Phone is loaded and ready to use!');
       },
       onLogout: () => {
         // we reset data and status
-        setStatusData('#user-info', 'user settings...');
+        setStatusData('#user-info', '', '//user informations');
         setStatusMessage('#phone-loading', 'danger', 'Phone is not loaded or logged in');
       }
     });
 
-    let inCallAlert = document.querySelector('#in-call');
-    let notInCallAlert = document.querySelector('#not-in-call');
     ap.on('incoming_call', callInfos => {
-      console.log('incoming call:', callInfos);
-      inCallAlert.classList.remove('d-none');
-      notInCallAlert.classList.add('d-none');
+      setPhoneVisibility(true);
+      setStatusData('#call-info', callInfos, '// Incoming call');
+      const message = `Incoming call from ${callInfos.from} to ${callInfos.to} ringing!`;
+      addLogLine('#call-info-logs', message);
+      setStatusMessage('#call-events', 'success', message);
+    });
+
+    ap.on('call_end_ringtone', callInfos => {
+      setStatusData('#call-info', callInfos, '// Ringing ended');
+      const message = `Ringing ended. call was ${callInfos.answer_status}`;
+      addLogLine('#call-info-logs', message);
+      setStatusMessage(
+        '#call-events',
+        callInfos.answer_status === 'answered' ? 'success' : 'warning',
+        message
+      );
+    });
+
+    ap.on('call_ended', callInfos => {
+      setStatusData('#call-info', callInfos, '// Call ended');
+      const message = `Call ended. Lasted ${callInfos.duration} seconds`;
+      addLogLine('#call-info-logs', message);
+      setStatusMessage('#call-events', 'warning', message);
+    });
+
+    ap.on('comment_saved', callInfos => {
+      setStatusData('#call-info', callInfos, '// Comment on call');
+      const message = 'Comment about the last call saved';
+      addLogLine('#call-info-logs', message);
+      setStatusMessage('#call-events', 'success', message);
     });
 
     ap.on('outgoing_call', callInfos => {
-      console.log('outgoing call:', callInfos);
+      setStatusData('#call-info', callInfos, '// Outgoing call');
+      const message = `Outgoing call from ${callInfos.from} to ${callInfos.to} ...`;
+      addLogLine('#call-info-logs', message);
+      setStatusMessage('#call-events', 'success', message);
     });
 
-    ap.on('call_end_ringtone', status => {
-      console.log('ringtone:', status);
-      inCallAlert.classList.add('d-none');
-      notInCallAlert.classList.remove('d-none');
+    ap.on('outgoing_answered', callInfos => {
+      setStatusData('#call-info', callInfos, '// Outgoing call');
+      const message = 'Outgoing call answered!';
+      addLogLine('#call-info-logs', message);
+      setStatusMessage('#call-events', 'success', message);
     });
 
     let dialButton = document.querySelector('#dial-button');
