@@ -3,28 +3,67 @@ import AircallPhone from 'aircall-everywhere';
 
 console.log('demo time!');
 
+const setPhoneVisibility = visible => {
+  const phoneContainer = document.querySelector('#phone-container');
+  if (!!visible) {
+    phoneContainer.classList.remove('d-none');
+  } else {
+    phoneContainer.classList.add('d-none');
+  }
+};
+
+const togglePhoneVisibility = () => {
+  const phoneContainer = document.querySelector('#phone-container');
+  if (phoneContainer.classList.contains('d-none')) {
+    setPhoneVisibility(true);
+  } else {
+    setPhoneVisibility(false);
+  }
+};
+
+const setStatusMessage = (selector, type, message) => {
+  const statusBox = document.querySelector(selector);
+  statusBox.classList.remove('alert-danger', 'alert-success');
+  statusBox.classList.add(`alert-${type}`);
+  statusBox.textContent = message;
+};
+
+const setStatusData = (selector, data) => {
+  const dataBox = document.querySelector(selector);
+  dataBox.innerHTML = window.PR.prettyPrintOne(JSON.stringify(data, null, 2));
+};
+
 const loadPhoneButton = document.querySelector('#load-phone-button');
+
 loadPhoneButton.addEventListener(
   'click',
   () => {
-    let phoneContainer = document.querySelector('#phone');
-    phoneContainer.classList.remove('d-none');
+    // we show the phone
+    // phone icon
+    const phoneButtonIcon = document.querySelector('#phone-aircall');
+    phoneButtonIcon.classList.remove('d-none');
+    // phone visibility
+    setPhoneVisibility(true);
 
-    let loadedPhoneAlert = document.querySelector('#phone-loaded');
-    let notLoadePhoneAlert = document.querySelector('#phone-not-loaded');
-    let userInfoText = document.querySelector('#user-info');
+    // we add listener to toogle via icon
+    phoneButtonIcon.addEventListener('click', () => {
+      togglePhoneVisibility();
+    });
+
+    // we don't allow to load phone again
     loadPhoneButton.disabled = true;
+
     const ap = new AircallPhone({
       domToLoadPhone: '#phone',
       onLogin: settings => {
-        userInfoText.textContent = JSON.stringify(settings, null, 4);
-        loadedPhoneAlert.classList.remove('d-none');
-        notLoadePhoneAlert.classList.add('d-none');
+        // we set data and status
+        setStatusData('#user-info', settings);
+        setStatusMessage('#phone-loading', 'success', 'Phone is loaded and ready to use!');
       },
       onLogout: () => {
-        loadedPhoneAlert.classList.add('d-none');
-        notLoadePhoneAlert.classList.remove('d-none');
-        userInfoText.textContent = ' ';
+        // we reset data and status
+        setStatusData('#user-info', 'user settings...');
+        setStatusMessage('#phone-loading', 'danger', 'Phone is not loaded or logged in');
       }
     });
 

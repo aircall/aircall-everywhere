@@ -9,7 +9,11 @@
 
 
 <body>
-  <div id="phone" class="d-none"></div>
+  <div id="phone-container" class="d-none">
+    <div class="arrow-up"></div>
+    <div id="phone"></div>
+  </div>
+
   <nav>
     <div class="nav-content">
       <a href="https://aircall.io" id="link-aircall">
@@ -24,7 +28,7 @@
         Github
       </a>
 
-      <a id="phone-aircall">
+      <a id="phone-aircall" class="d-none">
         <img src="images/aircall-icon.svg">
       </a>
     </div>
@@ -37,52 +41,73 @@
         your are building your custom CRM and want your users to use Aircall directly in it, you're in the right
         place!</p>
     </div>
+
+
     <div class="container">
+      <div class="dark-box"></div>
       <h2 id="installation">Installation</h2>
+
       <div class="row">
         <div class="left">
           <p>You just have to add this repository in your project, and then import the library in your code.<br>See the
             demo on how to use the library.</p>
         </div>
         <div class="right">
-          <samp>npm install aircall-everywhere</samp>
-          <samp>import AircallPhone from 'aircall-everywhere'</samp>
+          <pre class="prettyprint"><code>npm install aircall-everywhere
+
+import AircallPhone from 'aircall-everywhere'</code></pre>
         </div>
       </div>
-      <h2 id="installation">Demo</h2>
+
+
+      <h2 id="demo">Demo</h2>
+
       <div class="row">
-        <h3>Load Aircall phone</h3>
-        <div class="left">
+        <div class="left bg-grey">
+          <h3>Load Aircall phone</h3>
+          <p>Click on the button to load the Aircall phone. You will be able to toggle it via the phone icon in the
+            header.<br><br>Informations about the user logged in are retrieved on load.<br><br></p>
+
           <button class="button" id="load-phone-button">Load phone</button>
-          <div class="alert alert-success d-none" role="alert" id="phone-loaded">
-            Phone is logged in and ready to interact
-          </div>
-          <div class="alert alert-danger" role="alert" id="phone-not-loaded">
+          <br><br>
+          <pre class="prettyprint"><code id="user-info">user settings...</code></pre>
+
+          <div class="alert alert-danger" id="phone-loading">
             Phone is not loaded or logged in
           </div>
-
-          <p>Aircall user information</p>
-          <pre><code id="user-info"> </code></pre>
         </div>
         <div class="right">
-          <pre><code>const ap = new AircallPhone({
-domToLoadPhone: '#phone',
-onLogin: settings => {
-  userInfoText.textContent = JSON.stringify(settings, null, 4);
-  loadedPhoneAlert.classList.remove('d-none');
-  notLoadePhoneAlert.classList.add('d-none');
-},
-onLogout: () => {
-  loadedPhoneAlert.classList.remove('d-none');
-  notLoadePhoneAlert.classList.add('d-none');
-}
-});
+          <pre class="prettyprint"><code>const setStatusMessage = (selector, type, message) => {
+  const statusBox = document.querySelector(selector);
+  statusBox.classList.remove('alert-danger', 'alert-success');
+  statusBox.classList.add('alert-' + type);
+  statusBox.textContent = message;
+};
+
+const setStatusData = (selector, data) => {
+  const dataBox = document.querySelector(selector);
+  dataBox.innerHTML = JSON.stringify(data, null, 2));
+};
+
+const ap = new AircallPhone({
+  domToLoadPhone: '#phone',
+  onLogin: settings => {
+    // we set data and status
+    setStatusData('#user-info', settings);
+    setStatusMessage('#phone-loading', 'success', 'Phone is loaded and ready to use!');
+  },
+  onLogout: () => {
+    // we reset data and status
+    setStatusData('#user-info', 'user settings...');
+    setStatusMessage('#phone-loading', 'danger', 'Phone is not loaded or logged in');
+  }
 });</code></pre>
         </div>
       </div>
+
       <div class="row">
-        <h3>Phone events</h3>
         <div class="left">
+          <h3>Phone events</h3>
           <div class="alert alert-success d-none" role="alert" id="in-call">
             Incoming call !
           </div>
@@ -94,7 +119,7 @@ onLogout: () => {
           <pre><code id="user-info"> </code></pre>
         </div>
         <div class="right">
-          <pre><code>ap.on('incoming_call', () => {
+          <pre class="prettyprint"><code>ap.on('incoming_call', () => {
   inCallAlert.classList.remove('d-none');
   notInCallAlert.classList.add('d-none');
 });
@@ -105,8 +130,8 @@ ap.on('call_end_ringtone', () => {
 });</code></pre>
         </div>
       </div>
+      <h3>Send events to the phone</h3>
       <div class="row">
-        <h3>Send events to the phone</h3>
         <div class="left">
           <button type="button" class="btn btn-primary mb-2" id="is-login-button">Is Phone logged in?</button>
           <div class="alert alert-success d-none" role="alert" id="is-logged-in">
@@ -117,7 +142,7 @@ ap.on('call_end_ringtone', () => {
           </div>
         </div>
         <div class="right">
-          <pre><code>isLoginButton.addEventListener(
+          <pre class="prettyprint"><code>isLoginButton.addEventListener(
   'click',
   () => {
     ap.isLoggedIn(res => {
@@ -146,7 +171,7 @@ ap.on('call_end_ringtone', () => {
           </div>
         </div>
         <div class="right">
-          <pre><code>dialButton.addEventListener(
+          <pre class="prettyprint"><code>dialButton.addEventListener(
   'click',
   () => {
     ap.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
@@ -170,6 +195,8 @@ ap.on('call_end_ringtone', () => {
       <p>Do you need more info? Read our documentation on <a href="https://github.com/aircall/aircall-everywhere">Github</a>
     </div>
   </main>
+
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
 </body>
 
 </html>
