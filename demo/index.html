@@ -1,110 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
-    <style>
-      
-      #phone {
-        position: fixed;
-        bottom:10px;
-        right:10px;
-      }
-      #phone iframe {
-        border: 2px solid black;
-      }
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="demo.css">
+</head>
 
-      pre, samp {
-        background-color: #EFEFEF;
-        border-radius: 5px;
-        padding: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
-        <img src="https://aircall.io/images/icons/aircall-logo-e62bdb99.svg" width="30" height="30" alt="">
+
+<body>
+  <div id="phone" class="d-none"></div>
+  <nav>
+    <div class="nav-left-links">
+      <a href="https://aircall.io" id="link-aircall">
+        <img src="images/aircall-logo.svg">
+      </a>
+      <a href="#">About</a>
+      <a href="https://aircall.github.io/aircall-everywhere/tests/">Code coverage</a>
+    </div>
+
+    <div class="nav-right-links">
+      <a href="https://github.com/aircall/aircall-everywhere">
+        Github
       </a>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#installation">Install</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#demo">Demo</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://aircall.github.io/aircall-everywhere/tests/">Code coverage</a>
-          </li>
-        </ul>
-        <a class="navbar-brand" href="https://github.com/aircall/aircall-everywhere">
-          Github
-        </a>
-      </div>
-    </nav>
-    <main role="main">
+      <a class="phone-aircall">
+        <img src="images/aircall-icon.svg">
+      </a>
+    </div>
+  </nav>
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <div class="container">
-          <h1 class="display-3">Aircall Everywhere</h1>
-          <p>Aircall Everywhere purpose is to let you embed Aircall phone into your website and interacts with it. If your are building your custom CRM and want your users to use Aircall directly in it, you're in the right place!</p>
-          <p><a class="btn btn-primary btn-lg" href="#installation" role="button">See more</a></p>
+  <main role="main">
+    <div class="jumbotron">
+      <h1>Aircall Everywhere</h1>
+      <p>Aircall Everywhere purpose is to let you embed Aircall phone into your website and interacts with it. If
+        your are building your custom CRM and want your users to use Aircall directly in it, you're in the right
+        place!</p>
+    </div>
+    <div class="container">
+      <h2 id="installation">Installation</h2>
+      <div class="row">
+        <div class="left">
+          <p>You just have to add this repository in your project, and then import the library in your code.<br>See the
+            demo on how to use the library.</p>
+        </div>
+        <div class="right">
+          <samp>npm install aircall-everywhere</samp>
+          <samp>import AircallPhone from 'aircall-everywhere'</samp>
         </div>
       </div>
-
-      <div class="container">
-        <!-- Example row of columns -->
-        <div class="row">
-          <div class="col-md-6">
-            <h2 id="installation">Installation</h2>
-            <p>You just have to add this repository in your project:
-              <br><br><samp>npm install aircall-everywhere</samp><br><br>
-              Then, you can import the library in your code:
-              <br><br><samp>import AircallPhone from 'aircall-everywhere'</samp><br><br>
-              See the demo on how to use the library.
-            </p>
-            <hr>
+      <h2 id="installation">Demo</h2>
+      <div class="row">
+        <h3>Load Aircall phone</h3>
+        <div class="left">
+          <button class="button" id="load-phone-button">Load phone</button>
+          <div class="alert alert-success d-none" role="alert" id="phone-loaded">
+            Phone is logged in and ready to interact
           </div>
-        </div>
+          <div class="alert alert-danger" role="alert" id="phone-not-loaded">
+            Phone is not loaded or logged in
+          </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <h2 id="demo">Demo</h2>
-            <h4>Load Aircall phone in a div:</h4>
-              <pre><code>const ap = new AircallPhone({
-  domToLoadPhone: '#phone',
-  onLogin: settings => {
-    userInfoText.textContent = JSON.stringify(settings, null, 4);
-    loadedPhoneAlert.classList.remove('d-none');
-    notLoadePhoneAlert.classList.add('d-none');
-  },
-  onLogout: () => {
-    loadedPhoneAlert.classList.remove('d-none');
-    notLoadePhoneAlert.classList.add('d-none');
-  }
+          <p>Aircall user information</p>
+          <pre><code id="user-info"> </code></pre>
+        </div>
+        <div class="right">
+          <pre><code>const ap = new AircallPhone({
+domToLoadPhone: '#phone',
+onLogin: settings => {
+  userInfoText.textContent = JSON.stringify(settings, null, 4);
+  loadedPhoneAlert.classList.remove('d-none');
+  notLoadePhoneAlert.classList.add('d-none');
+},
+onLogout: () => {
+  loadedPhoneAlert.classList.remove('d-none');
+  notLoadePhoneAlert.classList.add('d-none');
+}
 });
 });</code></pre>
-            <button type="button" class="btn btn-primary mb-2" id="load-phone-button">Load phone</button>
-            <div class="alert alert-success d-none" role="alert" id="phone-loaded">
-              Phone is logged in and ready to interact
-            </div>
-            <div class="alert alert-danger" role="alert" id="phone-not-loaded">
-              Phone is not loaded or logged in
-            </div>
+        </div>
+      </div>
+      <div class="row">
+        <h3>Phone events</h3>
+        <div class="left">
+          <div class="alert alert-success d-none" role="alert" id="in-call">
+            Incoming call !
+          </div>
+          <div class="alert alert-danger" role="alert" id="not-in-call">
+            No incoming call
+          </div>
 
-            <p>Aircall user information</p>
-            <pre><code id="user-info"> </code></pre>
-
-            <h4>Listening to phone events:</h4>
-              <pre><code>ap.on('incoming_call', () => {
+          <p>Aircall user information</p>
+          <pre><code id="user-info"> </code></pre>
+        </div>
+        <div class="right">
+          <pre><code>ap.on('incoming_call', () => {
   inCallAlert.classList.remove('d-none');
   notInCallAlert.classList.add('d-none');
 });
@@ -113,17 +103,21 @@ ap.on('call_end_ringtone', () => {
   inCallAlert.classList.add('d-none');
   notInCallAlert.classList.remove('d-none');
 });</code></pre>
-            <div class="alert alert-success d-none" role="alert" id="in-call">
-              Incoming call !
-            </div>
-            <div class="alert alert-danger" role="alert" id="not-in-call">
-              No incoming call
-            </div>
-
-            <h4>Sending events to phone:</h4>
-
-            <p>Special method for login status:</p>
-            <pre><code>isLoginButton.addEventListener(
+        </div>
+      </div>
+      <div class="row">
+        <h3>Send events to the phone</h3>
+        <div class="left">
+          <button type="button" class="btn btn-primary mb-2" id="is-login-button">Is Phone logged in?</button>
+          <div class="alert alert-success d-none" role="alert" id="is-logged-in">
+            Logged in
+          </div>
+          <div class="alert alert-danger d-none" role="alert" id="is-logged-out">
+            Logged out
+          </div>
+        </div>
+        <div class="right">
+          <pre><code>isLoginButton.addEventListener(
   'click',
   () => {
     ap.isLoggedIn(res => {
@@ -138,17 +132,21 @@ ap.on('call_end_ringtone', () => {
   },
   false
 );</code></pre>
-            <button type="button" class="btn btn-primary mb-2" id="is-login-button">Is Phone logged in?</button>
-            <div class="alert alert-success d-none" role="alert" id="is-logged-in">
-              Logged in
-            </div>
-            <div class="alert alert-danger d-none" role="alert" id="is-logged-out">
-              Logged out
-            </div>
-            <br/>
-            <br/>
+        </div>
+      </div>
 
-              <pre><code>dialButton.addEventListener(
+      <div class="row">
+        <div class="left">
+          <button type="button" class="btn btn-primary mb-2" id="dial-button">Dial +33 1 23 45 67 89</button>
+          <div class="alert alert-success d-none" role="alert" id="dial-number-success">
+            Success!
+          </div>
+          <div class="alert alert-danger d-none" role="alert" id="dial-number-error">
+            Error:
+          </div>
+        </div>
+        <div class="right">
+          <pre><code>dialButton.addEventListener(
   'click',
   () => {
     ap.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
@@ -167,23 +165,11 @@ ap.on('call_end_ringtone', () => {
   },
   false
 );</code></pre>
-            <button type="button" class="btn btn-primary mb-2" id="dial-button">Dial +33 1 23 45 67 89</button>
-            <div class="alert alert-success d-none" role="alert" id="dial-number-success">
-              Success!
-            </div>
-            <div class="alert alert-danger d-none" role="alert" id="dial-number-error">
-              Error: 
-            </div>
-
-            <p>Do you need more info? Read our documentation on <a href="https://github.com/aircall/aircall-everywhere">Github</a>
-          </div>
         </div>
+      </div>
+      <p>Do you need more info? Read our documentation on <a href="https://github.com/aircall/aircall-everywhere">Github</a>
+    </div>
+  </main>
+</body>
 
-      </div> <!-- /container -->
-
-    </main>
-      
-  <div id="phone">
-  </div>
-  </body>
 </html>

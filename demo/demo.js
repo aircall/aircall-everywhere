@@ -7,6 +7,9 @@ const loadPhoneButton = document.querySelector('#load-phone-button');
 loadPhoneButton.addEventListener(
   'click',
   () => {
+    let phoneContainer = document.querySelector('#phone');
+    phoneContainer.classList.remove('d-none');
+
     let loadedPhoneAlert = document.querySelector('#phone-loaded');
     let notLoadePhoneAlert = document.querySelector('#phone-not-loaded');
     let userInfoText = document.querySelector('#user-info');
@@ -27,12 +30,18 @@ loadPhoneButton.addEventListener(
 
     let inCallAlert = document.querySelector('#in-call');
     let notInCallAlert = document.querySelector('#not-in-call');
-    ap.on('incoming_call', () => {
+    ap.on('incoming_call', callInfos => {
+      console.log('incoming call:', callInfos);
       inCallAlert.classList.remove('d-none');
       notInCallAlert.classList.add('d-none');
     });
 
-    ap.on('call_end_ringtone', () => {
+    ap.on('outgoing_call', callInfos => {
+      console.log('outgoing call:', callInfos);
+    });
+
+    ap.on('call_end_ringtone', status => {
+      console.log('ringtone:', status);
       inCallAlert.classList.add('d-none');
       notInCallAlert.classList.remove('d-none');
     });

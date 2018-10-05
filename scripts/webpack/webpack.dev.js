@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = () => {
   let _mode = null;
@@ -40,7 +41,11 @@ module.exports = () => {
         minifyCSS: true,
         minifyURLs: true
       }
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: path.join(__dirname, '../../demo/demo.css') },
+      { from: path.join(__dirname, '../../demo/images'), to: 'images/' }
+    ])
   ];
 
   const _module = {
