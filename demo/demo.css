@@ -132,6 +132,17 @@ table {
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #424242;
+  font-weight: 500;
+}
+
 nav {
   height: 70px;
   position: fixed;
@@ -139,7 +150,49 @@ nav {
   left: 0;
   right: 0;
   display: flex;
-  background-color: #4ac420;
+  background-color: #f8f8f8;
+  padding: 10px 20px;
+  justify-content: space-between;
+}
+
+.nav-content {
+  display: flex;
+  line-height: 50px;
+}
+
+.nav-content a {
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #7f7f7f;
+}
+
+.nav-content a:hover {
+  color: #000000;
+}
+
+#link-aircall {
+  width: 100px;
+  display: flex;
+}
+#link-aircall img {
+  margin: auto;
+  width: 100px;
+  position: relative;
+  top: -4px;
+}
+
+#phone-aircall {
+  width: 40px;
+  display: flex;
+}
+#phone-aircall img {
+  width: 40px;
+  margin: auto;
+}
+
+main {
+  margin-top: 70px;
 }
 
 .button {
