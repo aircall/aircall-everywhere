@@ -48,7 +48,7 @@
       <h2 id="installation">Installation</h2>
 
       <div class="row">
-        <div class="left">
+        <div class="left no-alert">
           <p>You just have to add this repository in your project, and then import the library in your code.<br>See the
             demo on how to use the library.</p>
         </div>
@@ -60,17 +60,16 @@ import AircallPhone from 'aircall-everywhere'</code></pre>
       </div>
 
 
-      <h2 id="demo">Demo</h2>
+      <h2>Load Aircall phone</h2>
 
       <div class="row">
-        <div class="left bg-grey">
-          <h3>Load Aircall phone</h3>
+        <div class="left">
           <p>Click on the button to load the Aircall phone. You will be able to toggle it via the phone icon in the
             header.<br>Informations about the user logged in are retrieved on load.<br><br></p>
 
           <button class="button" id="load-phone-button">Load phone</button>
           <br><br>
-          <pre class="prettyprint"><code id="user-info">//user informations</code></pre>
+          <pre class="prettyprint"><code id="user-info">// user informations</code></pre>
 
           <div class="alert alert-danger" id="phone-loading">
             Phone is not loaded or logged in
@@ -80,73 +79,54 @@ import AircallPhone from 'aircall-everywhere'</code></pre>
           <pre class="prettyprint"><code>const ap = new AircallPhone({
   domToLoadPhone: '#phone',
   onLogin: settings => {
-    setStatusData('#user-info', settings, '//user informations');
-    setStatusMessage('#phone-loading', 'success', 'Phone is loaded and ready to use!');
+    // ...
   },
   onLogout: () => {
-    setStatusData('#user-info', '', '//user informations');
-    setStatusMessage('#phone-loading', 'danger', 'Phone is not loaded or logged in');
+    // ...
   }
 });</code></pre>
         </div>
       </div>
 
+      <h2>Call lifecycle events</h2>
+
       <div class="row">
-        <div class="left bg-grey">
-          <h3>Call events</h3>
-          <p>There are multiple events happening during the lifecycle of a phone call. Try making an outgoing or ingoing call to see what happens!</p>
+        <div class="left">
+          <p>There are multiple events happening during the lifecycle of a phone call. Try making an outgoing or
+            ingoing call to see what happens!</p>
           <br><br>
           <div class="d-flex">
             <pre class="prettyprint"><code id="call-info">call informations...</code></pre>
             <pre id="call-info-logs">logging started</pre>
           </div>
-          
+
           <div class="alert alert-warning" id="call-events">
             Not in a call
           </div>
         </div>
         <div class="right">
           <pre class="prettyprint"><code>ap.on('incoming_call', callInfos => {
-  setPhoneVisibility(true);
-  setStatusData('#call-info', callInfos, '// Incoming call');
-  const message = 'Incoming call from ' + callInfos.from + ' to ' + callInfos.to + ' ringing!';
-  addLogLine('#call-info-logs', message);
-  setStatusMessage('#call-events', 'success', message);
+  // ...
 });
 
 ap.on('call_end_ringtone', callInfos => {
-  setStatusData('#call-info', callInfos, '// Ringing ended');
-  const message = 'Ringing ended. call was ' + callInfos.answer_status;
-  addLogLine('#call-info-logs', message);
-  setStatusMessage('#call-events', callInfos.answer_status === 'answered' ? 'success' : 'warning' , message);
+  // ...
 });
 
 ap.on('call_ended', callInfos => {
-  setStatusData('#call-info', callInfos, '// Call ended');
-  const message = 'Call ended. Lasted ' + callInfos.duration + ' seconds';
-  addLogLine('#call-info-logs', message);
-  setStatusMessage('#call-events', 'warning', message);
+  // ...
 });
 
 ap.on('comment_saved', callInfos => {
-  setStatusData('#call-info', callInfos, '// Comment on call');
-  const message = 'Comment about the last call saved';
-  addLogLine('#call-info-logs', message);
-  setStatusMessage('#call-events', 'success', message);
+  // ...
 });
 
 ap.on('outgoing_call', callInfos => {
-  setStatusData('#call-info', callInfos, '// Outgoing call');
-  const message = 'Outgoing call from ' + callInfos.from + ' to ' + callInfos.to + '...';
-  addLogLine('#call-info-logs', message);
-  setStatusMessage('#call-events', 'success', message);
+  // ...
 });
 
 ap.on('outgoing_answered', callInfos => {
-  setStatusData('#call-info', callInfos, '// Outgoing call');
-  const message = 'Outgoing call answered!';
-  addLogLine('#call-info-logs', message);
-  setStatusMessage('#call-events', 'success', message);
+  // ...
 });</code></pre>
         </div>
       </div>

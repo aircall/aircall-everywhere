@@ -294,8 +294,13 @@ h3 {
 
 .row .left {
   width: 60%;
-  padding: 20px 3vw 70px 3vw;
+  padding: 30px 3vw 70px 3vw;
   position: relative;
+  background-color: #f4f4f4;
+}
+
+.row .left.no-alert {
+  padding-bottom: 30px;
 }
 
 .row p {
@@ -311,10 +316,6 @@ h3 {
   display: flex;
   align-items: stretch;
   padding: 50px 0;
-}
-
-.bg-grey {
-  background-color: #f4f4f4;
 }
 
 .button {
@@ -337,7 +338,10 @@ h3 {
   padding: 10px 20px;
   font-size: 18px;
   color: #ffffff;
-  margin-top: 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 .alert.alert-success {
   background-color: #4ac420;
@@ -365,7 +369,7 @@ h3 {
 
   border-bottom: 5px solid #c2c8cc;
   position: absolute;
-  right: 42px;
+  right: 3.3vw;
   top: -5px;
 }
 
