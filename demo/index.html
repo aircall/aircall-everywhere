@@ -130,68 +130,33 @@ ap.on('outgoing_answered', callInfos => {
 });</code></pre>
         </div>
       </div>
-      <h3>Send events to the phone</h3>
+      <h2>Send events to the phone</h2>
       <div class="row">
         <div class="left">
-          <button type="button" class="btn btn-primary mb-2" id="is-login-button">Is Phone logged in?</button>
-          <div class="alert alert-success d-none" role="alert" id="is-logged-in">
-            Logged in
+          <p>You can send events to get information or perform actions.<br>
+              Make sure the phone is loaded before sending events to it!<br><br>
+          </p>
+          <div class="d-flex" id='send-events-buttons'>
+            <button type="button" class="button" id="is-login-button" disabled>Is Phone logged in?</button>
+            <button type="button" class="button" id="dial-button" disabled>Dial +33 1 23 45 67 89</button>
           </div>
-          <div class="alert alert-danger d-none" role="alert" id="is-logged-out">
-            Logged out
-          </div>
+          <div class="alert" role="alert" id="send-event-status-box"></div>
         </div>
         <div class="right">
-          <pre class="prettyprint"><code>isLoginButton.addEventListener(
-  'click',
-  () => {
+          <pre class="prettyprint"><code>
     ap.isLoggedIn(res => {
-      res
-        ? isLoggedInAlert.classList.remove('d-none')
-        : isLoggedOutAlert.classList.remove('d-none');
-      setTimeout(() => {
-        isLoggedInAlert.classList.add('d-none');
-        isLoggedOutAlert.classList.add('d-none');
-      }, 2000);
+      // ...
     });
-  },
-  false
-);</code></pre>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="left">
-          <button type="button" class="btn btn-primary mb-2" id="dial-button">Dial +33 1 23 45 67 89</button>
-          <div class="alert alert-success d-none" role="alert" id="dial-number-success">
-            Success!
-          </div>
-          <div class="alert alert-danger d-none" role="alert" id="dial-number-error">
-            Error:
-          </div>
-        </div>
-        <div class="right">
-          <pre class="prettyprint"><code>dialButton.addEventListener(
-  'click',
-  () => {
     ap.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
-      if (success) {
-        dialSuccessAlert.classList.remove('d-none');
-      } else {
-        dialErrorAlert.textContent = 'Error : ' + data.message;
-        dialErrorAlert.classList.remove('d-none');
-      }
-
-      setTimeout(() => {
-        dialSuccessAlert.classList.add('d-none');
-        dialErrorAlert.classList.add('d-none');
-      }, 2000);
+      // ...
     });
-  },
-  false
-);</code></pre>
+
+    // more to come!
+</code></pre>
         </div>
       </div>
+
       <p>Do you need more info? Read our documentation on <a href="https://github.com/aircall/aircall-everywhere">Github</a>
     </div>
   </main>

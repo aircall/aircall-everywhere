@@ -23,7 +23,7 @@ const togglePhoneVisibility = () => {
 
 const setStatusMessage = (selector, type, message) => {
   const statusBox = document.querySelector(selector);
-  statusBox.classList.remove('alert-danger', 'alert-success', 'alert-warning');
+  statusBox.classList.remove('alert-danger', 'alert-success', 'alert-warning', 'alert-info');
   statusBox.classList.add(`alert-${type}`);
   statusBox.textContent = message;
 };
@@ -41,6 +41,8 @@ const addLogLine = (selector, log) => {
 };
 
 const loadPhoneButton = document.querySelector('#load-phone-button');
+const dialButton = document.querySelector('#dial-button');
+const isLoginButton = document.querySelector('#is-login-button');
 
 loadPhoneButton.addEventListener(
   'click',
@@ -59,6 +61,9 @@ loadPhoneButton.addEventListener(
 
     // we don't allow to load phone again
     loadPhoneButton.disabled = true;
+    // we allow the send events to phone related buttons
+    dialButton.disabled = false;
+    isLoginButton.disabled = false;
 
     const ap = new AircallPhone({
       domToLoadPhone: '#phone',
@@ -122,43 +127,27 @@ loadPhoneButton.addEventListener(
       setStatusMessage('#call-events', 'success', message);
     });
 
-    let dialButton = document.querySelector('#dial-button');
-    let dialSuccessAlert = document.querySelector('#dial-number-success');
-    let dialErrorAlert = document.querySelector('#dial-number-error');
     dialButton.addEventListener(
       'click',
       () => {
         ap.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
           if (success) {
-            dialSuccessAlert.classList.remove('d-none');
+            setStatusMessage('#send-event-status-box', 'success', 'Success!');
           } else {
-            dialErrorAlert.textContent = 'Error : ' + data.message;
-            dialErrorAlert.classList.remove('d-none');
+            setStatusMessage('#send-event-status-box', 'danger', data.message);
           }
-
-          setTimeout(() => {
-            dialSuccessAlert.classList.add('d-none');
-            dialErrorAlert.classList.add('d-none');
-          }, 2000);
         });
       },
       false
     );
 
-    let isLoginButton = document.querySelector('#is-login-button');
-    let isLoggedInAlert = document.querySelector('#is-logged-in');
-    let isLoggedOutAlert = document.querySelector('#is-logged-out');
     isLoginButton.addEventListener(
       'click',
       () => {
         ap.isLoggedIn(res => {
           res
-            ? isLoggedInAlert.classList.remove('d-none')
-            : isLoggedOutAlert.classList.remove('d-none');
-          setTimeout(() => {
-            isLoggedInAlert.classList.add('d-none');
-            isLoggedOutAlert.classList.add('d-none');
-          }, 2000);
+            ? setStatusMessage('#send-event-status-box', 'info', 'Logged in')
+            : setStatusMessage('#send-event-status-box', 'info', 'Logged out');
         });
       },
       false

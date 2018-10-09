@@ -327,11 +327,19 @@ h3 {
   padding: 10px 20px;
   cursor: pointer;
   display: block;
+  outline: none;
+  transition: background-color 300 ease-in;
+}
+
+.button:hover {
+  background-color: #379717;
+  transition: background-color 300 ease-in;
 }
 
 .button:disabled {
   background-color: rgb(201, 238, 189);
   color: #7f7f7f;
+  cursor: not-allowed;
 }
 
 .alert {
@@ -353,6 +361,10 @@ h3 {
 
 .alert.alert-warning {
   background-color: #f7bd42;
+}
+
+.alert.alert-info {
+  background-color: #29c8ff;
 }
 
 #phone-container {
@@ -397,7 +409,7 @@ h3 {
   justify-content: space-between;
 }
 
-.d-flex > pre:first-child {
+.d-flex > :first-child {
   margin-right: 20px !important;
 }
 
@@ -426,4 +438,8 @@ pre.prettyprint {
   width: auto;
   flex-grow: 2;
   white-space: pre-wrap;
+}
+
+#send-events-buttons {
+  justify-content: flex-start;
 }
