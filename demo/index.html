@@ -4,7 +4,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="demo.css">
+
+  <style>
+    img {
+      max-height: 100px;
+    }
+  </style>
 </head>
 
 
@@ -68,7 +73,6 @@ import AircallPhone from 'aircall-everywhere'</code></pre>
             header.<br>Informations about the user logged in are retrieved on load.<br><br></p>
 
           <button class="button" id="load-phone-button">Load phone</button>
-          <br><br>
           <pre class="prettyprint"><code id="user-info">// user informations</code></pre>
 
           <div class="alert alert-danger" id="phone-loading">
@@ -94,12 +98,10 @@ import AircallPhone from 'aircall-everywhere'</code></pre>
         <div class="left">
           <p>There are multiple events happening during the lifecycle of a phone call. Try making an outgoing or
             ingoing call to see what happens!</p>
-          <br><br>
-          <div class="d-flex">
-            <pre class="prettyprint"><code id="call-info">call informations...</code></pre>
-            <pre id="call-info-logs">logging started</pre>
-          </div>
+          <p id="waiting-events">Waiting for events...</p>
 
+          <div id="call-events-log">
+          </div>
           <div class="alert alert-warning" id="call-events">
             Not in a call
           </div>
@@ -130,25 +132,31 @@ ap.on('outgoing_answered', callInfos => {
 });</code></pre>
         </div>
       </div>
-      <h2>Send events to the phone</h2>
+      <h2>Events to the phone</h2>
       <div class="row">
         <div class="left">
           <p>You can send events to get information or perform actions.<br>
-              Make sure the phone is loaded before sending events to it!<br><br>
+            Make sure the phone is loaded before sending events to it!<br><br>
           </p>
-          <div class="d-flex" id='send-events-buttons'>
-            <button type="button" class="button" id="is-login-button" disabled>Is Phone logged in?</button>
-            <button type="button" class="button" id="dial-button" disabled>Dial +33 1 23 45 67 89</button>
+          <button type="button" class="button" id="is-login-button" disabled>Is Phone logged in?</button>
+          <pre class="prettyprint"><code id="is-login-info">// isLoggedIn result</code></pre>
+
+          <button type="button" class="button" id="dial-button" disabled>Dial +33 1 23 45 67 89</button>
+          <pre class="prettyprint"><code id="dial-info">// dial_number result</code></pre>
+
+          <div class="alert alert-warning" id="send-event-status-box">
+            Waiting events to be sent...
           </div>
-          <div class="alert" role="alert" id="send-event-status-box"></div>
         </div>
         <div class="right">
           <pre class="prettyprint"><code>
-    ap.isLoggedIn(res => {
+    ap.isLoggedIn(response => {
       // ...
     });
 
-    ap.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
+    const payload = { phone_number: '+33123456789' };
+
+    ap.send('dial_number', payload, (success, data) => {
       // ...
     });
 
@@ -156,9 +164,17 @@ ap.on('outgoing_answered', callInfos => {
 </code></pre>
         </div>
       </div>
-
-      <p>Do you need more info? Read our documentation on <a href="https://github.com/aircall/aircall-everywhere">Github</a>
-    </div>
+      <div class="row">
+        <div class="left no-alert">
+          <p>Do you need more info? Read our documentation on <a href="https://github.com/aircall/aircall-everywhere">Github</a>.
+            You can also take a look at the code of <a href="https://github.com/aircall/aircall-everywhere/blob/master/demo/demo.js">this
+              page</a>.
+        </div>
+        <div class="right">
+          <pre class="prettyprint"><code>console.log('Have fun!');
+</code></pre>
+        </div>
+      </div>
   </main>
 
   <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>

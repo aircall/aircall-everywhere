@@ -42,10 +42,7 @@ module.exports = () => {
         minifyURLs: true
       }
     }),
-    new CopyWebpackPlugin([
-      { from: path.join(__dirname, '../../demo/demo.css') },
-      { from: path.join(__dirname, '../../demo/images'), to: 'images/' }
-    ])
+    new CopyWebpackPlugin([{ from: path.join(__dirname, '../../demo/images'), to: 'images/' }])
   ];
 
   const _module = {
@@ -61,6 +58,20 @@ module.exports = () => {
         options: {
           presets: ['env']
         }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader' // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader' // translates CSS into CommonJS
+          },
+          {
+            loader: 'sass-loader' // compiles Sass to CSS
+          }
+        ]
       }
     ]
   };
