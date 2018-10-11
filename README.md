@@ -10,7 +10,7 @@ You need to create an instance to use the library. The constructor has a setting
 
 - `onLogin`: Callback function after the phone is fully loaded, logged in, and the connexion between the phone and the CRM is established. This callback will triggers everytime the user logs again. User details and integration settings if any are passed as parameters.
 - `onLogout`: Callback function after the user logs out of the phone. It will triggers everytime the user logs out.
-- `integrationToLoad`: You can specify a CRM from which specific settings can be retrieved. Only `zendesk` or `hubspot` available for now.
+- `integrationToLoad`: You can specify a CRM from which specific settings can be retrieved. Only `zendesk` or `hubspot` available for now. You can ignore this if you have your own CRM.
 - `domToLoadPhone`: You must specify in which element you want to load the phone. Query selector string.
 
 Example:
@@ -47,7 +47,7 @@ Settings passed in the `onLogin` callback contains info about the user and integ
 
 ## isLoggedIn method
 
-In addition to the `onLogin` and `onLogout` callbacks, a `isLoggedIn` method is provided that will directly asks the phone about its status.
+In addition to the `onLogin` and `onLogout` callbacks, a `isLoggedIn` method is provided that will directly asks the phone about its status. The result is a boolean.
 
 Example:
 
@@ -63,8 +63,58 @@ You can send messages to the phone and listen messages coming from it.
 
 ### events from the phone:
 
-- `incoming_call`: the phone is ringing
-- `call_end_ringtone`: the ringtone has ended. It can mean the incoming call was taken or missed.
+All events from the phone with the payload associated:
+
+- `incoming_call`: there is an incoming call, ringing.
+  ```javascript
+  {
+    from: '+15557543010',
+    to: '+15551234567',
+    communication_id: 'abcdeABCDE12345'
+  }
+  ```
+- `call_end_ringtone`: the ringtone has ended.
+  ```javascript
+  {
+    answer_status: 'answered | disconnected | refused',
+    communication_id: 'abcdeABCDE12345'
+  }
+  ```
+- `outgoing_call`: an outgoing call has started
+  ```javascript
+  {
+    from: '+15557543010',
+    to: '+15551234567',
+    communication_id: 'abcdeABCDE12345'
+  }
+  ```
+- `outgoing_answered`: an outgoing call has been answered
+  ```javascript
+  {
+    communication_id: 'abcdeABCDE12345';
+  }
+  ```
+- `call_ended`: a call has been ended
+  ```javascript
+  {
+    duration: 20,
+    communication_id: 'abcdeABCDE12345'
+  }
+  ```
+- `comment_saved`: a comment has been saved about a call
+  ```javascript
+  {
+    comment: 'This is a comment',
+    communication_id: 'abcdeABCDE12345'
+  }
+  ```
+- `external_dial`: a dial has been made from outside of the phone (api/extension)
+  ```javascript
+  {
+    phone_number: '+15557543010';
+  }
+  ```
+- `powerdialer_updated`: a powerdialer campain has been updated (via extension). There is no payload.
 - `redirect_event`: event coming from specific CRM settings if it has been enabled in the Aircall Dashboard. Only `zendesk` and `hubspot` is supported for now. This event data has this schema:
   ```javascript
   {
@@ -72,6 +122,19 @@ You can send messages to the phone and listen messages coming from it.
     id: <userId> | <ticketId>
   }
   ```
+
+`communication_id` parameter is a hash unique per call.
+`duration` is in seconds.
+All numbers are sent in the `e.164` format.
+
+Example:
+
+```javascript
+aircallPhone.on('incoming_call', callInfos => {
+  console.log('Call from ' + callInfos.from + ' to ' + callInfos.to);
+  doStuff();
+});
+```
 
 ### events the phone listens to:
 
