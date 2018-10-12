@@ -1,79 +1,178 @@
 /* demo.js */
 import AircallPhone from 'aircall-everywhere';
 
+import './reset.scss';
+import './demo.scss';
+
 console.log('demo time!');
 
+// Show phone
+const setPhoneVisibility = visible => {
+  const phoneContainer = document.querySelector('#phone-container');
+  if (!!visible) {
+    phoneContainer.classList.remove('d-none');
+  } else {
+    phoneContainer.classList.add('d-none');
+  }
+};
+
+// toogle phone
+const togglePhoneVisibility = () => {
+  const phoneContainer = document.querySelector('#phone-container');
+  if (phoneContainer.classList.contains('d-none')) {
+    setPhoneVisibility(true);
+  } else {
+    setPhoneVisibility(false);
+  }
+};
+
+// write a mesage in an alert box
+const setStatusMessage = (selector, type, message) => {
+  const statusBox = document.querySelector(selector);
+  statusBox.classList.remove('alert-danger', 'alert-success', 'alert-warning');
+  statusBox.classList.add(`alert-${type}`);
+  statusBox.textContent = message;
+};
+
+// write a payload and label in a code box
+const setStatusData = (selector, data, label) => {
+  const dataBox = document.querySelector(selector);
+  const toPrettify = `${label}\n${JSON.stringify(data, null, 2)}`;
+  dataBox.innerHTML = window.PR.prettyPrintOne(toPrettify);
+};
+
+// for call flow events, create an item with message and payload
+const addCallLog = (id, payload, log) => {
+  // we remove waiting text
+  const waitingText = document.querySelector('#waiting-events');
+  if (waitingText) {
+    waitingText.remove();
+  }
+  // we add item
+  const logBox = document.querySelector('#call-events-log');
+  const d = document.createElement('div');
+  const currentTime = new Date(Date.now());
+  const htmlBlock = `<input type="checkbox" id="${id}"><label for="${id}"><span>${currentTime.toLocaleTimeString()}: ${log}</span><pre class="prettyprint"><code>${window.PR.prettyPrintOne(
+    JSON.stringify(payload, null, 2)
+  )}</code></pre></label>`;
+  d.innerHTML = htmlBlock;
+  logBox.appendChild(d);
+};
+
+// our buttons elements
 const loadPhoneButton = document.querySelector('#load-phone-button');
+const dialButton = document.querySelector('#dial-button');
+const isLoginButton = document.querySelector('#is-login-button');
+
+// loading phone button clicked
 loadPhoneButton.addEventListener(
   'click',
   () => {
-    let loadedPhoneAlert = document.querySelector('#phone-loaded');
-    let notLoadePhoneAlert = document.querySelector('#phone-not-loaded');
-    let userInfoText = document.querySelector('#user-info');
+    // we show the phone
+    // phone icon
+    const phoneButtonIcon = document.querySelector('#phone-aircall');
+    phoneButtonIcon.classList.remove('d-none');
+    // phone visibility
+    setPhoneVisibility(true);
+
+    // we add listener to toogle via icon
+    phoneButtonIcon.addEventListener('click', () => {
+      togglePhoneVisibility();
+    });
+
+    // we don't allow to load phone again
     loadPhoneButton.disabled = true;
+    // we allow the send events to phone related buttons
+    dialButton.disabled = false;
+    isLoginButton.disabled = false;
+
+    // we load the phone via the library
     const ap = new AircallPhone({
       domToLoadPhone: '#phone',
       onLogin: settings => {
-        userInfoText.textContent = JSON.stringify(settings, null, 4);
-        loadedPhoneAlert.classList.remove('d-none');
-        notLoadePhoneAlert.classList.add('d-none');
+        // we set data and status
+        setStatusData('#user-info', settings, '// user informations');
+        setStatusMessage('#phone-loading', 'success', 'Phone is loaded and ready to use!');
       },
       onLogout: () => {
-        loadedPhoneAlert.classList.add('d-none');
-        notLoadePhoneAlert.classList.remove('d-none');
-        userInfoText.textContent = ' ';
+        // we reset data and status
+        setStatusData('#user-info', '', '// user informations');
+        setStatusMessage('#phone-loading', 'danger', 'Phone is not loaded or logged in');
       }
     });
 
-    let inCallAlert = document.querySelector('#in-call');
-    let notInCallAlert = document.querySelector('#not-in-call');
-    ap.on('incoming_call', () => {
-      inCallAlert.classList.remove('d-none');
-      notInCallAlert.classList.add('d-none');
+    // listeners
+    // incoming call
+    ap.on('incoming_call', callInfos => {
+      setPhoneVisibility(true);
+      const message = `Incoming call from ${callInfos.from} to ${callInfos.to} ringing!`;
+      addCallLog('incoming_call', callInfos, message);
+      setStatusMessage('#call-events', 'success', message);
     });
 
-    ap.on('call_end_ringtone', () => {
-      inCallAlert.classList.add('d-none');
-      notInCallAlert.classList.remove('d-none');
+    // ringtone ended
+    ap.on('call_end_ringtone', callInfos => {
+      const message = `Ringing ended. call was ${callInfos.answer_status}`;
+      addCallLog('call_end_ringtone', callInfos, message);
+      setStatusMessage(
+        '#call-events',
+        callInfos.answer_status === 'answered' ? 'success' : 'warning',
+        message
+      );
     });
 
-    let dialButton = document.querySelector('#dial-button');
-    let dialSuccessAlert = document.querySelector('#dial-number-success');
-    let dialErrorAlert = document.querySelector('#dial-number-error');
+    // call ended
+    ap.on('call_ended', callInfos => {
+      const message = `Call ended. Lasted ${callInfos.duration} seconds`;
+      addCallLog('call_ended', callInfos, message);
+      setStatusMessage('#call-events', 'warning', message);
+    });
+
+    // comment saved
+    ap.on('comment_saved', callInfos => {
+      const message = 'Comment about the last call saved';
+      addCallLog('comment_saved', callInfos, message);
+      setStatusMessage('#call-events', 'success', message);
+    });
+
+    // outgoing call
+    ap.on('outgoing_call', callInfos => {
+      const message = `Outgoing call from ${callInfos.from} to ${callInfos.to} ...`;
+      addCallLog('outgoing_call', callInfos, message);
+      setStatusMessage('#call-events', 'success', message);
+    });
+
+    // outgoing call answered
+    ap.on('outgoing_answered', callInfos => {
+      const message = 'Outgoing call answered!';
+      addCallLog('outgoing_answered', callInfos, message);
+      setStatusMessage('#call-events', 'success', message);
+    });
+
+    // dial button clicked
     dialButton.addEventListener(
       'click',
       () => {
         ap.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
-          if (success) {
-            dialSuccessAlert.classList.remove('d-none');
-          } else {
-            dialErrorAlert.textContent = 'Error : ' + data.message;
-            dialErrorAlert.classList.remove('d-none');
-          }
-
-          setTimeout(() => {
-            dialSuccessAlert.classList.add('d-none');
-            dialErrorAlert.classList.add('d-none');
-          }, 2000);
+          setPhoneVisibility(true);
+          setStatusData('#dial-info', data, `// first argument\n${success}\n// second argument`);
+          !!success
+            ? setStatusMessage('#send-event-status-box', 'success', 'Dialing action was a success!')
+            : setStatusMessage('#send-event-status-box', 'danger', data.message);
         });
       },
       false
     );
 
-    let isLoginButton = document.querySelector('#is-login-button');
-    let isLoggedInAlert = document.querySelector('#is-logged-in');
-    let isLoggedOutAlert = document.querySelector('#is-logged-out');
+    // is logged in button clicked
     isLoginButton.addEventListener(
       'click',
       () => {
-        ap.isLoggedIn(res => {
-          res
-            ? isLoggedInAlert.classList.remove('d-none')
-            : isLoggedOutAlert.classList.remove('d-none');
-          setTimeout(() => {
-            isLoggedInAlert.classList.add('d-none');
-            isLoggedOutAlert.classList.add('d-none');
-          }, 2000);
+        ap.isLoggedIn(response => {
+          setStatusData('#is-login-info', response, `// isLoggedIn result`);
+          response
+            ? setStatusMessage('#send-event-status-box', 'success', 'User is logged in')
+            : setStatusMessage('#send-event-status-box', 'danger', 'User is logged out');
         });
       },
       false

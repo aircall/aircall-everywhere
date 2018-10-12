@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = () => {
   let _mode = null;
@@ -40,7 +41,8 @@ module.exports = () => {
         minifyCSS: true,
         minifyURLs: true
       }
-    })
+    }),
+    new CopyWebpackPlugin([{ from: path.join(__dirname, '../../demo/images'), to: 'images/' }])
   ];
 
   const _module = {
@@ -56,6 +58,20 @@ module.exports = () => {
         options: {
           presets: ['env']
         }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader' // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader' // translates CSS into CommonJS
+          },
+          {
+            loader: 'sass-loader' // compiles Sass to CSS
+          }
+        ]
       }
     ]
   };
