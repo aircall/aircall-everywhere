@@ -114,7 +114,7 @@ All events from the phone with the payload associated:
     phone_number: '+15557543010';
   }
   ```
-- `powerdialer_updated`: a powerdialer campain has been updated (via extension). There is no payload.
+- `powerdialer_updated`: a powerdialer campaign has been updated (via extension). There is no payload.
 - `redirect_event`: event coming from specific CRM settings if it has been enabled in the Aircall Dashboard. Only `zendesk` and `hubspot` is supported for now. This event data has this schema:
   ```javascript
   {
