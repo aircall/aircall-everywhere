@@ -91,7 +91,7 @@ All events from the phone with the payload associated:
 - `outgoing_answered`: an outgoing call has been answered
   ```javascript
   {
-    communication_id: 'abcdeABCDE12345';
+    communication_id: 'abcdeABCDE12345'
   }
   ```
 - `call_ended`: a call has been ended
@@ -111,7 +111,7 @@ All events from the phone with the payload associated:
 - `external_dial`: a dial has been made from outside of the phone (api/extension)
   ```javascript
   {
-    phone_number: '+15557543010';
+    phone_number: '+15557543010'
   }
   ```
 - `powerdialer_updated`: a powerdialer campaign has been updated (via extension). There is no payload.
@@ -131,7 +131,7 @@ Example:
 
 ```javascript
 aircallPhone.on('incoming_call', callInfos => {
-  console.log('Call from ' + callInfos.from + ' to ' + callInfos.to);
+  console.log(`Call from ${callInfos.from} to ${callInfos.to}`);
   doStuff();
 });
 ```
