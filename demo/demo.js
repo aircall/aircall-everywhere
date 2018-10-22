@@ -87,7 +87,7 @@ loadPhoneButton.addEventListener(
     isLoginButton.disabled = false;
 
     // we load the phone via the library
-    const ap = new AircallPhone({
+    const phone = new AircallPhone({
       domToLoadPhone: '#phone',
       onLogin: settings => {
         // we set data and status
@@ -103,7 +103,7 @@ loadPhoneButton.addEventListener(
 
     // listeners
     // incoming call
-    ap.on('incoming_call', callInfos => {
+    phone.on('incoming_call', callInfos => {
       setPhoneVisibility(true);
       const message = `Incoming call from ${callInfos.from} to ${callInfos.to} ringing!`;
       addCallLog('incoming_call', callInfos, message);
@@ -111,7 +111,7 @@ loadPhoneButton.addEventListener(
     });
 
     // ringtone ended
-    ap.on('call_end_ringtone', callInfos => {
+    phone.on('call_end_ringtone', callInfos => {
       const message = `Ringing ended. call was ${callInfos.answer_status}`;
       addCallLog('call_end_ringtone', callInfos, message);
       setStatusMessage(
@@ -122,28 +122,28 @@ loadPhoneButton.addEventListener(
     });
 
     // call ended
-    ap.on('call_ended', callInfos => {
+    phone.on('call_ended', callInfos => {
       const message = `Call ended. Lasted ${callInfos.duration} seconds`;
       addCallLog('call_ended', callInfos, message);
       setStatusMessage('#call-events', 'warning', message);
     });
 
     // comment saved
-    ap.on('comment_saved', callInfos => {
+    phone.on('comment_saved', callInfos => {
       const message = 'Comment about the last call saved';
       addCallLog('comment_saved', callInfos, message);
       setStatusMessage('#call-events', 'success', message);
     });
 
     // outgoing call
-    ap.on('outgoing_call', callInfos => {
+    phone.on('outgoing_call', callInfos => {
       const message = `Outgoing call from ${callInfos.from} to ${callInfos.to} ...`;
       addCallLog('outgoing_call', callInfos, message);
       setStatusMessage('#call-events', 'success', message);
     });
 
     // outgoing call answered
-    ap.on('outgoing_answered', callInfos => {
+    phone.on('outgoing_answered', callInfos => {
       const message = 'Outgoing call answered!';
       addCallLog('outgoing_answered', callInfos, message);
       setStatusMessage('#call-events', 'success', message);
@@ -153,7 +153,7 @@ loadPhoneButton.addEventListener(
     dialButton.addEventListener(
       'click',
       () => {
-        ap.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
+        phone.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
           setPhoneVisibility(true);
           setStatusData('#dial-info', data, `// first argument\n${success}\n// second argument`);
           !!success
@@ -168,7 +168,7 @@ loadPhoneButton.addEventListener(
     isLoginButton.addEventListener(
       'click',
       () => {
-        ap.isLoggedIn(response => {
+        phone.isLoggedIn(response => {
           setStatusData('#is-login-info', response, `// isLoggedIn result`);
           response
             ? setStatusMessage('#send-event-status-box', 'success', 'User is logged in')

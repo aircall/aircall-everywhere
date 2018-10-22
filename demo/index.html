@@ -80,7 +80,7 @@ import AircallPhone from 'aircall-everywhere'</code></pre>
           </div>
         </div>
         <div class="right">
-          <pre class="prettyprint"><code>const ap = new AircallPhone({
+          <pre class="prettyprint"><code>const phone = new AircallPhone({
   domToLoadPhone: '#phone',
   onLogin: settings => {
     // ...
@@ -107,27 +107,27 @@ import AircallPhone from 'aircall-everywhere'</code></pre>
           </div>
         </div>
         <div class="right">
-          <pre class="prettyprint"><code>ap.on('incoming_call', callInfos => {
+          <pre class="prettyprint"><code>phone.on('incoming_call', callInfos => {
   // ...
 });
 
-ap.on('call_end_ringtone', callInfos => {
+phone.on('call_end_ringtone', callInfos => {
   // ...
 });
 
-ap.on('call_ended', callInfos => {
+phone.on('call_ended', callInfos => {
   // ...
 });
 
-ap.on('comment_saved', callInfos => {
+phone.on('comment_saved', callInfos => {
   // ...
 });
 
-ap.on('outgoing_call', callInfos => {
+phone.on('outgoing_call', callInfos => {
   // ...
 });
 
-ap.on('outgoing_answered', callInfos => {
+phone.on('outgoing_answered', callInfos => {
   // ...
 });</code></pre>
         </div>
@@ -150,13 +150,13 @@ ap.on('outgoing_answered', callInfos => {
         </div>
         <div class="right">
           <pre class="prettyprint"><code>
-    ap.isLoggedIn(response => {
+    phone.isLoggedIn(response => {
       // ...
     });
 
     const payload = { phone_number: '+33123456789' };
 
-    ap.send('dial_number', payload, (success, data) => {
+    phone.send('dial_number', payload, (success, data) => {
       // ...
     });
 
