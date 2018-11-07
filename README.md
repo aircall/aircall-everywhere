@@ -2,7 +2,7 @@
 
 ## Include this project in your dependency
 
-`npm install aircall-everywhere`
+`npm install -s aircall-everywhere`
 
 ## Constructor
 
