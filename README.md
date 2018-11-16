@@ -70,14 +70,14 @@ All events from the phone with the payload associated:
   {
     from: '+15557543010',
     to: '+15551234567',
-    communication_id: 'abcdeABCDE12345'
+    call_id: 12345
   }
   ```
 - `call_end_ringtone`: the ringtone has ended.
   ```javascript
   {
     answer_status: 'answered | disconnected | refused',
-    communication_id: 'abcdeABCDE12345'
+    call_id: 12345
   }
   ```
 - `outgoing_call`: an outgoing call has started
@@ -85,27 +85,27 @@ All events from the phone with the payload associated:
   {
     from: '+15557543010',
     to: '+15551234567',
-    communication_id: 'abcdeABCDE12345'
+    call_id: 12345
   }
   ```
 - `outgoing_answered`: an outgoing call has been answered
   ```javascript
   {
-    communication_id: 'abcdeABCDE12345'
+    call_id: 12345
   }
   ```
 - `call_ended`: a call has been ended
   ```javascript
   {
     duration: 20,
-    communication_id: 'abcdeABCDE12345'
+    call_id: 12345
   }
   ```
 - `comment_saved`: a comment has been saved about a call
   ```javascript
   {
     comment: 'This is a comment',
-    communication_id: 'abcdeABCDE12345'
+    call_id: 12345
   }
   ```
 - `external_dial`: a dial has been made from outside of the phone (api/extension)
@@ -123,7 +123,7 @@ All events from the phone with the payload associated:
   }
   ```
 
-`communication_id` parameter is a hash unique per call.
+`call_id` parameter is a number per call.
 `duration` is in seconds.
 All numbers are sent in the `e.164` format.
 
