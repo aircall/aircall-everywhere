@@ -52,7 +52,9 @@ const addCallLog = (id, payload, log) => {
   const logBox = document.querySelector('#call-events-log');
   const d = document.createElement('div');
   const currentTime = new Date(Date.now());
-  const htmlBlock = `<input type="checkbox" id="${id}"><label for="${id}"><span>${currentTime.toLocaleTimeString()}: ${log}</span><pre class="prettyprint"><code>${window.PR.prettyPrintOne(
+  const htmlBlock = `<input type="checkbox" id="${id}-${payload.call_id}"><label for="${id}-${
+    payload.call_id
+  }"><span>${currentTime.toLocaleTimeString()}: ${log}</span><pre class="prettyprint"><code>${window.PR.prettyPrintOne(
     JSON.stringify(payload, null, 2)
   )}</code></pre></label>`;
   d.innerHTML = htmlBlock;
