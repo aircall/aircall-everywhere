@@ -1,55 +1,36 @@
 /* VARIABLES */
 
-$green: #4ac420;
-$green-light: rgb(201, 238, 189);
-$red: #f96772;
-$orange: #f7bd42;
-$white: #ffffff;
-$light: #f4f4f4;
-$dark: #121212;
-$black: #000000;
+$green: #00b388;
+$duck: #006c5b;
+$smoke: #afafa9;
+$midnight: #101820;
+$neon: #307fe2;
+$red: #ff5c39;
+$orange: #fcbb26;
+$white: #fff;
+$smoke-lighten-80: #f4f4f4;
 
-$grey-lighter: #eaeaea;
-$grey-light: #c2c8cc;
-$grey: #7f7f7f;
-$grey-dark: #555555;
-$grey-darker: #393939;
-
-$text-color: #424242;
+$cyan: #003b4c;
+$cyan-dark: #00242d;
 /* FONTS */
 
 @font-face {
-  font-family: 'Mark';
-  src: url('https://cdn.aircall.io/fonts/33182D_2_0.eot');
-  src: url('https://cdn.aircall.io/fonts/33182D_2_0.woff2') format('woff2'),
-    url('https://cdn.aircall.io/fonts/33182D_2_0.woff') format('woff'),
-    url('https://cdn.aircall.io/fonts/33182D_2_0.ttf') format('truetype'),
-    url('https://cdn.aircall.io/fonts/33182D_2_0.svg#wf') format('svg'),
-    url('https://cdn.aircall.io/fonts/33182D_2_0.eot?#iefix') format('embedded-opentype');
+  font-family: 'Fellix';
+  src: url('http://cdn.aircall.io/fonts/Fellix-Regular.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Mark';
-  src: url('https://cdn.aircall.io/fonts/33182D_5_0.eot');
-  src: url('https://cdn.aircall.io/fonts/33182D_5_0.woff2') format('woff2'),
-    url('https://cdn.aircall.io/fonts/33182D_5_0.woff') format('woff'),
-    url('https://cdn.aircall.io/fonts/33182D_5_0.ttf') format('truetype'),
-    url('https://cdn.aircall.io/fonts/33182D_5_0.svg#wf') format('svg'),
-    url('https://cdn.aircall.io/fonts/33182D_5_0.eot?#iefix') format('embedded-opentype');
+  font-family: 'Fellix';
+  src: url('http://cdn.aircall.io/fonts/Fellix-SemiBold.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Mark';
-  src: url('https://cdn.aircall.io/fonts/33182D_3_0.eot');
-  src: url('https://cdn.aircall.io/fonts/33182D_3_0.woff2') format('woff2'),
-    url('https://cdn.aircall.io/fonts/33182D_3_0.woff') format('woff'),
-    url('https://cdn.aircall.io/fonts/33182D_3_0.ttf') format('truetype'),
-    url('https://cdn.aircall.io/fonts/33182D_3_0.svg#wf') format('svg'),
-    url('https://cdn.aircall.io/fonts/33182D_3_0.eot?#iefix') format('embedded-opentype');
+  font-family: 'Fellix';
+  src: url('http://cdn.aircall.io/fonts/Fellix-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
 }
@@ -64,9 +45,9 @@ body {
   height: 100%;
 }
 body {
-  font-family: 'Mark', Helvetica, Arial, sans-serif;
+  font-family: 'Fellix', Helvetica, Arial, sans-serif;
   font-size: 16px;
-  color: $text-color;
+  color: $midnight;
   font-weight: 300;
   line-height: 1.3;
 }
@@ -102,7 +83,7 @@ nav {
   left: 0;
   right: 0;
   display: flex;
-  background-color: $green-light;
+  background-color: $neon;
   padding: 10px 2vw;
   justify-content: space-between;
   z-index: 10;
@@ -115,20 +96,17 @@ nav {
       margin: 0 1vw;
       text-decoration: none;
       font-size: 20px;
-      color: $grey;
+      color: $white;
 
       &:hover {
-        color: $dark;
+        text-decoration: underline;
       }
 
       &#link-aircall {
-        width: 100px;
         display: flex;
         img {
-          margin: auto;
-          width: 100px;
+          margin: auto 0;
           position: relative;
-          top: -4px;
         }
       }
 
@@ -160,7 +138,7 @@ nav {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
 
-    border-bottom: 5px solid $grey-light;
+    border-bottom: 5px solid $smoke;
     position: absolute;
     right: 3.3vw;
     top: -5px;
@@ -168,12 +146,12 @@ nav {
 
   #phone {
     border-radius: 5px;
-    background-color: $grey-lighter;
-    border: 3px solid $grey-light;
+    background-color: $white;
+    border: 3px solid $smoke;
     overflow: hidden;
     height: 672px;
     width: 382px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px #10182020;
 
     iframe {
       border-radius: 2px;
@@ -190,16 +168,18 @@ main {
 // Jumbotron
 .jumbotron {
   padding: 70px 10vw;
-  background-color: $green-light;
+  background-color: $neon;
 
   h1 {
     text-align: center;
+    color: $white;
   }
 
   p {
     margin-top: 20px;
     font-size: 20px;
-    color: $grey;
+    color: $white;
+    text-align: center;
   }
 }
 
@@ -223,7 +203,7 @@ pre {
   // right part
   .dark-box {
     width: 40%;
-    background-color: $grey-darker;
+    background-color: $cyan;
     position: absolute;
     right: 0;
     top: 0;
@@ -242,10 +222,13 @@ pre {
   }
 
   a {
-    color: $dark;
+    color: $green;
+    text-decoration: none;
+    font-weight: 500;
 
     &:hover {
-      color: $grey;
+      color: $duck;
+      text-decoration: underline;
     }
   }
 
@@ -263,7 +246,7 @@ pre {
       width: 60%;
       padding: 30px 3vw 70px 3vw;
       position: relative;
-      background-color: $light;
+      background-color: $smoke-lighten-80;
 
       &.no-alert {
         padding-bottom: 30px;
@@ -274,7 +257,7 @@ pre {
       }
 
       pre.prettyprint {
-        background-color: $grey-dark !important;
+        background-color: $cyan-dark !important;
         width: auto !important;
         flex-grow: 1;
       }
@@ -286,7 +269,7 @@ pre {
 
     .right {
       width: 40%;
-      background: #444444;
+      background: $cyan-dark;
     }
   }
 
@@ -312,7 +295,7 @@ pre {
 
       > span {
         display: block;
-        background-color: $grey-darker;
+        background-color: $cyan;
         font-family: monospace;
         color: $white;
         padding: 10px 40px 10px 30px;
@@ -366,13 +349,13 @@ pre {
   transition: background-color 300 ease-in;
 
   &:hover {
-    background-color: #379717;
+    background-color: $duck;
     transition: background-color 300 ease-in;
   }
 
   &:disabled {
-    background-color: $green-light;
-    color: $grey;
+    background-color: $smoke;
+    color: $white;
     cursor: not-allowed;
   }
 }
