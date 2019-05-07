@@ -133,6 +133,9 @@ class AircallPhone {
     this.domToLoadPhone = opts.domToLoadPhone;
     this.integrationToLoad = opts.integrationToLoad;
 
+    // 3 different sizes: big/small/auto
+    this.size = opts.size || 'big';
+
     this.onLogin = () => {
       if (typeof opts.onLogin === 'function' && this.phoneLoginState === false) {
         this.phoneLoginState = true;
@@ -171,10 +174,23 @@ class AircallPhone {
   }
 
   _createPhoneIframe() {
+    let sizeStyle = '';
+    switch (this.size) {
+      case 'big':
+        sizeStyle = 'height:666px; width:376px;';
+        break;
+      case 'small':
+        sizeStyle = 'height:600px; width:376px;';
+        break;
+      case 'auto':
+        sizeStyle = 'height:100%; width:100%;';
+        break;
+    }
+
     // we get the passed dom
     try {
       const el = document.querySelector(this.domToLoadPhone);
-      el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="height:666px; width:376px;"></iframe>`;
+      el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="${sizeStyle}"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
       console.error(
