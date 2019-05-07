@@ -12,6 +12,10 @@ You need to create an instance to use the library. The constructor has a setting
 - `onLogout`: Callback function after the user logs out of the phone. It will triggers everytime the user logs out.
 - `integrationToLoad`: You can specify a CRM from which specific settings can be retrieved. Only `zendesk` or `hubspot` available for now. You can ignore this if you have your own CRM.
 - `domToLoadPhone`: You must specify in which element you want to load the phone. Query selector string.
+- `size`: You can specify a preset for the size of the phone loaded. 3 possibilities:
+  - `big`: 666px by 376px. Recommanded and default value
+  - `small`: 600px by 376px
+  - `auto`: 100% width and height. Not recommanded
 
 Example:
 
@@ -25,7 +29,8 @@ const aircallPhone = new AircallPhone({
   },
   onLogout: () => {},
   domToLoadPhone: '#phone',
-  integrationToLoad: 'zendesk'
+  integrationToLoad: 'zendesk',
+  size: 'big'
 });
 ```
 
