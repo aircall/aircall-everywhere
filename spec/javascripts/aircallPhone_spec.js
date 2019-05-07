@@ -17,6 +17,7 @@ describe('Aircall SDK Library', () => {
         phoneUrl: 'https://phone.aircall-staging.com',
         domToLoadPhone: '#phone',
         integrationToLoad: 'zendesk',
+        size: 'small',
         onLogin: () => {
           console.log('loaded');
         },
@@ -27,6 +28,7 @@ describe('Aircall SDK Library', () => {
       expect(ap.phoneUrl).toBeDefined();
       expect(ap.domToLoadPhone).toBeDefined();
       expect(ap.integrationToLoad).toBeDefined();
+      expect(ap.size).toBeDefined();
     });
 
     it('should launch _messageListener', () => {
@@ -91,6 +93,24 @@ describe('Aircall SDK Library', () => {
       ap._createPhoneIframe();
       expect(HTMLElements['#phone'].innerHTML).toEqual(
         '<iframe allow="microphone; autoplay" src="https://phone.aircall.io?integration=generic" style="height:666px; width:376px;"></iframe>'
+      );
+    });
+
+    it('should set an iframe with small size depending on the size option', () => {
+      ap.domToLoadPhone = '#phone';
+      ap.size = 'small';
+      ap._createPhoneIframe();
+      expect(HTMLElements['#phone'].innerHTML).toEqual(
+        '<iframe allow="microphone; autoplay" src="https://phone.aircall.io?integration=generic" style="height:600px; width:376px;"></iframe>'
+      );
+    });
+
+    it('should set an iframe with auto size depending on the size option', () => {
+      ap.domToLoadPhone = '#phone';
+      ap.size = 'auto';
+      ap._createPhoneIframe();
+      expect(HTMLElements['#phone'].innerHTML).toEqual(
+        '<iframe allow="microphone; autoplay" src="https://phone.aircall.io?integration=generic" style="height:100%; width:100%;"></iframe>'
       );
     });
 
