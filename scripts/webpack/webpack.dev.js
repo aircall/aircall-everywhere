@@ -23,6 +23,12 @@ module.exports = () => {
     extensions: ['.js']
   };
 
+  const _devServer = {
+    contentBase: path.join(__dirname, '../../demo_dist'),
+    compress: true,
+    port: 8080
+  };
+
   const _plugins = [
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -50,13 +56,12 @@ module.exports = () => {
       {
         test: /\.jsx?$/,
         include: [path.resolve(__dirname, '../src')],
-        enforce: 'pre',
         enforce: 'post',
 
         loader: 'babel-loader',
 
         options: {
-          presets: ['env']
+          presets: ['@babel/preset-env']
         }
       },
       {
@@ -84,6 +89,7 @@ module.exports = () => {
   _mode = 'development';
 
   return {
+    devServer: _devServer,
     entry: _entry,
     output: _output,
     module: _module,
@@ -92,6 +98,7 @@ module.exports = () => {
     plugins: _plugins,
     mode: _mode,
     target: _target,
-    context: _context
+    context: _context,
+    watch: true
   };
 };

@@ -4,13 +4,17 @@
   "description": "Library to embed and communicate with aircall-phone in any webpage",
   "main": "index.js",
   "scripts": {
-    "precommit": "pretty-quick --staged",
     "start": "./scripts/development.sh",
     "build": "./scripts/build.sh",
     "prepublishOnly": "./scripts/publish.sh",
     "test": "karma start --singleRun true scripts/karma.conf.js",
     "test-watch": "karma start scripts/karma.conf.js",
     "coverage": "karma start --singleRun true --reporters coverage-istanbul scripts/karma.conf.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "repository": {
     "type": "git",
@@ -22,33 +26,36 @@
     "url": "https://github.com/aircall/aircall-everywhere/issues"
   },
   "homepage": "https://aircall.github.io/aircall-everywhere/",
-  "dependencies": {
-    "babel-core": "6.26.3",
-    "babel-loader": "7.1.5",
-    "babel-plugin-istanbul": "4.1.6",
-    "babel-plugin-rewire": "1.1.0",
-    "babel-preset-env": "1.7.0",
-    "copy-webpack-plugin": "4.5.2",
-    "css-loader": "1.0.0",
-    "gh-pages": "1.2.0",
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/template": "^7.4.4",
+    "@babel/types": "^7.4.4",
+    "babel-loader": "8.0.6",
+    "babel-plugin-istanbul": "5.1.4",
+    "babel-plugin-rewire": "1.2.0",
+    "copy-webpack-plugin": "5.0.3",
+    "css-loader": "2.1.1",
+    "gh-pages": "2.0.1",
     "html-webpack-plugin": "3.2.0",
-    "husky": "0.14.3",
+    "husky": "2.3.0",
     "istanbul-instrumenter-loader": "3.0.1",
-    "jasmine-core": "3.1.0",
-    "karma": "3.0.0",
-    "karma-babel-preprocessor": "7.0.0",
+    "jasmine-core": "3.4.0",
+    "karma": "4.1.0",
+    "karma-babel-preprocessor": "8.0.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage": "1.1.2",
-    "karma-coverage-istanbul-reporter": "2.0.1",
-    "karma-jasmine": "1.1.2",
+    "karma-coverage-istanbul-reporter": "2.0.5",
+    "karma-jasmine": "2.0.1",
     "karma-sourcemap-loader": "0.3.7",
-    "karma-webpack": "3.0.0",
-    "node-sass": "4.9.3",
-    "pretty-quick": "1.6.0",
+    "karma-webpack": "^4.0.0-rc.6",
+    "node-sass": "4.12.0",
+    "prettier": "1.17.1",
+    "pretty-quick": "1.11.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
-    "webpack": "4.16.0",
-    "webpack-cli": "2.1.5",
-    "webpack-serve": "1.0.4"
+    "webpack": "4.32.0",
+    "webpack-cli": "3.3.2",
+    "webpack-dev-server": "^3.4.1"
   }
 }

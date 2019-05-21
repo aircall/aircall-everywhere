@@ -8,14 +8,13 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: [path.resolve(__dirname, '../../src')],
-        enforce: 'pre',
         enforce: 'post',
 
         loader: 'babel-loader',
 
         options: {
           plugins: ['babel-plugin-rewire'],
-          presets: ['env']
+          presets: ['@babel/preset-env']
         }
       },
       {
