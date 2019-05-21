@@ -1,65 +1,96 @@
-version: 2.0
+version: 2.1
+
+restore-workspace: &restore-workspace
+  attach_workspace:
+    at: ~/
+
+master-filter: &master-filter
+  branches:
+    only: master
+
+gh-pages-filter: &gh-pages-filter
+  branches:
+    ignore: gh-pages
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:10.11.0-browsers
+    working_directory: ~/aircall-everywhere
+
 jobs:
-  tests:
-    docker:
-      - image: circleci/node:8.9.4-browsers
+  checkout-install-node-dependencies:
+    executor: node
     steps:
       - checkout
       - restore_cache:
-          key: everywhere-cache-v1-{{ checksum "package.json" }}
-      - run:
-          name: Install dependencies
-          command: |
-            npm install
+          key: aircall-everywhere-node-modules{{ checksum "package.json" }}
+      - add_ssh_keys:
+          fingerprints:
+            - 'fe:f2:fc:ba:8a:e2:49:8d:77:4d:50:5a:d0:9c:c4:41'
+      - run: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+      - run: yarn install
       - save_cache:
-          key: everywhere-cache-v1-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Run tests
-          command: |
-            npm run test
+          key: aircall-everywhere-node-modules{{ checksum "package.json" }}
+          paths: node_modules
+      - persist_to_workspace:
+          root: ~/
+          paths: aircall-everywhere
+
+  test:
+    executor: node
+    steps:
+      - *restore-workspace
+      - run: yarn test
+
   coverage:
-    docker:
-      - image: circleci/node:8.9.4-browsers
+    executor: node
     steps:
-      - checkout
-      - run:
-          name: Install System Dependencies
-          command: |
-            sudo apt-get install jq \
-            && sudo apt-get install bc
-      - restore_cache:
-          key: everywhere-cache-v1-{{ checksum "package.json" }}
-      - run:
-          name: Install dependencies
-          command: |
-            npm install
-      - save_cache:
-          key: everywhere-cache-v1-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Run coverage
-          command: |
-            npm run coverage
+      - *restore-workspace
+      - run: |
+          sudo rm /etc/apt/sources.list
+          echo "deb http://deb.debian.org/debian jessie main" | sudo tee -a /etc/apt/sources.list
+          echo "deb http://archive.debian.org/debian/ jessie-backports main" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://archive.debian.org/debian/ jessie-backports main" | sudo tee -a /etc/apt/sources.list
+          echo "Acquire::Check-Valid-Until false;" | sudo tee -a /etc/apt/apt.conf.d/10-nocheckvalid
+          echo 'Package: *\nPin: origin "archive.debian.org"\nPin-Priority: 500' | sudo tee -a /etc/apt/preferences.d/10-archive-pin
+          sudo apt-get update
+      - run: sudo apt-get install libonig2 && sudo apt-get install libjq1 &&  sudo apt-get install jq && sudo apt-get install bc
+      - run: yarn coverage
       - run:
           name: Publish coverage on PR
           command: |
             export PATH="$PATH:~/.local/bin"
             bash ./scripts/post-coverage-to-github.sh $CIRCLE_BRANCH
+
+  npm-publish:
+    executor: node
+    steps:
+      - *restore-workspace
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/aircall-everywhere/.npmrc
+      - run: npm publish
+
 workflows:
   version: 2
-  commit-workflow:
+  build-deploy:
     jobs:
-      - tests:
-          filters:
-            branches:
-              ignore:
-                - gh-pages
+      - checkout-install-node-dependencies
+      - test:
+          requires: [checkout-install-node-dependencies]
+          filters: *gh-pages-filter
+
       - coverage:
+          requires: [test]
           filters:
             branches:
-              ignore:
-                - gh-pages
-                - master
+              ignore: gh-pages
+                master
+
+      - approve-publish:
+          type: approval
+          requires: [test]
+          filters: *master-filter
+
+      - npm-publish:
+          requires: [approve-publish]
+          filters: *master-filter
