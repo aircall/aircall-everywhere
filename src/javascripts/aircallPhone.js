@@ -12,7 +12,10 @@ class AircallPhone {
     const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 
     // options passed
-    this.phoneUrl = opts.phoneUrl !== undefined ? opts.phoneUrl : 'https://phone.aircall.io';
+    this.phoneUrl =
+      opts.phoneUrl !== undefined && URL_REGEX.test(opts.phoneUrl) === true
+        ? opts.phoneUrl
+        : 'https://phone.aircall.io';
     this.domToLoadPhone = opts.domToLoadPhone;
     this.integrationToLoad = opts.integrationToLoad;
 

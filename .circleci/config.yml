@@ -4,7 +4,9 @@ restore-workspace: &restore-workspace
   attach_workspace:
     at: ~/
 
-master-filter: &master-filter
+publish-filter: &publish-filter
+  tags:
+    only: \^v.*\
   branches:
     only: master
 
@@ -25,10 +27,6 @@ jobs:
       - checkout
       - restore_cache:
           key: aircall-everywhere-node-modules{{ checksum "package.json" }}
-      - add_ssh_keys:
-          fingerprints:
-            - 'fe:f2:fc:ba:8a:e2:49:8d:77:4d:50:5a:d0:9c:c4:41'
-      - run: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
       - run: yarn install
       - save_cache:
           key: aircall-everywhere-node-modules{{ checksum "package.json" }}
@@ -63,6 +61,15 @@ jobs:
             export PATH="$PATH:~/.local/bin"
             bash ./scripts/post-coverage-to-github.sh $CIRCLE_BRANCH
 
+  build-prod:
+    executor: node
+    steps:
+      - *restore-workspace
+      - run: yarn build
+      - persist_to_workspace:
+          root: ~/
+          paths: aircall-everywhere/dist
+
   npm-publish:
     executor: node
     steps:
@@ -86,11 +93,15 @@ workflows:
               ignore: gh-pages
                 master
 
+      - build-prod:
+          requires: [test]
+          filters: *gh-pages-filter
+
       - approve-publish:
           type: approval
-          requires: [test]
-          filters: *master-filter
+          requires: [build-prod]
+          filters: *publish-filter
 
       - npm-publish:
           requires: [approve-publish]
-          filters: *master-filter
+          filters: *publish-filter
