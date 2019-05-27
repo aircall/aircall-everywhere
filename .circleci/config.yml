@@ -5,10 +5,10 @@ restore-workspace: &restore-workspace
     at: ~/
 
 publish-filter: &publish-filter
+  branches:
+    ignore: /.*/
   tags:
     only: \^v.*\
-  branches:
-    only: master
 
 gh-pages-filter: &gh-pages-filter
   branches:
@@ -74,8 +74,6 @@ jobs:
     executor: node
     steps:
       - *restore-workspace
-      - run: npm set init.author.name "Alan Chauchet"
-      - run: npm set init.author.email "alan.chauchet@gmail.com"
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/aircall-everywhere/.npmrc
       - run: npm publish
 
@@ -102,16 +100,8 @@ workflows:
       - approve-publish:
           type: approval
           requires: [build-prod]
-          filters:
-            tags:
-              only: \^v.*\
-            branches:
-              only: master
+          filters: *publish-filter
 
       - npm-publish:
           requires: [approve-publish]
-          filters:
-            tags:
-              only: \^v.*\
-            branches:
-              only: master
+          filters: *publish-filter
