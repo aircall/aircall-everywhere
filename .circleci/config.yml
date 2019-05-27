@@ -74,6 +74,8 @@ jobs:
     executor: node
     steps:
       - *restore-workspace
+      - run: npm set init.author.name "Alan Chauchet"
+      - run: npm set init.author.email "alan.chauchet@gmail.com"
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/aircall-everywhere/.npmrc
       - run: npm publish
 
@@ -100,8 +102,16 @@ workflows:
       - approve-publish:
           type: approval
           requires: [build-prod]
-          filters: *publish-filter
+          filters:
+            tags:
+              only: \^v.*\
+            branches:
+              only: master
 
       - npm-publish:
           requires: [approve-publish]
-          filters: *publish-filter
+          filters:
+            tags:
+              only: \^v.*\
+            branches:
+              only: master
