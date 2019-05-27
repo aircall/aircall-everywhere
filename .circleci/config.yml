@@ -6,9 +6,7 @@ restore-workspace: &restore-workspace
 
 publish-filter: &publish-filter
   branches:
-    ignore: /.*/
-  tags:
-    only: /^v[0-9]+(\.[0-9]+)*$/
+    only: master
 
 gh-pages-filter: &gh-pages-filter
   branches:
