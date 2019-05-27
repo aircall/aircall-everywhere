@@ -91,7 +91,6 @@ module.exports = () => {
     plugins: _plugins,
     mode: _mode,
     target: _target,
-    context: _context,
-    watch: true
+    context: _context
   };
 };
