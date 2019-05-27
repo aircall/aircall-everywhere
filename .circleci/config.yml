@@ -5,10 +5,10 @@ restore-workspace: &restore-workspace
     at: ~/
 
 publish-filter: &publish-filter
-  tags:
-    only: /^v.*/
   branches:
     ignore: /.*/
+  tags:
+    only: /^v[0-9]+(\.[0-9]+)*$/
 
 gh-pages-filter: &gh-pages-filter
   branches:
