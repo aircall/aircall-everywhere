@@ -31,7 +31,7 @@ module.exports = () => {
         loader: 'babel-loader',
 
         options: {
-          presets: ['env']
+          presets: ['@babel/preset-env']
         }
       }
     ]
@@ -39,7 +39,9 @@ module.exports = () => {
 
   _output = {
     path: path.resolve(__dirname, '../../dist'),
-    filename: 'main.[hash].js'
+    filename: 'index.js',
+    library: 'aircall-everywhere',
+    libraryTarget: 'commonjs2'
   };
 
   _mode = 'production';

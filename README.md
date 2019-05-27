@@ -187,9 +187,12 @@ You can remove a listener added by `on` with this method.
 # Development
 
 You can run the demo webpage with:
-`npm start`
+`yarn start`
 
 tests are available:
-`npm run test`
-`npm run test-watch`
-`npm run coverage`
+`yarn test`
+`yarn test-watch`
+`yarn coverage`
+
+to create a new version:
+`yarn version --patch|--minor|--major` and create a PR. The CI will publish the new version after manual approval.
