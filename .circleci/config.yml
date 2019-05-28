@@ -77,6 +77,8 @@ jobs:
             - '39:31:4b:93:fd:ea:b3:65:09:c9:d7:20:9f:8d:87:dd'
       - run: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/aircall-everywhere/.npmrc
+      - run: git config --global user.email "alan.chauchet@gmail.com"
+      - run: git config --global user.name "Alan Chauchet"
       - run: npm publish
 
 workflows:
