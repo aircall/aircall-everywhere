@@ -87,9 +87,9 @@
 /******/ ({
 
 /***/ "../../index.js":
-/*!****************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/index.js ***!
-  \****************************************************************/
+/*!**************************************************!*\
+  !*** /home/circleci/aircall-everywhere/index.js ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -104,9 +104,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "../../src/javascripts/aircallPhone.js":
-/*!***************************************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/src/javascripts/aircallPhone.js ***!
-  \***************************************************************************************/
+/*!*************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/src/javascripts/aircallPhone.js ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -408,13 +408,13 @@ class AircallPhone {
 /***/ }),
 
 /***/ 1:
-/*!**********************************************************************!*\
-  !*** multi /Users/mass/Documents/GitHub/aircall-everywhere/index.js ***!
-  \**********************************************************************/
+/*!********************************************************!*\
+  !*** multi /home/circleci/aircall-everywhere/index.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/mass/Documents/GitHub/aircall-everywhere/index.js */"../../index.js");
+module.exports = __webpack_require__(/*! /home/circleci/aircall-everywhere/index.js */"../../index.js");
 
 
 /***/ })

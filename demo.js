@@ -87,15 +87,16 @@
 /******/ ({
 
 /***/ "../../demo/demo.js":
-/*!********************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/demo/demo.js ***!
-  \********************************************************************/
+/*!******************************************************!*\
+  !*** /home/circleci/aircall-everywhere/demo/demo.js ***!
+  \******************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var aircall_everywhere__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! aircall-everywhere */ "../../index.js");
+/* harmony import */ var aircall_everywhere__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! aircall-everywhere */ "../../dist/index.js");
+/* harmony import */ var aircall_everywhere__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(aircall_everywhere__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _reset_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reset.scss */ "../../demo/reset.scss");
 /* harmony import */ var _reset_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_reset_scss__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _demo_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./demo.scss */ "../../demo/demo.scss");
@@ -191,7 +192,7 @@ loadPhoneButton.addEventListener(
     isLoginButton.disabled = false;
 
     // we load the phone via the library
-    const phone = new aircall_everywhere__WEBPACK_IMPORTED_MODULE_0__["default"]({
+    const phone = new aircall_everywhere__WEBPACK_IMPORTED_MODULE_0___default.a({
       domToLoadPhone: '#phone',
       onLogin: settings => {
         // we set data and status
@@ -289,14 +290,14 @@ loadPhoneButton.addEventListener(
 /***/ }),
 
 /***/ "../../demo/demo.scss":
-/*!**********************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/demo/demo.scss ***!
-  \**********************************************************************/
+/*!********************************************************!*\
+  !*** /home/circleci/aircall-everywhere/demo/demo.scss ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../node_modules/css-loader!../node_modules/sass-loader/lib/loader.js!./demo.scss */ "../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!../../demo/demo.scss");
+var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/lib/loader.js!./demo.scss */ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/demo.scss");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -319,14 +320,14 @@ if(false) {}
 /***/ }),
 
 /***/ "../../demo/reset.scss":
-/*!***********************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/demo/reset.scss ***!
-  \***********************************************************************/
+/*!*********************************************************!*\
+  !*** /home/circleci/aircall-everywhere/demo/reset.scss ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../node_modules/css-loader!../node_modules/sass-loader/lib/loader.js!./reset.scss */ "../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!../../demo/reset.scss");
+var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/lib/loader.js!./reset.scss */ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/reset.scss");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -348,152 +349,148 @@ if(false) {}
 
 /***/ }),
 
-/***/ "../../index.js":
-/*!****************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/index.js ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_javascripts_aircallPhone_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/javascripts/aircallPhone.js */ "../../src/javascripts/aircallPhone.js");
-
-
-/* harmony default export */ __webpack_exports__["default"] = (_src_javascripts_aircallPhone_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
-/***/ }),
-
-/***/ "../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!../../demo/demo.scss":
-/*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/node_modules/css-loader!/Users/mass/Documents/GitHub/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/Users/mass/Documents/GitHub/aircall-everywhere/demo/demo.scss ***!
-  \*************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ "../../node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "/* VARIABLES */\n/* FONTS */\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Regular.otf\") format(\"opentype\");\n  font-weight: 300;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-SemiBold.otf\") format(\"opentype\");\n  font-weight: 500;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Bold.otf\") format(\"opentype\");\n  font-weight: 700;\n  font-style: normal; }\n\n/* GLOBAL */\n* {\n  box-sizing: border-box; }\n\nhtml,\nbody {\n  height: 100%; }\n\nbody {\n  font-family: 'Fellix', Helvetica, Arial, sans-serif;\n  font-size: 16px;\n  color: #101820;\n  font-weight: 300;\n  line-height: 1.3; }\n\nh1 {\n  font-size: 42px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 26px;\n  font-weight: 500; }\n\nh3 {\n  font-size: 20px;\n  font-weight: 500; }\n\n.d-none {\n  display: none !important; }\n\n.d-flex {\n  display: flex !important; }\n\n/* HEADER */\nnav {\n  height: 70px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  background-color: #307fe2;\n  padding: 10px 2vw;\n  justify-content: space-between;\n  z-index: 10; }\n  nav .nav-content {\n    display: flex;\n    line-height: 50px; }\n    nav .nav-content a {\n      margin: 0 1vw;\n      text-decoration: none;\n      font-size: 20px;\n      color: #fff; }\n      nav .nav-content a:hover {\n        text-decoration: underline; }\n      nav .nav-content a#link-aircall {\n        display: flex; }\n        nav .nav-content a#link-aircall img {\n          margin: auto 0;\n          position: relative; }\n      nav .nav-content a#phone-aircall {\n        width: 40px;\n        display: flex;\n        cursor: pointer; }\n        nav .nav-content a#phone-aircall img {\n          width: 40px;\n          margin: auto; }\n\n/* PHONE */\n#phone-container {\n  position: fixed;\n  top: 65px;\n  right: 10px;\n  z-index: 30; }\n  #phone-container .arrow-up {\n    width: 0;\n    height: 0;\n    border-left: 5px solid transparent;\n    border-right: 5px solid transparent;\n    border-bottom: 5px solid #afafa9;\n    position: absolute;\n    right: 3.3vw;\n    top: -5px; }\n  #phone-container #phone {\n    border-radius: 5px;\n    background-color: #fff;\n    border: 3px solid #afafa9;\n    overflow: hidden;\n    height: 672px;\n    width: 382px;\n    box-shadow: 0 5px 10px #10182020; }\n    #phone-container #phone iframe {\n      border-radius: 2px; }\n\n/* CONTENT */\nmain {\n  margin-top: 70px; }\n\n.jumbotron {\n  padding: 70px 10vw;\n  background-color: #307fe2; }\n  .jumbotron h1 {\n    text-align: center;\n    color: #fff; }\n  .jumbotron p {\n    margin-top: 20px;\n    font-size: 20px;\n    color: #fff;\n    text-align: center; }\n\npre {\n  font-family: monospace; }\n  pre.prettyprint {\n    width: 100% !important;\n    margin: 0 !important;\n    padding: 30px !important;\n    border-radius: 0 !important;\n    background-color: transparent !important; }\n\n.container {\n  position: relative; }\n  .container .dark-box {\n    width: 40%;\n    background-color: #003b4c;\n    position: absolute;\n    right: 0;\n    top: 0;\n    bottom: 0;\n    z-index: -1; }\n  .container h2 {\n    margin-right: 40%;\n    padding: 0px 3vw; }\n  .container h3 {\n    padding-bottom: 20px; }\n  .container a {\n    color: #00b388;\n    text-decoration: none;\n    font-weight: 500; }\n    .container a:hover {\n      color: #006c5b;\n      text-decoration: underline; }\n  .container .row {\n    display: flex;\n    align-items: stretch;\n    padding: 50px 0; }\n    .container .row:last-child {\n      padding-bottom: 0; }\n    .container .row .left {\n      width: 60%;\n      padding: 30px 3vw 70px 3vw;\n      position: relative;\n      background-color: #f4f4f4; }\n      .container .row .left.no-alert {\n        padding-bottom: 30px; }\n      .container .row .left p {\n        line-height: 2; }\n      .container .row .left pre.prettyprint {\n        background-color: #00242d !important;\n        width: auto !important;\n        flex-grow: 1; }\n      .container .row .left .button {\n        margin-bottom: 20px; }\n    .container .row .right {\n      width: 40%;\n      background: #00242d; }\n  .container #installation {\n    padding-top: 40px; }\n  .container #waiting-events {\n    margin: 40px 0; }\n  .container #dial-button {\n    margin-top: 40px; }\n  .container #call-events-log label {\n    position: relative;\n    display: block;\n    margin: 20px 0; }\n    .container #call-events-log label > span {\n      display: block;\n      background-color: #003b4c;\n      font-family: monospace;\n      color: #fff;\n      padding: 10px 40px 10px 30px;\n      position: relative;\n      cursor: pointer; }\n      .container #call-events-log label > span::after {\n        position: absolute;\n        content: '+';\n        color: #fff;\n        right: 30px;\n        top: 10px; }\n  .container #call-events-log pre.prettyprint {\n    display: none;\n    height: 0;\n    overflow: hidden; }\n  .container #call-events-log input {\n    display: none; }\n    .container #call-events-log input:checked + label pre.prettyprint {\n      height: auto;\n      display: block; }\n    .container #call-events-log input:checked + label > span::after {\n      content: '-'; }\n\n.button {\n  background-color: #00b388;\n  color: #fff;\n  font-size: 18px;\n  border: none;\n  border-radius: 5px;\n  padding: 10px 20px;\n  cursor: pointer;\n  display: block;\n  outline: none;\n  transition: background-color 300 ease-in; }\n  .button:hover {\n    background-color: #006c5b;\n    transition: background-color 300 ease-in; }\n  .button:disabled {\n    background-color: #afafa9;\n    color: #fff;\n    cursor: not-allowed; }\n\n.alert {\n  padding: 10px 3vw;\n  font-size: 18px;\n  color: #fff;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n  .alert.alert-success {\n    background-color: #00b388; }\n  .alert.alert-danger {\n    background-color: #ff5c39; }\n  .alert.alert-warning {\n    background-color: #fcbb26; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!../../demo/reset.scss":
-/*!**************************************************************************************************************************************************************************************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/node_modules/css-loader!/Users/mass/Documents/GitHub/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/Users/mass/Documents/GitHub/aircall-everywhere/demo/reset.scss ***!
-  \**************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ "../../node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml,\nbody,\ndiv,\nspan,\napplet,\nobject,\niframe,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\np,\nblockquote,\npre,\na,\nabbr,\nacronym,\naddress,\nbig,\ncite,\ncode,\ndel,\ndfn,\nem,\nimg,\nins,\nkbd,\nq,\ns,\nsamp,\nsmall,\nstrike,\nstrong,\nsub,\nsup,\ntt,\nvar,\nb,\nu,\ni,\ncenter,\ndl,\ndt,\ndd,\nol,\nul,\nli,\nfieldset,\nform,\nlabel,\nlegend,\ntable,\ncaption,\ntbody,\ntfoot,\nthead,\ntr,\nth,\ntd,\narticle,\naside,\ncanvas,\ndetails,\nembed,\nfigure,\nfigcaption,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\noutput,\nruby,\nsection,\nsummary,\ntime,\nmark,\naudio,\nvideo {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\nsection {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol,\nul {\n  list-style: none; }\n\nblockquote,\nq {\n  quotes: none; }\n\nblockquote:before,\nblockquote:after,\nq:before,\nq:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "../../node_modules/css-loader/lib/css-base.js":
-/*!***********************************************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/node_modules/css-loader/lib/css-base.js ***!
-  \***********************************************************************************************/
+/***/ "../../dist/index.js":
+/*!*******************************************************!*\
+  !*** /home/circleci/aircall-everywhere/dist/index.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+module.exports=function(e){var n={};function t(o){if(n[o])return n[o].exports;var i=n[o]={i:o,l:!1,exports:{}};return e[o].call(i.exports,i,i.exports,t),i.l=!0,i.exports}return t.m=e,t.c=n,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:o})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(t.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var i in e)t.d(o,i,function(n){return e[n]}.bind(null,i));return o},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},t.p="",t(t.s=0)}([function(e,n,t){e.exports=t(1)},function(e,n,t){"use strict";function o(e,n){for(var t=0;t<n.length;t++){var o=n[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}t.r(n);var i=function(){function e(){var n=this,t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};!function(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}(this,e),this.phoneWindow=null,this.integrationSettings={},this.userSettings={},this.eventsRegistered={},this.phoneLoginState=!1;this.phoneUrl=void 0!==t.phoneUrl&&!0===/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/gi.test(t.phoneUrl)?t.phoneUrl:"https://phone.aircall.io",this.domToLoadPhone=t.domToLoadPhone,this.integrationToLoad=t.integrationToLoad,this.size=t.size||"big",this.onLogin=function(){if("function"==typeof t.onLogin&&!1===n.phoneLoginState){n.phoneLoginState=!0;var e={user:n.userSettings};Object.keys(n.integrationSettings).length>0&&(e.settings=n.integrationSettings),t.onLogin(e)}},this.onLogout=function(){"function"==typeof t.onLogout&&t.onLogout()},this.w=t.window||window,this._messageListener(),this.domToLoadPhone&&this._createPhoneIframe()}var n,t,i;return n=e,(t=[{key:"_resetData",value:function(){this.phoneWindow=null,this.integrationSettings={},this.userSettings={},this.phoneLoginState=!1}},{key:"_createPhoneIframe",value:function(){var e="";switch(this.size){case"big":e="height:666px; width:376px;";break;case"small":e="height:600px; width:376px;";break;case"auto":e="height:100%; width:100%;"}try{document.querySelector(this.domToLoadPhone).innerHTML='<iframe allow="microphone; autoplay" src="'.concat(this.getUrlToLoad(),'" style="').concat(e,'"></iframe>')}catch(e){console.error("[AircallEverywhere] [iframe creation] ".concat(this.domToLoadPhone," not be found. Error:"),e)}}},{key:"_messageListener",value:function(){var e=this;this.w.addEventListener("message",function(n){console.info("[AircallEverywhere] [event listener] received event",n);if(!n.data||!n.data.name||!/^apm_phone_/.test(n.data.name))return!1;if("apm_phone_loaded"!==n.data.name){if("apm_phone_integration_settings"===n.data.name&&n.data.value)return e.integrationSettings=n.data.value,void e.onLogin();if("apm_phone_logout"===n.data.name)return e._resetData(),void e.onLogout();for(var t in e.eventsRegistered)n.data.name==="apm_phone_".concat(t)&&e.eventsRegistered[t](n.data.value)}else e._handleInitMessage(n)},!1)}},{key:"_handleInitMessage",value:function(e){this.phoneWindow={source:e.source,origin:e.origin},e.data.value&&(this.userSettings=e.data.value),this.phoneWindow.source.postMessage({name:"apm_app_isready"},this.phoneWindow.origin),this.integrationToLoad?this.phoneWindow.source.postMessage({name:"apm_app_get_settings",value:this.integrationToLoad},this.phoneWindow.origin):this.onLogin()}},{key:"getUrlToLoad",value:function(){return"".concat(this.phoneUrl,"?integration=generic")}},{key:"on",value:function(e,n){if(!e||"function"!=typeof n)throw new Error("[AircallEverywhere] [on function] Invalid parameters format. Expected non empty string and function");this.eventsRegistered[e]=n}},{key:"_handleSendError",value:function(e,n){if(e&&e.code||(e={code:"unknown_error"}),e&&!e.message)switch(e.code){case"unknown_error":e.message="Unknown error. Contact aircall developers dev@aircall.io";break;case"no_event_name":e.message="Invalid parameter eventName. Expected an non empty string";break;case"not_ready":e.message='Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback';break;case"no_answer":e.message="No answer from the phone. Check if the phone is logged in";break;case"invalid_response":e.message="Invalid response from the phone. Contact aircall developers dev@aircall.io";break;default:e.message="Generic error message"}console.error("[AircallEverywhere] [send function] ".concat(e.message)),"function"==typeof n&&n(!1,e)}},{key:"send",value:function(e,n,t){var o=this;if("function"!=typeof n||t||(t=n,n=void 0),!e)return this._handleSendError({code:"no_event_name"},t),!1;if(!this.phoneWindow||!this.phoneWindow.source)return this._handleSendError({code:"not_ready"},t),!1;var i=null;this.phoneWindow.source.postMessage({name:"apm_app_".concat(e),value:n},this.phoneWindow.origin),this.on("".concat(e,"_response"),function(n){o.removeListener("".concat(e,"_response")),clearTimeout(i),n&&!1===n.success?o._handleSendError({code:n.errorCode,message:n.errorMessage},t):n&&!0===n.success?"function"==typeof t&&t(!0,n.data):o._handleSendError({code:"invalid_response"},t)}),i=setTimeout(function(){o.removeListener("".concat(e,"_response")),o._handleSendError({code:"no_answer"},t)},500)}},{key:"removeListener",value:function(e){var n=this;return!!this.eventsRegistered[e]&&(Object.keys(this.eventsRegistered).filter(function(n){return n===e}).forEach(function(e){return delete n.eventsRegistered[e]}),!0)}},{key:"isLoggedIn",value:function(e){this.send("is_logged_in",function(n){e(n)})}}])&&o(n.prototype,t),i&&o(n,i),e}();n.default=i}]);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/demo.scss":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/home/circleci/aircall-everywhere/demo/demo.scss ***!
+  \*******************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "../../node_modules/css-loader/dist/runtime/api.js")(false);
+// Module
+exports.push([module.i, "/* VARIABLES */\n/* FONTS */\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Regular.otf\") format(\"opentype\");\n  font-weight: 300;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-SemiBold.otf\") format(\"opentype\");\n  font-weight: 500;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Bold.otf\") format(\"opentype\");\n  font-weight: 700;\n  font-style: normal; }\n\n/* GLOBAL */\n* {\n  box-sizing: border-box; }\n\nhtml,\nbody {\n  height: 100%; }\n\nbody {\n  font-family: 'Fellix', Helvetica, Arial, sans-serif;\n  font-size: 16px;\n  color: #101820;\n  font-weight: 300;\n  line-height: 1.3; }\n\nh1 {\n  font-size: 42px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 26px;\n  font-weight: 500; }\n\nh3 {\n  font-size: 20px;\n  font-weight: 500; }\n\n.d-none {\n  display: none !important; }\n\n.d-flex {\n  display: flex !important; }\n\n/* HEADER */\nnav {\n  height: 70px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  background-color: #307fe2;\n  padding: 10px 2vw;\n  justify-content: space-between;\n  z-index: 10; }\n  nav .nav-content {\n    display: flex;\n    line-height: 50px; }\n    nav .nav-content a {\n      margin: 0 1vw;\n      text-decoration: none;\n      font-size: 20px;\n      color: #fff; }\n      nav .nav-content a:hover {\n        text-decoration: underline; }\n      nav .nav-content a#link-aircall {\n        display: flex; }\n        nav .nav-content a#link-aircall img {\n          margin: auto 0;\n          position: relative; }\n      nav .nav-content a#phone-aircall {\n        width: 40px;\n        display: flex;\n        cursor: pointer; }\n        nav .nav-content a#phone-aircall img {\n          width: 40px;\n          margin: auto; }\n\n/* PHONE */\n#phone-container {\n  position: fixed;\n  top: 65px;\n  right: 10px;\n  z-index: 30; }\n  #phone-container .arrow-up {\n    width: 0;\n    height: 0;\n    border-left: 5px solid transparent;\n    border-right: 5px solid transparent;\n    border-bottom: 5px solid #afafa9;\n    position: absolute;\n    right: 3.3vw;\n    top: -5px; }\n  #phone-container #phone {\n    border-radius: 5px;\n    background-color: #fff;\n    border: 3px solid #afafa9;\n    overflow: hidden;\n    height: 672px;\n    width: 382px;\n    box-shadow: 0 5px 10px #10182020; }\n    #phone-container #phone iframe {\n      border-radius: 2px; }\n\n/* CONTENT */\nmain {\n  margin-top: 70px; }\n\n.jumbotron {\n  padding: 70px 10vw;\n  background-color: #307fe2; }\n  .jumbotron h1 {\n    text-align: center;\n    color: #fff; }\n  .jumbotron p {\n    margin-top: 20px;\n    font-size: 20px;\n    color: #fff;\n    text-align: center; }\n\npre {\n  font-family: monospace; }\n  pre.prettyprint {\n    width: 100% !important;\n    margin: 0 !important;\n    padding: 30px !important;\n    border-radius: 0 !important;\n    background-color: transparent !important; }\n\n.container {\n  position: relative; }\n  .container .dark-box {\n    width: 40%;\n    background-color: #003b4c;\n    position: absolute;\n    right: 0;\n    top: 0;\n    bottom: 0;\n    z-index: -1; }\n  .container h2 {\n    margin-right: 40%;\n    padding: 0px 3vw; }\n  .container h3 {\n    padding-bottom: 20px; }\n  .container a {\n    color: #00b388;\n    text-decoration: none;\n    font-weight: 500; }\n    .container a:hover {\n      color: #006c5b;\n      text-decoration: underline; }\n  .container .row {\n    display: flex;\n    align-items: stretch;\n    padding: 50px 0; }\n    .container .row:last-child {\n      padding-bottom: 0; }\n    .container .row .left {\n      width: 60%;\n      padding: 30px 3vw 70px 3vw;\n      position: relative;\n      background-color: #f4f4f4; }\n      .container .row .left.no-alert {\n        padding-bottom: 30px; }\n      .container .row .left p {\n        line-height: 2; }\n      .container .row .left pre.prettyprint {\n        background-color: #00242d !important;\n        width: auto !important;\n        flex-grow: 1; }\n      .container .row .left .button {\n        margin-bottom: 20px; }\n    .container .row .right {\n      width: 40%;\n      background: #00242d; }\n  .container #installation {\n    padding-top: 40px; }\n  .container #waiting-events {\n    margin: 40px 0; }\n  .container #dial-button {\n    margin-top: 40px; }\n  .container #call-events-log label {\n    position: relative;\n    display: block;\n    margin: 20px 0; }\n    .container #call-events-log label > span {\n      display: block;\n      background-color: #003b4c;\n      font-family: monospace;\n      color: #fff;\n      padding: 10px 40px 10px 30px;\n      position: relative;\n      cursor: pointer; }\n      .container #call-events-log label > span::after {\n        position: absolute;\n        content: '+';\n        color: #fff;\n        right: 30px;\n        top: 10px; }\n  .container #call-events-log pre.prettyprint {\n    display: none;\n    height: 0;\n    overflow: hidden; }\n  .container #call-events-log input {\n    display: none; }\n    .container #call-events-log input:checked + label pre.prettyprint {\n      height: auto;\n      display: block; }\n    .container #call-events-log input:checked + label > span::after {\n      content: '-'; }\n\n.button {\n  background-color: #00b388;\n  color: #fff;\n  font-size: 18px;\n  border: none;\n  border-radius: 5px;\n  padding: 10px 20px;\n  cursor: pointer;\n  display: block;\n  outline: none;\n  transition: background-color 300 ease-in; }\n  .button:hover {\n    background-color: #006c5b;\n    transition: background-color 300 ease-in; }\n  .button:disabled {\n    background-color: #afafa9;\n    color: #fff;\n    cursor: not-allowed; }\n\n.alert {\n  padding: 10px 3vw;\n  font-size: 18px;\n  color: #fff;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n  .alert.alert-success {\n    background-color: #00b388; }\n  .alert.alert-danger {\n    background-color: #ff5c39; }\n  .alert.alert-warning {\n    background-color: #fcbb26; }\n", ""]);
+
+
+
+/***/ }),
+
+/***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/reset.scss":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/home/circleci/aircall-everywhere/demo/reset.scss ***!
+  \********************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "../../node_modules/css-loader/dist/runtime/api.js")(false);
+// Module
+exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml,\nbody,\ndiv,\nspan,\napplet,\nobject,\niframe,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\np,\nblockquote,\npre,\na,\nabbr,\nacronym,\naddress,\nbig,\ncite,\ncode,\ndel,\ndfn,\nem,\nimg,\nins,\nkbd,\nq,\ns,\nsamp,\nsmall,\nstrike,\nstrong,\nsub,\nsup,\ntt,\nvar,\nb,\nu,\ni,\ncenter,\ndl,\ndt,\ndd,\nol,\nul,\nli,\nfieldset,\nform,\nlabel,\nlegend,\ntable,\ncaption,\ntbody,\ntfoot,\nthead,\ntr,\nth,\ntd,\narticle,\naside,\ncanvas,\ndetails,\nembed,\nfigure,\nfigcaption,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\noutput,\nruby,\nsection,\nsummary,\ntime,\nmark,\naudio,\nvideo {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\nsection {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol,\nul {\n  list-style: none; }\n\nblockquote,\nq {\n  quotes: none; }\n\nblockquote:before,\nblockquote:after,\nq:before,\nq:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n", ""]);
+
+
+
+/***/ }),
+
+/***/ "../../node_modules/css-loader/dist/runtime/api.js":
+/*!*************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/runtime/api.js ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 /*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
 */
 // css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
+module.exports = function (useSourceMap) {
+  var list = []; // return the list of modules as css string
 
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item, useSourceMap);
 
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
+      if (item[2]) {
+        return '@media ' + item[2] + '{' + content + '}';
+      } else {
+        return content;
+      }
+    }).join('');
+  }; // import a list of modules into the list
+
+
+  list.i = function (modules, mediaQuery) {
+    if (typeof modules === 'string') {
+      modules = [[null, modules, '']];
+    }
+
+    var alreadyImportedModules = {};
+
+    for (var i = 0; i < this.length; i++) {
+      var id = this[i][0];
+
+      if (id != null) {
+        alreadyImportedModules[id] = true;
+      }
+    }
+
+    for (i = 0; i < modules.length; i++) {
+      var item = modules[i]; // skip already imported module
+      // this implementation is not 100% perfect for weird media query combinations
+      // when a module is imported multiple times with different media queries.
+      // I hope this will never occur (Hey this way we have smaller bundles)
+
+      if (item[0] == null || !alreadyImportedModules[item[0]]) {
+        if (mediaQuery && !item[2]) {
+          item[2] = mediaQuery;
+        } else if (mediaQuery) {
+          item[2] = '(' + item[2] + ') and (' + mediaQuery + ')';
+        }
+
+        list.push(item);
+      }
+    }
+  };
+
+  return list;
 };
 
 function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
+  var content = item[1] || '';
+  var cssMapping = item[3];
 
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
+  if (!cssMapping) {
+    return content;
+  }
 
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
+  if (useSourceMap && typeof btoa === 'function') {
+    var sourceMapping = toComment(cssMapping);
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+  }
 
-	return [content].join('\n');
-}
+  return [content].join('\n');
+} // Adapted from convert-source-map (MIT)
 
-// Adapted from convert-source-map (MIT)
+
 function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
+  // eslint-disable-next-line no-undef
+  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+  var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+  return '/*# ' + data + ' */';
 }
-
 
 /***/ }),
 
 /***/ "../../node_modules/style-loader/lib/addStyles.js":
-/*!**************************************************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/node_modules/style-loader/lib/addStyles.js ***!
-  \**************************************************************************************************/
+/*!************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/style-loader/lib/addStyles.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -900,9 +897,9 @@ function updateLink (link, options, obj) {
 /***/ }),
 
 /***/ "../../node_modules/style-loader/lib/urls.js":
-/*!*********************************************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/node_modules/style-loader/lib/urls.js ***!
-  \*********************************************************************************************/
+/*!*******************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/style-loader/lib/urls.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -999,318 +996,14 @@ module.exports = function (css) {
 
 /***/ }),
 
-/***/ "../../src/javascripts/aircallPhone.js":
-/*!***************************************************************************************!*\
-  !*** /Users/mass/Documents/GitHub/aircall-everywhere/src/javascripts/aircallPhone.js ***!
-  \***************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-class AircallPhone {
-  constructor(opts = {}) {
-    // internal vars
-    // window object of loaded aircall phone
-    this.phoneWindow = null;
-    this.integrationSettings = {};
-    this.userSettings = {};
-    this.eventsRegistered = {};
-
-    this.phoneLoginState = false;
-
-    const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
-
-    // options passed
-    this.phoneUrl =
-      opts.phoneUrl !== undefined && URL_REGEX.test(opts.phoneUrl) === true
-        ? opts.phoneUrl
-        : 'https://phone.aircall.io';
-    this.domToLoadPhone = opts.domToLoadPhone;
-    this.integrationToLoad = opts.integrationToLoad;
-
-    // 3 different sizes: big/small/auto
-    this.size = opts.size || 'big';
-
-    this.onLogin = () => {
-      if (typeof opts.onLogin === 'function' && this.phoneLoginState === false) {
-        this.phoneLoginState = true;
-        const data = {
-          user: this.userSettings
-        };
-        if (Object.keys(this.integrationSettings).length > 0) {
-          data.settings = this.integrationSettings;
-        }
-        opts.onLogin(data);
-      }
-    };
-
-    this.onLogout = () => {
-      if (typeof opts.onLogout === 'function') {
-        opts.onLogout();
-      }
-    };
-    // local window
-    this.w = opts.window || window;
-
-    // launch postmessage listener
-    this._messageListener();
-
-    // load phone in specified dom
-    if (!!this.domToLoadPhone) {
-      this._createPhoneIframe();
-    }
-  }
-
-  _resetData() {
-    this.phoneWindow = null;
-    this.integrationSettings = {};
-    this.userSettings = {};
-    this.phoneLoginState = false;
-  }
-
-  _createPhoneIframe() {
-    let sizeStyle = '';
-    switch (this.size) {
-      case 'big':
-        sizeStyle = 'height:666px; width:376px;';
-        break;
-      case 'small':
-        sizeStyle = 'height:600px; width:376px;';
-        break;
-      case 'auto':
-        sizeStyle = 'height:100%; width:100%;';
-        break;
-    }
-
-    // we get the passed dom
-    try {
-      const el = document.querySelector(this.domToLoadPhone);
-      el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="${sizeStyle}"></iframe>`;
-    } catch (e) {
-      // couldnt query the dom wanted
-      console.error(
-        `[AircallEverywhere] [iframe creation] ${this.domToLoadPhone} not be found. Error:`,
-        e
-      );
-    }
-  }
-
-  _messageListener() {
-    this.w.addEventListener(
-      'message',
-      event => {
-        console.info('[AircallEverywhere] [event listener] received event', event);
-        // we test if our format object is present. if not, we stop
-        const matchPrefixRegex = /^apm_phone_/;
-        if (!event.data || !event.data.name || !matchPrefixRegex.test(event.data.name)) {
-          return false;
-        }
-
-        // initialisation message
-        if (event.data.name === 'apm_phone_loaded') {
-          this._handleInitMessage(event);
-          return;
-        }
-
-        // integration settings sent by phone
-        if (event.data.name === 'apm_phone_integration_settings' && !!event.data.value) {
-          this.integrationSettings = event.data.value;
-          // init callback after settings received
-          this.onLogin();
-          return;
-        }
-
-        // phone logout
-        if (event.data.name === 'apm_phone_logout') {
-          // we clean data related to user
-          this._resetData();
-          this.onLogout();
-          return;
-        }
-
-        // loop over events registered
-        for (const eventName in this.eventsRegistered) {
-          if (event.data.name === `apm_phone_${eventName}`) {
-            // event triggered => we execute callback
-            this.eventsRegistered[eventName](event.data.value);
-          }
-        }
-      },
-      false
-    );
-  }
-
-  _handleInitMessage(event) {
-    // we keep the source
-    this.phoneWindow = {
-      source: event.source,
-      origin: event.origin
-    };
-
-    if (!!event.data.value) {
-      this.userSettings = event.data.value;
-    }
-
-    // we answer init
-    this.phoneWindow.source.postMessage({ name: 'apm_app_isready' }, this.phoneWindow.origin);
-
-    // we ask for integration settings
-    if (!!this.integrationToLoad) {
-      this.phoneWindow.source.postMessage(
-        { name: 'apm_app_get_settings', value: this.integrationToLoad },
-        this.phoneWindow.origin
-      );
-    } else {
-      // init callback now if present
-      this.onLogin();
-    }
-  }
-
-  getUrlToLoad() {
-    return `${this.phoneUrl}?integration=generic`;
-  }
-
-  on(eventName, callback) {
-    if (!eventName || typeof callback !== 'function') {
-      throw new Error(
-        '[AircallEverywhere] [on function] Invalid parameters format. Expected non empty string and function'
-      );
-    }
-    this.eventsRegistered[eventName] = callback;
-  }
-
-  _handleSendError(error, callback) {
-    if (!error || !error.code) {
-      // should not happen, unknown error
-      error = {
-        code: 'unknown_error'
-      };
-    }
-    // errors sent by the phone for specific events are not handled since they should have their code AND message
-    if (!!error && !error.message) {
-      switch (error.code) {
-        case 'unknown_error':
-          error.message = 'Unknown error. Contact aircall developers dev@aircall.io';
-          break;
-        case 'no_event_name':
-          error.message = 'Invalid parameter eventName. Expected an non empty string';
-          break;
-        case 'not_ready':
-          error.message =
-            'Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback';
-          break;
-        case 'no_answer':
-          error.message = 'No answer from the phone. Check if the phone is logged in';
-          break;
-        case 'invalid_response':
-          error.message =
-            'Invalid response from the phone. Contact aircall developers dev@aircall.io';
-          break;
-        default:
-          // specific error without a message. Should not happen
-          error.message = 'Generic error message';
-          break;
-      }
-    }
-
-    // we log the error
-    console.error(`[AircallEverywhere] [send function] ${error.message}`);
-
-    // we send the callback with the error
-    if (typeof callback === 'function') {
-      callback(false, error);
-    }
-  }
-
-  send(eventName, data, callback) {
-    if (typeof data === 'function' && !callback) {
-      callback = data;
-      data = undefined;
-    }
-
-    if (!eventName) {
-      this._handleSendError({ code: 'no_event_name' }, callback);
-      return false;
-    }
-
-    if (!!this.phoneWindow && !!this.phoneWindow.source) {
-      let responseTimeout = null;
-      let timeoutLimit = 500;
-
-      // we send the message
-      this.phoneWindow.source.postMessage(
-        { name: `apm_app_${eventName}`, value: data },
-        this.phoneWindow.origin
-      );
-
-      // we wait for a response to this message
-      this.on(`${eventName}_response`, response => {
-        // we have a response, we remove listener and return the callback
-        this.removeListener(`${eventName}_response`);
-        clearTimeout(responseTimeout);
-        // we evaluate response
-        if (!!response && response.success === false) {
-          // phone answers with an error
-          this._handleSendError(
-            { code: response.errorCode, message: response.errorMessage },
-            callback
-          );
-        } else if (!!response && response.success === true) {
-          // phone answer a succes with its response
-          if (typeof callback === 'function') {
-            callback(true, response.data);
-          }
-        } else {
-          // phone answer is invalid
-          this._handleSendError({ code: 'invalid_response' }, callback);
-        }
-      });
-
-      responseTimeout = setTimeout(() => {
-        // if no response, we remove listener
-        this.removeListener(`${eventName}_response`);
-
-        this._handleSendError({ code: 'no_answer' }, callback);
-      }, timeoutLimit);
-    } else {
-      this._handleSendError({ code: 'not_ready' }, callback);
-      return false;
-    }
-  }
-
-  removeListener(eventName) {
-    if (!this.eventsRegistered[eventName]) {
-      return false;
-    }
-
-    Object.keys(this.eventsRegistered)
-      .filter(key => key === eventName)
-      .forEach(key => delete this.eventsRegistered[key]);
-    return true;
-  }
-
-  isLoggedIn(callback) {
-    // we simply send an event and send its result.
-    this.send('is_logged_in', success => {
-      callback(success);
-    });
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (AircallPhone);
-
-
-/***/ }),
-
 /***/ 0:
-/*!**************************************************************************!*\
-  !*** multi /Users/mass/Documents/GitHub/aircall-everywhere/demo/demo.js ***!
-  \**************************************************************************/
+/*!************************************************************!*\
+  !*** multi /home/circleci/aircall-everywhere/demo/demo.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/mass/Documents/GitHub/aircall-everywhere/demo/demo.js */"../../demo/demo.js");
+module.exports = __webpack_require__(/*! /home/circleci/aircall-everywhere/demo/demo.js */"../../demo/demo.js");
 
 
 /***/ })
