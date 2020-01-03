@@ -23,12 +23,21 @@ describe('Aircall SDK Library', () => {
         },
         onLogout: () => {
           console.log('logged out');
-        }
+        },
+        debug: false
       });
       expect(ap.phoneUrl).toBeDefined();
       expect(ap.domToLoadPhone).toBeDefined();
       expect(ap.integrationToLoad).toBeDefined();
       expect(ap.size).toBeDefined();
+      expect(ap.debug).toBeDefined();
+      expect(ap.debug).toEqual(false);
+    });
+
+    it('should default debug mode to true', () => {
+      const ap = new AircallPhone();
+      expect(ap.debug).toBeDefined();
+      expect(ap.debug).toEqual(true);
     });
 
     it('should launch _messageListener', () => {
@@ -606,6 +615,56 @@ describe('Aircall SDK Library', () => {
         done();
       };
       ap.isLoggedIn(cb);
+    });
+  });
+
+  describe('_log function', () => {
+    beforeEach(() => {
+      spyOn(console, 'error');
+      spyOn(console, 'info');
+    });
+
+    it('should exist', () => {
+      const ap = new AircallPhone();
+      expect(ap._log).toBeDefined();
+    });
+
+    it('when `debug`=true, prints passed args with specified console action', () => {
+      const ap = new AircallPhone({ debug: true });
+      ap._log('info', 'some info');
+      ap._log('error', 'some error');
+
+      expect(console.info).toHaveBeenCalledWith('some info');
+      expect(console.error).toHaveBeenCalledWith('some error');
+    });
+
+    it('can print multiple arguments', () => {
+      const ap = new AircallPhone({ debug: true });
+      ap._log('info', 'some info', 'some more info');
+
+      expect(console.info).toHaveBeenCalledWith('some info', 'some more info');
+    });
+
+    it('defaults to info() if incorrect action is passed', () => {
+      const ap = new AircallPhone({ debug: true });
+      ap._log('foo', 'some info');
+
+      expect(console.info).toHaveBeenCalledWith('some info');
+    });
+
+    it('throws error when non-string action is passed', () => {
+      const ap = new AircallPhone({ debug: true });
+
+      expect(() => ap._log(() => {}, 'some info')).toThrow();
+    });
+
+    it('when `debug`=false, it does not print to console', () => {
+      const ap = new AircallPhone({ debug: false });
+      ap._log('info', 'some info');
+      ap._log('error', 'some error');
+
+      expect(console.info).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 });
