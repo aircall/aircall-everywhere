@@ -113,7 +113,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 class AircallPhone {
-  constructor(opts = {}) {
+  constructor(opts = { debug: true }) {
     // internal vars
     // window object of loaded aircall phone
     this.phoneWindow = null;
@@ -132,6 +132,7 @@ class AircallPhone {
         : 'https://phone.aircall.io';
     this.domToLoadPhone = opts.domToLoadPhone;
     this.integrationToLoad = opts.integrationToLoad;
+    this.debug = opts.debug;
 
     // 3 different sizes: big/small/auto
     this.size = opts.size || 'big';
@@ -193,7 +194,8 @@ class AircallPhone {
       el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="${sizeStyle}"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
-      console.error(
+      this._log(
+        'error',
         `[AircallEverywhere] [iframe creation] ${this.domToLoadPhone} not be found. Error:`,
         e
       );
@@ -204,7 +206,7 @@ class AircallPhone {
     this.w.addEventListener(
       'message',
       event => {
-        console.info('[AircallEverywhere] [event listener] received event', event);
+        this._log('info', '[AircallEverywhere] [event listener] received event', event);
         // we test if our format object is present. if not, we stop
         const matchPrefixRegex = /^apm_phone_/;
         if (!event.data || !event.data.name || !matchPrefixRegex.test(event.data.name)) {
@@ -271,6 +273,20 @@ class AircallPhone {
     }
   }
 
+  _log(action, ...restArguments) {
+    if (typeof action !== 'string') {
+      throw new Error('[AircallEverywhere] [_log] Must provide valid console action');
+    }
+
+    // logging turned off, don't do anything
+    if (!this.debug) {
+      return;
+    }
+
+    // if valid action, execute with given args, otherwise default to info
+    console[action] ? console[action](...restArguments) : console.info(...restArguments);
+  }
+
   getUrlToLoad() {
     return `${this.phoneUrl}?integration=generic`;
   }
@@ -319,7 +335,7 @@ class AircallPhone {
     }
 
     // we log the error
-    console.error(`[AircallEverywhere] [send function] ${error.message}`);
+    this._log('error', `[AircallEverywhere] [send function] ${error.message}`);
 
     // we send the callback with the error
     if (typeof callback === 'function') {
