@@ -16,6 +16,7 @@ You need to create an instance to use the library. The constructor has a setting
   - `big`: 666px by 376px. Recommanded and default value
   - `small`: 600px by 376px
   - `auto`: 100% width and height. Not recommanded
+- `debug`: Enables or disables logging. Defaults to `true`.
 
 Example:
 
