@@ -1,6 +1,6 @@
 {
   "name": "aircall-everywhere",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Library to embed and communicate with aircall-phone in any webpage",
   "main": "dist/index.js",
   "scripts": {
@@ -54,8 +54,8 @@
     "pretty-quick": "1.11.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
-    "webpack": "4.32.0",
-    "webpack-cli": "3.3.2",
-    "webpack-dev-server": "^3.4.1"
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-server": "^3.10.1"
   }
 }
