@@ -197,3 +197,7 @@ tests are available:
 
 to create a new version:
 `yarn version --patch|--minor|--major` and create a PR. The CI will publish the new version after manual approval.
+
+# Code coverage
+
+A code coverage report is available [here](https://aircall.github.io/aircall-everywhere/tests/).
