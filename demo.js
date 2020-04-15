@@ -87,9 +87,9 @@
 /******/ ({
 
 /***/ "../../demo/demo.js":
-/*!******************************************************!*\
-  !*** /home/circleci/aircall-everywhere/demo/demo.js ***!
-  \******************************************************/
+/*!**********************************************************************!*\
+  !*** /Users/xave/Documents/Projects/aircall-everywhere/demo/demo.js ***!
+  \**********************************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -290,9 +290,9 @@ loadPhoneButton.addEventListener(
 /***/ }),
 
 /***/ "../../demo/demo.scss":
-/*!********************************************************!*\
-  !*** /home/circleci/aircall-everywhere/demo/demo.scss ***!
-  \********************************************************/
+/*!************************************************************************!*\
+  !*** /Users/xave/Documents/Projects/aircall-everywhere/demo/demo.scss ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -320,9 +320,9 @@ if(false) {}
 /***/ }),
 
 /***/ "../../demo/reset.scss":
-/*!*********************************************************!*\
-  !*** /home/circleci/aircall-everywhere/demo/reset.scss ***!
-  \*********************************************************/
+/*!*************************************************************************!*\
+  !*** /Users/xave/Documents/Projects/aircall-everywhere/demo/reset.scss ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -350,9 +350,9 @@ if(false) {}
 /***/ }),
 
 /***/ "../../dist/index.js":
-/*!*******************************************************!*\
-  !*** /home/circleci/aircall-everywhere/dist/index.js ***!
-  \*******************************************************/
+/*!***********************************************************************!*\
+  !*** /Users/xave/Documents/Projects/aircall-everywhere/dist/index.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -362,24 +362,24 @@ module.exports=function(e){var n={};function t(o){if(n[o])return n[o].exports;va
 /***/ }),
 
 /***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/demo.scss":
-/*!*******************************************************************************************************************************************************************************************************!*\
-  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/home/circleci/aircall-everywhere/demo/demo.scss ***!
-  \*******************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/Users/xave/Documents/Projects/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/Users/xave/Documents/Projects/aircall-everywhere/demo/demo.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "../../node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "/* VARIABLES */\n/* FONTS */\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Regular.otf\") format(\"opentype\");\n  font-weight: 300;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-SemiBold.otf\") format(\"opentype\");\n  font-weight: 500;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Bold.otf\") format(\"opentype\");\n  font-weight: 700;\n  font-style: normal; }\n\n/* GLOBAL */\n* {\n  box-sizing: border-box; }\n\nhtml,\nbody {\n  height: 100%; }\n\nbody {\n  font-family: 'Fellix', Helvetica, Arial, sans-serif;\n  font-size: 16px;\n  color: #101820;\n  font-weight: 300;\n  line-height: 1.3; }\n\nh1 {\n  font-size: 42px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 26px;\n  font-weight: 500; }\n\nh3 {\n  font-size: 20px;\n  font-weight: 500; }\n\n.d-none {\n  display: none !important; }\n\n.d-flex {\n  display: flex !important; }\n\n/* HEADER */\nnav {\n  height: 70px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  background-color: #307fe2;\n  padding: 10px 2vw;\n  justify-content: space-between;\n  z-index: 10; }\n  nav .nav-content {\n    display: flex;\n    line-height: 50px; }\n    nav .nav-content a {\n      margin: 0 1vw;\n      text-decoration: none;\n      font-size: 20px;\n      color: #fff; }\n      nav .nav-content a:hover {\n        text-decoration: underline; }\n      nav .nav-content a#link-aircall {\n        display: flex; }\n        nav .nav-content a#link-aircall img {\n          margin: auto 0;\n          position: relative; }\n      nav .nav-content a#phone-aircall {\n        width: 40px;\n        display: flex;\n        cursor: pointer; }\n        nav .nav-content a#phone-aircall img {\n          width: 40px;\n          margin: auto; }\n\n/* PHONE */\n#phone-container {\n  position: fixed;\n  top: 65px;\n  right: 10px;\n  z-index: 30; }\n  #phone-container .arrow-up {\n    width: 0;\n    height: 0;\n    border-left: 5px solid transparent;\n    border-right: 5px solid transparent;\n    border-bottom: 5px solid #afafa9;\n    position: absolute;\n    right: 3.3vw;\n    top: -5px; }\n  #phone-container #phone {\n    border-radius: 5px;\n    background-color: #fff;\n    border: 3px solid #afafa9;\n    overflow: hidden;\n    height: 672px;\n    width: 382px;\n    box-shadow: 0 5px 10px #10182020; }\n    #phone-container #phone iframe {\n      border-radius: 2px; }\n\n/* CONTENT */\nmain {\n  margin-top: 70px; }\n\n.jumbotron {\n  padding: 70px 10vw;\n  background-color: #307fe2; }\n  .jumbotron h1 {\n    text-align: center;\n    color: #fff; }\n  .jumbotron p {\n    margin-top: 20px;\n    font-size: 20px;\n    color: #fff;\n    text-align: center; }\n\npre {\n  font-family: monospace; }\n  pre.prettyprint {\n    width: 100% !important;\n    margin: 0 !important;\n    padding: 30px !important;\n    border-radius: 0 !important;\n    background-color: transparent !important; }\n\n.container {\n  position: relative; }\n  .container .dark-box {\n    width: 40%;\n    background-color: #003b4c;\n    position: absolute;\n    right: 0;\n    top: 0;\n    bottom: 0;\n    z-index: -1; }\n  .container h2 {\n    margin-right: 40%;\n    padding: 0px 3vw; }\n  .container h3 {\n    padding-bottom: 20px; }\n  .container a {\n    color: #00b388;\n    text-decoration: none;\n    font-weight: 500; }\n    .container a:hover {\n      color: #006c5b;\n      text-decoration: underline; }\n  .container .row {\n    display: flex;\n    align-items: stretch;\n    padding: 50px 0; }\n    .container .row:last-child {\n      padding-bottom: 0; }\n    .container .row .left {\n      width: 60%;\n      padding: 30px 3vw 70px 3vw;\n      position: relative;\n      background-color: #f4f4f4; }\n      .container .row .left.no-alert {\n        padding-bottom: 30px; }\n      .container .row .left p {\n        line-height: 2; }\n      .container .row .left pre.prettyprint {\n        background-color: #00242d !important;\n        width: auto !important;\n        flex-grow: 1; }\n      .container .row .left .button {\n        margin-bottom: 20px; }\n    .container .row .right {\n      width: 40%;\n      background: #00242d; }\n  .container #installation {\n    padding-top: 40px; }\n  .container #waiting-events {\n    margin: 40px 0; }\n  .container #dial-button {\n    margin-top: 40px; }\n  .container #call-events-log label {\n    position: relative;\n    display: block;\n    margin: 20px 0; }\n    .container #call-events-log label > span {\n      display: block;\n      background-color: #003b4c;\n      font-family: monospace;\n      color: #fff;\n      padding: 10px 40px 10px 30px;\n      position: relative;\n      cursor: pointer; }\n      .container #call-events-log label > span::after {\n        position: absolute;\n        content: '+';\n        color: #fff;\n        right: 30px;\n        top: 10px; }\n  .container #call-events-log pre.prettyprint {\n    display: none;\n    height: 0;\n    overflow: hidden; }\n  .container #call-events-log input {\n    display: none; }\n    .container #call-events-log input:checked + label pre.prettyprint {\n      height: auto;\n      display: block; }\n    .container #call-events-log input:checked + label > span::after {\n      content: '-'; }\n\n.button {\n  background-color: #00b388;\n  color: #fff;\n  font-size: 18px;\n  border: none;\n  border-radius: 5px;\n  padding: 10px 20px;\n  cursor: pointer;\n  display: block;\n  outline: none;\n  transition: background-color 300 ease-in; }\n  .button:hover {\n    background-color: #006c5b;\n    transition: background-color 300 ease-in; }\n  .button:disabled {\n    background-color: #afafa9;\n    color: #fff;\n    cursor: not-allowed; }\n\n.alert {\n  padding: 10px 3vw;\n  font-size: 18px;\n  color: #fff;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n  .alert.alert-success {\n    background-color: #00b388; }\n  .alert.alert-danger {\n    background-color: #ff5c39; }\n  .alert.alert-warning {\n    background-color: #fcbb26; }\n", ""]);
+exports.push([module.i, "/* VARIABLES */\n/* FONTS */\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Light.otf\") format(\"opentype\");\n  font-weight: 300;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Regular.otf\") format(\"opentype\");\n  font-weight: 500;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Medium.otf\") format(\"opentype\");\n  font-weight: 600;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-SemiBold.otf\") format(\"opentype\");\n  font-weight: 700;\n  font-style: normal; }\n\n/* GLOBAL */\n* {\n  box-sizing: border-box; }\n  * ::-moz-selection {\n    background: rgba(162, 228, 184, 0.3); }\n  * ::selection {\n    background: rgba(162, 228, 184, 0.3); }\n\nhtml,\nbody {\n  height: 100%;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased; }\n\nbody {\n  font-family: 'Fellix', Helvetica, Arial, sans-serif;\n  font-size: 15px;\n  color: #4b5054;\n  line-height: 1.4; }\n\nh1,\nh2,\nh3 {\n  font-weight: 700;\n  color: #000000; }\n\nh1 {\n  font-size: 42px; }\n\nh2 {\n  font-size: 32px; }\n\nh3 {\n  font-size: 20px; }\n\n.d-none {\n  display: none !important; }\n\n.d-flex {\n  display: flex !important; }\n\n/* HEADER */\nnav {\n  height: 90px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  background-color: #fff;\n  padding: 10px 2vw;\n  justify-content: space-between;\n  box-shadow: 0 1px 1px #f4f4f4;\n  z-index: 10; }\n  nav .nav-content {\n    display: flex;\n    align-items: center; }\n    nav .nav-content a {\n      margin: 0 1vw;\n      text-decoration: none;\n      font-weight: 600;\n      color: #4b5054;\n      transition: color 0.1s ease-in-out; }\n      nav .nav-content a:hover {\n        color: #00b388; }\n      nav .nav-content a#link-aircall {\n        display: flex; }\n        nav .nav-content a#link-aircall img {\n          margin: auto 0;\n          position: relative; }\n      nav .nav-content a#phone-aircall {\n        width: 30px;\n        display: flex;\n        cursor: pointer; }\n        nav .nav-content a#phone-aircall img {\n          width: 30px;\n          margin: auto; }\n\n/* PHONE */\n#phone-container {\n  position: fixed;\n  top: 65px;\n  right: 10px;\n  z-index: 30; }\n  #phone-container .arrow-up {\n    position: absolute;\n    right: 3.3vw;\n    top: -5px;\n    width: 0;\n    height: 0;\n    border-left: 5px solid transparent;\n    border-right: 5px solid transparent;\n    border-bottom: 5px solid #afafa9; }\n  #phone-container #phone {\n    border-radius: 4px;\n    background-color: #fff;\n    border: 1px solid #afafa9;\n    overflow: hidden;\n    box-shadow: 0 5px 10px #10182060; }\n    #phone-container #phone iframe {\n      border-radius: 4px; }\n\n/* CONTENT */\n.jumbotron {\n  padding: 180px 10vw 0; }\n  .jumbotron h1 {\n    text-align: center;\n    color: #000000; }\n  .jumbotron p {\n    margin-top: 20px;\n    font-size: 20px;\n    text-align: center; }\n\ncode {\n  padding: 2px 4px;\n  background: #f4f4f4;\n  border-radius: 4px;\n  font-family: \"Operator\", Menlo, DejaVu Sans Mono, Monaco, Consolas, \"Courier New\", monospace;\n  font-size: 0.9em; }\n\npre {\n  font-family: \"Operator\", Menlo, DejaVu Sans Mono, Monaco, Consolas, \"Courier New\", monospace; }\n  pre.prettyprint {\n    width: 100% !important;\n    margin: 0 !important;\n    padding: 16px !important;\n    border-radius: 4px !important;\n    background: #40464d;\n    color: #d9d9d6;\n    overflow: hidden; }\n    pre.prettyprint code {\n      background: transparent; }\n\n.container {\n  position: relative;\n  padding: 3vw;\n  max-width: 1200px;\n  margin: auto; }\n  .container h2 {\n    margin-top: 40px; }\n    .container h2::before {\n      display: block;\n      height: 1px;\n      width: 100%;\n      margin-bottom: 40px;\n      background: #f4f4f4;\n      content: ''; }\n  .container a {\n    color: #00b388;\n    text-decoration: none;\n    font-weight: 600;\n    transition: color 0.1s ease-in-out; }\n    .container a:hover {\n      color: #006c5b; }\n  .container .row {\n    display: flex;\n    align-items: stretch;\n    padding: 20px 0; }\n    .container .row:last-child {\n      padding-bottom: 0; }\n    .container .row .left {\n      position: relative;\n      width: 60%;\n      padding-right: 4vw; }\n      .container .row .left p {\n        margin-bottom: 1em; }\n      .container .row .left pre.prettyprint {\n        background-color: #40464d !important;\n        width: auto !important;\n        flex-grow: 1; }\n      .container .row .left .button {\n        margin-bottom: 20px; }\n    .container .row .right {\n      width: 40%; }\n  .container #installation {\n    padding-top: 40px; }\n  .container #waiting-events {\n    margin: 40px 0; }\n  .container #dial-button {\n    margin-top: 40px; }\n  .container #call-events-log label {\n    position: relative;\n    display: block;\n    margin: 20px 0; }\n    .container #call-events-log label > span {\n      display: block;\n      background-color: #003b4c;\n      font-family: \"Operator\", Menlo, DejaVu Sans Mono, Monaco, Consolas, \"Courier New\", monospace;\n      color: #fff;\n      padding: 10px 40px 10px 30px;\n      position: relative;\n      cursor: pointer; }\n      .container #call-events-log label > span::after {\n        position: absolute;\n        content: '+';\n        color: #fff;\n        right: 30px;\n        top: 10px; }\n  .container #call-events-log pre.prettyprint {\n    display: none;\n    height: 0;\n    overflow: hidden; }\n  .container #call-events-log input {\n    display: none; }\n    .container #call-events-log input:checked + label pre.prettyprint {\n      height: auto;\n      display: block; }\n    .container #call-events-log input:checked + label > span::after {\n      content: '-'; }\n\n.button {\n  display: block;\n  background-color: #00b388;\n  color: #fff;\n  font-weight: 600;\n  font-size: 15px;\n  border: none;\n  border-radius: 4px;\n  padding: 12px 20px;\n  cursor: pointer;\n  outline: none;\n  transition: background-color 0.1s ease-in-out; }\n  .button:hover {\n    background-color: #006c5b; }\n  .button:disabled {\n    background-color: #afafa9;\n    color: #fff;\n    cursor: not-allowed; }\n\n.alert {\n  margin: 20px auto;\n  padding: 10px 14px;\n  font-size: 0.95em;\n  border-radius: 4px; }\n  .alert.alert-success {\n    color: #00b388;\n    box-shadow: 0 0 0 1px #00b388; }\n  .alert.alert-danger {\n    color: #ff5c39;\n    box-shadow: 0 0 0 1px #ff5c39; }\n  .alert.alert-warning {\n    color: #ff854c;\n    box-shadow: 0 0 0 1px #ff854c; }\n\n@media only screen and (max-width: 800px) {\n  .container .row {\n    flex-direction: column; }\n    .container .row .left {\n      width: 100%;\n      padding: 0; }\n    .container .row .right {\n      width: 100%; } }\n", ""]);
 
 
 
 /***/ }),
 
 /***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/reset.scss":
-/*!********************************************************************************************************************************************************************************************************!*\
-  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/home/circleci/aircall-everywhere/demo/reset.scss ***!
-  \********************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/Users/xave/Documents/Projects/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/Users/xave/Documents/Projects/aircall-everywhere/demo/reset.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -392,9 +392,9 @@ exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 
 /***/ }),
 
 /***/ "../../node_modules/css-loader/dist/runtime/api.js":
-/*!*************************************************************************************!*\
-  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/runtime/api.js ***!
-  \*************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -488,9 +488,9 @@ function toComment(sourceMap) {
 /***/ }),
 
 /***/ "../../node_modules/style-loader/lib/addStyles.js":
-/*!************************************************************************************!*\
-  !*** /home/circleci/aircall-everywhere/node_modules/style-loader/lib/addStyles.js ***!
-  \************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/style-loader/lib/addStyles.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -897,9 +897,9 @@ function updateLink (link, options, obj) {
 /***/ }),
 
 /***/ "../../node_modules/style-loader/lib/urls.js":
-/*!*******************************************************************************!*\
-  !*** /home/circleci/aircall-everywhere/node_modules/style-loader/lib/urls.js ***!
-  \*******************************************************************************/
+/*!***********************************************************************************************!*\
+  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/style-loader/lib/urls.js ***!
+  \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -997,13 +997,13 @@ module.exports = function (css) {
 /***/ }),
 
 /***/ 0:
-/*!************************************************************!*\
-  !*** multi /home/circleci/aircall-everywhere/demo/demo.js ***!
-  \************************************************************/
+/*!****************************************************************************!*\
+  !*** multi /Users/xave/Documents/Projects/aircall-everywhere/demo/demo.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/circleci/aircall-everywhere/demo/demo.js */"../../demo/demo.js");
+module.exports = __webpack_require__(/*! /Users/xave/Documents/Projects/aircall-everywhere/demo/demo.js */"../../demo/demo.js");
 
 
 /***/ })
