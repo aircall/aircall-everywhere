@@ -87,9 +87,9 @@
 /******/ ({
 
 /***/ "../../index.js":
-/*!******************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/index.js ***!
-  \******************************************************************/
+/*!**************************************************!*\
+  !*** /home/circleci/aircall-everywhere/index.js ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -104,9 +104,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "../../src/javascripts/aircallPhone.js":
-/*!*****************************************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/src/javascripts/aircallPhone.js ***!
-  \*****************************************************************************************/
+/*!*************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/src/javascripts/aircallPhone.js ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -191,7 +191,7 @@ class AircallPhone {
     // we get the passed dom
     try {
       const el = document.querySelector(this.domToLoadPhone);
-      el.innerHTML = `<iframe allow="microphone; autoplay" src="${this.getUrlToLoad()}" style="${sizeStyle}"></iframe>`;
+      el.innerHTML = `<iframe allow="microphone; autoplay; clipboard-read; clipboard-write" src="${this.getUrlToLoad()}" style="${sizeStyle}"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
       this._log(
@@ -356,7 +356,7 @@ class AircallPhone {
 
     if (!!this.phoneWindow && !!this.phoneWindow.source) {
       let responseTimeout = null;
-      let timeoutLimit = 500;
+      let timeoutLimit = 2000;
 
       // we send the message
       this.phoneWindow.source.postMessage(
@@ -424,13 +424,13 @@ class AircallPhone {
 /***/ }),
 
 /***/ 1:
-/*!************************************************************************!*\
-  !*** multi /Users/xave/Documents/Projects/aircall-everywhere/index.js ***!
-  \************************************************************************/
+/*!********************************************************!*\
+  !*** multi /home/circleci/aircall-everywhere/index.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/xave/Documents/Projects/aircall-everywhere/index.js */"../../index.js");
+module.exports = __webpack_require__(/*! /home/circleci/aircall-everywhere/index.js */"../../index.js");
 
 
 /***/ })

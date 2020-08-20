@@ -87,9 +87,9 @@
 /******/ ({
 
 /***/ "../../demo/demo.js":
-/*!**********************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/demo/demo.js ***!
-  \**********************************************************************/
+/*!******************************************************!*\
+  !*** /home/circleci/aircall-everywhere/demo/demo.js ***!
+  \******************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -290,9 +290,9 @@ loadPhoneButton.addEventListener(
 /***/ }),
 
 /***/ "../../demo/demo.scss":
-/*!************************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/demo/demo.scss ***!
-  \************************************************************************/
+/*!********************************************************!*\
+  !*** /home/circleci/aircall-everywhere/demo/demo.scss ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -320,9 +320,9 @@ if(false) {}
 /***/ }),
 
 /***/ "../../demo/reset.scss":
-/*!*************************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/demo/reset.scss ***!
-  \*************************************************************************/
+/*!*********************************************************!*\
+  !*** /home/circleci/aircall-everywhere/demo/reset.scss ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -350,21 +350,21 @@ if(false) {}
 /***/ }),
 
 /***/ "../../dist/index.js":
-/*!***********************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/dist/index.js ***!
-  \***********************************************************************/
+/*!*******************************************************!*\
+  !*** /home/circleci/aircall-everywhere/dist/index.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports=function(e){var n={};function t(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,t),r.l=!0,r.exports}return t.m=e,t.c=n,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:o})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(t.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var r in e)t.d(o,r,function(n){return e[n]}.bind(null,r));return o},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},t.p="",t(t.s=0)}([function(e,n,t){e.exports=t(1)},function(e,n,t){"use strict";function o(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}function r(e,n){for(var t=0;t<n.length;t++){var o=n[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}t.r(n);var i=function(){function e(){var n=this,t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{debug:!0};o(this,e),this.phoneWindow=null,this.integrationSettings={},this.userSettings={},this.eventsRegistered={},this.phoneLoginState=!1;var r=/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;this.phoneUrl=void 0!==t.phoneUrl&&!0===r.test(t.phoneUrl)?t.phoneUrl:"https://phone.aircall.io",this.domToLoadPhone=t.domToLoadPhone,this.integrationToLoad=t.integrationToLoad,this.debug=t.debug,this.size=t.size||"big",this.onLogin=function(){if("function"==typeof t.onLogin&&!1===n.phoneLoginState){n.phoneLoginState=!0;var e={user:n.userSettings};Object.keys(n.integrationSettings).length>0&&(e.settings=n.integrationSettings),t.onLogin(e)}},this.onLogout=function(){"function"==typeof t.onLogout&&t.onLogout()},this.w=t.window||window,this._messageListener(),this.domToLoadPhone&&this._createPhoneIframe()}var n,t,i;return n=e,(t=[{key:"_resetData",value:function(){this.phoneWindow=null,this.integrationSettings={},this.userSettings={},this.phoneLoginState=!1}},{key:"_createPhoneIframe",value:function(){var e="";switch(this.size){case"big":e="height:666px; width:376px;";break;case"small":e="height:600px; width:376px;";break;case"auto":e="height:100%; width:100%;"}try{document.querySelector(this.domToLoadPhone).innerHTML='<iframe allow="microphone; autoplay" src="'.concat(this.getUrlToLoad(),'" style="').concat(e,'"></iframe>')}catch(e){this._log("error","[AircallEverywhere] [iframe creation] ".concat(this.domToLoadPhone," not be found. Error:"),e)}}},{key:"_messageListener",value:function(){var e=this;this.w.addEventListener("message",(function(n){if(e._log("info","[AircallEverywhere] [event listener] received event",n),!n.data||!n.data.name||!/^apm_phone_/.test(n.data.name))return!1;if("apm_phone_loaded"!==n.data.name){if("apm_phone_integration_settings"===n.data.name&&n.data.value)return e.integrationSettings=n.data.value,void e.onLogin();if("apm_phone_logout"===n.data.name)return e._resetData(),void e.onLogout();for(var t in e.eventsRegistered)n.data.name==="apm_phone_".concat(t)&&e.eventsRegistered[t](n.data.value)}else e._handleInitMessage(n)}),!1)}},{key:"_handleInitMessage",value:function(e){this.phoneWindow={source:e.source,origin:e.origin},e.data.value&&(this.userSettings=e.data.value),this.phoneWindow.source.postMessage({name:"apm_app_isready"},this.phoneWindow.origin),this.integrationToLoad?this.phoneWindow.source.postMessage({name:"apm_app_get_settings",value:this.integrationToLoad},this.phoneWindow.origin):this.onLogin()}},{key:"_log",value:function(e){var n,t;if("string"!=typeof e)throw new Error("[AircallEverywhere] [_log] Must provide valid console action");if(this.debug){for(var o=arguments.length,r=new Array(o>1?o-1:0),i=1;i<o;i++)r[i-1]=arguments[i];console[e]?(n=console)[e].apply(n,r):(t=console).info.apply(t,r)}}},{key:"getUrlToLoad",value:function(){return"".concat(this.phoneUrl,"?integration=generic")}},{key:"on",value:function(e,n){if(!e||"function"!=typeof n)throw new Error("[AircallEverywhere] [on function] Invalid parameters format. Expected non empty string and function");this.eventsRegistered[e]=n}},{key:"_handleSendError",value:function(e,n){if(e&&e.code||(e={code:"unknown_error"}),e&&!e.message)switch(e.code){case"unknown_error":e.message="Unknown error. Contact aircall developers dev@aircall.io";break;case"no_event_name":e.message="Invalid parameter eventName. Expected an non empty string";break;case"not_ready":e.message='Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback';break;case"no_answer":e.message="No answer from the phone. Check if the phone is logged in";break;case"invalid_response":e.message="Invalid response from the phone. Contact aircall developers dev@aircall.io";break;default:e.message="Generic error message"}this._log("error","[AircallEverywhere] [send function] ".concat(e.message)),"function"==typeof n&&n(!1,e)}},{key:"send",value:function(e,n,t){var o=this;if("function"!=typeof n||t||(t=n,n=void 0),!e)return this._handleSendError({code:"no_event_name"},t),!1;if(!this.phoneWindow||!this.phoneWindow.source)return this._handleSendError({code:"not_ready"},t),!1;var r=null;this.phoneWindow.source.postMessage({name:"apm_app_".concat(e),value:n},this.phoneWindow.origin),this.on("".concat(e,"_response"),(function(n){o.removeListener("".concat(e,"_response")),clearTimeout(r),n&&!1===n.success?o._handleSendError({code:n.errorCode,message:n.errorMessage},t):n&&!0===n.success?"function"==typeof t&&t(!0,n.data):o._handleSendError({code:"invalid_response"},t)})),r=setTimeout((function(){o.removeListener("".concat(e,"_response")),o._handleSendError({code:"no_answer"},t)}),500)}},{key:"removeListener",value:function(e){var n=this;return!!this.eventsRegistered[e]&&(Object.keys(this.eventsRegistered).filter((function(n){return n===e})).forEach((function(e){return delete n.eventsRegistered[e]})),!0)}},{key:"isLoggedIn",value:function(e){this.send("is_logged_in",(function(n){e(n)}))}}])&&r(n.prototype,t),i&&r(n,i),e}();n.default=i}]);
+module.exports=function(e){var n={};function t(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,t),r.l=!0,r.exports}return t.m=e,t.c=n,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:o})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(t.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var r in e)t.d(o,r,function(n){return e[n]}.bind(null,r));return o},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},t.p="",t(t.s=0)}([function(e,n,t){e.exports=t(1)},function(e,n,t){"use strict";function o(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}function r(e,n){for(var t=0;t<n.length;t++){var o=n[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}t.r(n);var i=function(){function e(){var n=this,t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{debug:!0};o(this,e),this.phoneWindow=null,this.integrationSettings={},this.userSettings={},this.eventsRegistered={},this.phoneLoginState=!1;var r=/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;this.phoneUrl=void 0!==t.phoneUrl&&!0===r.test(t.phoneUrl)?t.phoneUrl:"https://phone.aircall.io",this.domToLoadPhone=t.domToLoadPhone,this.integrationToLoad=t.integrationToLoad,this.debug=t.debug,this.size=t.size||"big",this.onLogin=function(){if("function"==typeof t.onLogin&&!1===n.phoneLoginState){n.phoneLoginState=!0;var e={user:n.userSettings};Object.keys(n.integrationSettings).length>0&&(e.settings=n.integrationSettings),t.onLogin(e)}},this.onLogout=function(){"function"==typeof t.onLogout&&t.onLogout()},this.w=t.window||window,this._messageListener(),this.domToLoadPhone&&this._createPhoneIframe()}var n,t,i;return n=e,(t=[{key:"_resetData",value:function(){this.phoneWindow=null,this.integrationSettings={},this.userSettings={},this.phoneLoginState=!1}},{key:"_createPhoneIframe",value:function(){var e="";switch(this.size){case"big":e="height:666px; width:376px;";break;case"small":e="height:600px; width:376px;";break;case"auto":e="height:100%; width:100%;"}try{document.querySelector(this.domToLoadPhone).innerHTML='<iframe allow="microphone; autoplay; clipboard-read; clipboard-write" src="'.concat(this.getUrlToLoad(),'" style="').concat(e,'"></iframe>')}catch(e){this._log("error","[AircallEverywhere] [iframe creation] ".concat(this.domToLoadPhone," not be found. Error:"),e)}}},{key:"_messageListener",value:function(){var e=this;this.w.addEventListener("message",(function(n){if(e._log("info","[AircallEverywhere] [event listener] received event",n),!n.data||!n.data.name||!/^apm_phone_/.test(n.data.name))return!1;if("apm_phone_loaded"!==n.data.name){if("apm_phone_integration_settings"===n.data.name&&n.data.value)return e.integrationSettings=n.data.value,void e.onLogin();if("apm_phone_logout"===n.data.name)return e._resetData(),void e.onLogout();for(var t in e.eventsRegistered)n.data.name==="apm_phone_".concat(t)&&e.eventsRegistered[t](n.data.value)}else e._handleInitMessage(n)}),!1)}},{key:"_handleInitMessage",value:function(e){this.phoneWindow={source:e.source,origin:e.origin},e.data.value&&(this.userSettings=e.data.value),this.phoneWindow.source.postMessage({name:"apm_app_isready"},this.phoneWindow.origin),this.integrationToLoad?this.phoneWindow.source.postMessage({name:"apm_app_get_settings",value:this.integrationToLoad},this.phoneWindow.origin):this.onLogin()}},{key:"_log",value:function(e){var n,t;if("string"!=typeof e)throw new Error("[AircallEverywhere] [_log] Must provide valid console action");if(this.debug){for(var o=arguments.length,r=new Array(o>1?o-1:0),i=1;i<o;i++)r[i-1]=arguments[i];console[e]?(n=console)[e].apply(n,r):(t=console).info.apply(t,r)}}},{key:"getUrlToLoad",value:function(){return"".concat(this.phoneUrl,"?integration=generic")}},{key:"on",value:function(e,n){if(!e||"function"!=typeof n)throw new Error("[AircallEverywhere] [on function] Invalid parameters format. Expected non empty string and function");this.eventsRegistered[e]=n}},{key:"_handleSendError",value:function(e,n){if(e&&e.code||(e={code:"unknown_error"}),e&&!e.message)switch(e.code){case"unknown_error":e.message="Unknown error. Contact aircall developers dev@aircall.io";break;case"no_event_name":e.message="Invalid parameter eventName. Expected an non empty string";break;case"not_ready":e.message='Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback';break;case"no_answer":e.message="No answer from the phone. Check if the phone is logged in";break;case"invalid_response":e.message="Invalid response from the phone. Contact aircall developers dev@aircall.io";break;default:e.message="Generic error message"}this._log("error","[AircallEverywhere] [send function] ".concat(e.message)),"function"==typeof n&&n(!1,e)}},{key:"send",value:function(e,n,t){var o=this;if("function"!=typeof n||t||(t=n,n=void 0),!e)return this._handleSendError({code:"no_event_name"},t),!1;if(!this.phoneWindow||!this.phoneWindow.source)return this._handleSendError({code:"not_ready"},t),!1;var r=null;this.phoneWindow.source.postMessage({name:"apm_app_".concat(e),value:n},this.phoneWindow.origin),this.on("".concat(e,"_response"),(function(n){o.removeListener("".concat(e,"_response")),clearTimeout(r),n&&!1===n.success?o._handleSendError({code:n.errorCode,message:n.errorMessage},t):n&&!0===n.success?"function"==typeof t&&t(!0,n.data):o._handleSendError({code:"invalid_response"},t)})),r=setTimeout((function(){o.removeListener("".concat(e,"_response")),o._handleSendError({code:"no_answer"},t)}),2e3)}},{key:"removeListener",value:function(e){var n=this;return!!this.eventsRegistered[e]&&(Object.keys(this.eventsRegistered).filter((function(n){return n===e})).forEach((function(e){return delete n.eventsRegistered[e]})),!0)}},{key:"isLoggedIn",value:function(e){this.send("is_logged_in",(function(n){e(n)}))}}])&&r(n.prototype,t),i&&r(n,i),e}();n.default=i}]);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
 /***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/demo.scss":
-/*!*******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/Users/xave/Documents/Projects/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/Users/xave/Documents/Projects/aircall-everywhere/demo/demo.scss ***!
-  \*******************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/home/circleci/aircall-everywhere/demo/demo.scss ***!
+  \*******************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -377,9 +377,9 @@ exports.push([module.i, "/* VARIABLES */\n/* FONTS */\n@font-face {\n  font-fami
 /***/ }),
 
 /***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/reset.scss":
-/*!********************************************************************************************************************************************************************************************************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/Users/xave/Documents/Projects/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/Users/xave/Documents/Projects/aircall-everywhere/demo/reset.scss ***!
-  \********************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/home/circleci/aircall-everywhere/demo/reset.scss ***!
+  \********************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -392,9 +392,9 @@ exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 
 /***/ }),
 
 /***/ "../../node_modules/css-loader/dist/runtime/api.js":
-/*!*****************************************************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/css-loader/dist/runtime/api.js ***!
-  \*****************************************************************************************************/
+/*!*************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/runtime/api.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -488,9 +488,9 @@ function toComment(sourceMap) {
 /***/ }),
 
 /***/ "../../node_modules/style-loader/lib/addStyles.js":
-/*!****************************************************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/style-loader/lib/addStyles.js ***!
-  \****************************************************************************************************/
+/*!************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/style-loader/lib/addStyles.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -897,9 +897,9 @@ function updateLink (link, options, obj) {
 /***/ }),
 
 /***/ "../../node_modules/style-loader/lib/urls.js":
-/*!***********************************************************************************************!*\
-  !*** /Users/xave/Documents/Projects/aircall-everywhere/node_modules/style-loader/lib/urls.js ***!
-  \***********************************************************************************************/
+/*!*******************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/style-loader/lib/urls.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -997,13 +997,13 @@ module.exports = function (css) {
 /***/ }),
 
 /***/ 0:
-/*!****************************************************************************!*\
-  !*** multi /Users/xave/Documents/Projects/aircall-everywhere/demo/demo.js ***!
-  \****************************************************************************/
+/*!************************************************************!*\
+  !*** multi /home/circleci/aircall-everywhere/demo/demo.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/xave/Documents/Projects/aircall-everywhere/demo/demo.js */"../../demo/demo.js");
+module.exports = __webpack_require__(/*! /home/circleci/aircall-everywhere/demo/demo.js */"../../demo/demo.js");
 
 
 /***/ })
