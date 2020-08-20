@@ -495,13 +495,13 @@ describe('Aircall SDK Library', () => {
     it('should timeout if no response sent by the phone', () => {
       ap.send('my_event', { foo: 'bar' });
       spyOn(ap, '_handleSendError');
-      jasmine.clock().tick(501);
+      jasmine.clock().tick(2001);
       expect(ap._handleSendError).toHaveBeenCalledWith({ code: 'no_answer' }, undefined);
     });
 
     it('should remove listener for response after timeout', () => {
       ap.send('my_event', { foo: 'bar' });
-      jasmine.clock().tick(501);
+      jasmine.clock().tick(2001);
       expect(ap.eventsRegistered.my_event_response).not.toBeDefined();
     });
 

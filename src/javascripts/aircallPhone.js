@@ -242,7 +242,7 @@ class AircallPhone {
 
     if (!!this.phoneWindow && !!this.phoneWindow.source) {
       let responseTimeout = null;
-      let timeoutLimit = 500;
+      let timeoutLimit = 2000;
 
       // we send the message
       this.phoneWindow.source.postMessage(
