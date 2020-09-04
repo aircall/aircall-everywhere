@@ -49,7 +49,7 @@
     "karma-jasmine": "2.0.1",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "^4.0.0-rc.6",
-    "node-sass": "4.12.0",
+    "node-sass": "4.13.1",
     "prettier": "1.17.1",
     "pretty-quick": "1.11.0",
     "sass-loader": "7.1.0",
