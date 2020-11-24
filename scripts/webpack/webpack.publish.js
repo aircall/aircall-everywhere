@@ -9,7 +9,7 @@ module.exports = () => {
 
   const _entry = {
     demo: [path.join(__dirname, '../../demo/demo.js')],
-    'aircall-everywhere': [path.join(__dirname, '../../index.js')]
+    'aircall-everywhere': [path.join(__dirname, '../../index.js')],
   };
 
   const _devtool = 'source-map';
@@ -20,7 +20,7 @@ module.exports = () => {
 
   const _resolve = {
     modules: ['node_modules', './'],
-    extensions: ['.js']
+    extensions: ['.js'],
   };
 
   const _plugins = [
@@ -39,10 +39,12 @@ module.exports = () => {
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
-        minifyURLs: true
-      }
+        minifyURLs: true,
+      },
     }),
-    new CopyWebpackPlugin([{ from: path.join(__dirname, '../../demo/images'), to: 'images/' }])
+    new CopyWebpackPlugin({
+      patterns: [{ from: path.join(__dirname, '../../demo/images'), to: 'images/' }],
+    }),
   ];
 
   const _module = {
@@ -55,29 +57,29 @@ module.exports = () => {
         loader: 'babel-loader',
 
         options: {
-          presets: ['@babel/preset-env']
-        }
+          presets: ['@babel/preset-env'],
+        },
       },
       {
         test: /\.scss$/,
         use: [
           {
-            loader: 'style-loader' // creates style nodes from JS strings
+            loader: 'style-loader', // creates style nodes from JS strings
           },
           {
-            loader: 'css-loader' // translates CSS into CommonJS
+            loader: 'css-loader', // translates CSS into CommonJS
           },
           {
-            loader: 'sass-loader' // compiles Sass to CSS
-          }
-        ]
-      }
-    ]
+            loader: 'sass-loader', // compiles Sass to CSS
+          },
+        ],
+      },
+    ],
   };
 
   _output = {
     path: path.resolve(__dirname, '../../demo_dist'),
-    filename: '[name].js'
+    filename: '[name].js',
   };
 
   _mode = 'development';
@@ -91,6 +93,6 @@ module.exports = () => {
     plugins: _plugins,
     mode: _mode,
     target: _target,
-    context: _context
+    context: _context,
   };
 };

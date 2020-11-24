@@ -15,7 +15,7 @@ gh-pages-filter: &gh-pages-filter
 executors:
   node:
     docker:
-      - image: circleci/node:10.11.0-browsers
+      - image: circleci/node:12.9.0-browsers
     working_directory: ~/aircall-everywhere
 
 jobs:
@@ -43,15 +43,7 @@ jobs:
     executor: node
     steps:
       - *restore-workspace
-      - run: |
-          sudo rm /etc/apt/sources.list
-          echo "deb http://deb.debian.org/debian jessie main" | sudo tee -a /etc/apt/sources.list
-          echo "deb http://archive.debian.org/debian/ jessie-backports main" | sudo tee -a /etc/apt/sources.list
-          echo "deb-src http://archive.debian.org/debian/ jessie-backports main" | sudo tee -a /etc/apt/sources.list
-          echo "Acquire::Check-Valid-Until false;" | sudo tee -a /etc/apt/apt.conf.d/10-nocheckvalid
-          echo 'Package: *\nPin: origin "archive.debian.org"\nPin-Priority: 500' | sudo tee -a /etc/apt/preferences.d/10-archive-pin
-          sudo apt-get update
-      - run: sudo apt-get install libonig2 && sudo apt-get install libjq1 &&  sudo apt-get install jq && sudo apt-get install bc
+      - run: sudo apt-get install libjq1 jq bc
       - run: yarn coverage
       - run:
           name: Publish coverage on PR
