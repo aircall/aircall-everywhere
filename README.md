@@ -79,7 +79,7 @@ All events from the phone with the payload associated:
     call_id: 12345
   }
   ```
-- `call_end_ringtone`: the ringtone has ended.
+- `call_end_ringtone`: the ringtone has ended. This event is only triggered for incoming calls.
   ```javascript
   {
     answer_status: 'answered | disconnected | refused',
