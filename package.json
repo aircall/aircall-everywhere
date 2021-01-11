@@ -7,14 +7,20 @@
     "start": "webpack-dev-server --config scripts/webpack/webpack.dev.js --open",
     "build": "webpack --config scripts/webpack/webpack.build.js",
     "prepublishOnly": "./scripts/publish.sh",
-    "test": "karma start --singleRun true scripts/karma.conf.js",
-    "test-watch": "karma start scripts/karma.conf.js",
-    "coverage": "karma start --singleRun true --reporters coverage-istanbul scripts/karma.conf.js"
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "coverage": "jest --coverage"
   },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
+  },
+  "jest": {
+    "coverageReporters": [
+      "html",
+      "json-summary"
+    ]
   },
   "repository": {
     "type": "git",
@@ -32,23 +38,13 @@
     "@babel/template": "^7.10.4",
     "@babel/types": "^7.11.5",
     "babel-loader": "^8.1.0",
-    "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-rewire": "^1.2.0",
     "copy-webpack-plugin": "^6.2.0",
     "css-loader": "^4.3.0",
     "gh-pages": "^3.1.0",
     "html-webpack-plugin": "^4.5.0",
     "husky": "^4.3.0",
-    "istanbul-instrumenter-loader": "^3.0.1",
-    "jasmine-core": "^3.6.0",
-    "karma": "^5.2.3",
-    "karma-babel-preprocessor": "^8.0.1",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-coverage": "^2.0.3",
-    "karma-coverage-istanbul-reporter": "^3.0.3",
-    "karma-jasmine": "^4.0.1",
-    "karma-sourcemap-loader": "^0.3.8",
-    "karma-webpack": "^4.0.2",
+    "jest": "^26.4.2",
     "node-sass": "^4.14.1",
     "prettier": "^2.1.2",
     "pretty-quick": "^3.0.2",
