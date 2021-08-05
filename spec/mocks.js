@@ -1,8 +1,8 @@
 export const HTMLElements = {};
 
-export const querySpy = jasmine.createSpy('HTML Element').and.callFake(function(query) {
+export const querySpy = jest.fn((query) => {
   var newElement = {
-    innerHTML: ''
+    innerHTML: '',
   };
   HTMLElements[query] = newElement;
   return HTMLElements[query];
