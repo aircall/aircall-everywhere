@@ -19,6 +19,7 @@ describe('Aircall SDK Library', () => {
     it('should set the options passed', () => {
       const ap = new AircallPhone({
         phoneUrl: 'https://phone.aircall-staging.com',
+        path: 'zendesk',
         domToLoadPhone: '#phone',
         integrationToLoad: 'zendesk',
         size: 'small',
@@ -31,6 +32,7 @@ describe('Aircall SDK Library', () => {
         debug: false,
       });
       expect(ap.phoneUrl).toBeDefined();
+      expect(ap.path).toBeDefined();
       expect(ap.domToLoadPhone).toBeDefined();
       expect(ap.integrationToLoad).toBeDefined();
       expect(ap.size).toBeDefined();
@@ -84,8 +86,10 @@ describe('Aircall SDK Library', () => {
         email: 'toto@toto.fr',
       };
       ap.phoneLoginState = true;
+      ap.path = 'salesforce';
       ap._resetData();
       expect(ap.phoneWindow).toBe(null);
+      expect(ap.path).toBe(null);
       expect(ap.integrationSettings).toEqual({});
       expect(ap.userSettings).toEqual({});
       expect(ap.phoneLoginState).toBe(false);
@@ -289,6 +293,21 @@ describe('Aircall SDK Library', () => {
         source: {
           postMessage: (event, target) => {
             if (event.name === 'apm_app_isready') {
+              done();
+            }
+          },
+        },
+      });
+    });
+
+    it('should send a postmessage that it is ready with path when defined', (done) => {
+      ap.path = 'salesforce';
+      ap._handleInitMessage({
+        data: {},
+        origin: '*',
+        source: {
+          postMessage: (event, target) => {
+            if (event.name === 'apm_app_isready' && event.path === 'salesforce') {
               done();
             }
           },
