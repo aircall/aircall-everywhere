@@ -109,7 +109,7 @@ describe('Aircall SDK Library', () => {
       ap.domToLoadPhone = '#phone';
       ap._createPhoneIframe();
       expect(HTMLElements['#phone'].innerHTML).toEqual(
-        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write" src="https://phone.aircall.io?integration=generic" style="height:666px; width:376px;"></iframe>'
+        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="https://phone.aircall.io?integration=generic" style="height:666px; width:376px;"></iframe>'
       );
     });
 
@@ -118,7 +118,7 @@ describe('Aircall SDK Library', () => {
       ap.size = 'small';
       ap._createPhoneIframe();
       expect(HTMLElements['#phone'].innerHTML).toEqual(
-        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write" src="https://phone.aircall.io?integration=generic" style="height:600px; width:376px;"></iframe>'
+        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="https://phone.aircall.io?integration=generic" style="height:600px; width:376px;"></iframe>'
       );
     });
 
@@ -127,7 +127,7 @@ describe('Aircall SDK Library', () => {
       ap.size = 'auto';
       ap._createPhoneIframe();
       expect(HTMLElements['#phone'].innerHTML).toEqual(
-        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write" src="https://phone.aircall.io?integration=generic" style="height:100%; width:100%;"></iframe>'
+        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="https://phone.aircall.io?integration=generic" style="height:100%; width:100%;"></iframe>'
       );
     });
 
