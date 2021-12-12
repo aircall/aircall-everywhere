@@ -296,26 +296,25 @@ loadPhoneButton.addEventListener(
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/dist/cjs.js!./demo.scss */ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!../../demo/demo.scss");
 
-var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/lib/loader.js!./demo.scss */ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/demo.scss");
+            content = content.__esModule ? content.default : content;
 
-if(typeof content === 'string') content = [[module.i, content, '']];
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
 
-var transform;
-var insertInto;
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
 
 
 
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../node_modules/style-loader/lib/addStyles.js */ "../../node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
+module.exports = content.locals || {};
 
 /***/ }),
 
@@ -326,26 +325,25 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/dist/cjs.js!./reset.scss */ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!../../demo/reset.scss");
 
-var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/lib/loader.js!./reset.scss */ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/reset.scss");
+            content = content.__esModule ? content.default : content;
 
-if(typeof content === 'string') content = [[module.i, content, '']];
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
 
-var transform;
-var insertInto;
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
 
 
 
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../node_modules/style-loader/lib/addStyles.js */ "../../node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
+module.exports = content.locals || {};
 
 /***/ }),
 
@@ -356,37 +354,51 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports=function(e){var n={};function t(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,t),r.l=!0,r.exports}return t.m=e,t.c=n,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:o})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(t.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var r in e)t.d(o,r,function(n){return e[n]}.bind(null,r));return o},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},t.p="",t(t.s=0)}([function(e,n,t){e.exports=t(1)},function(e,n,t){"use strict";function o(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}function r(e,n){for(var t=0;t<n.length;t++){var o=n[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}t.r(n);var i=function(){function e(){var n=this,t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{debug:!0};o(this,e),this.phoneWindow=null,this.integrationSettings={},this.userSettings={},this.eventsRegistered={},this.phoneLoginState=!1;var r=/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;this.phoneUrl=void 0!==t.phoneUrl&&!0===r.test(t.phoneUrl)?t.phoneUrl:"https://phone.aircall.io",this.domToLoadPhone=t.domToLoadPhone,this.integrationToLoad=t.integrationToLoad,this.debug=t.debug,this.size=t.size||"big",this.onLogin=function(){if("function"==typeof t.onLogin&&!1===n.phoneLoginState){n.phoneLoginState=!0;var e={user:n.userSettings};Object.keys(n.integrationSettings).length>0&&(e.settings=n.integrationSettings),t.onLogin(e)}},this.onLogout=function(){"function"==typeof t.onLogout&&t.onLogout()},this.w=t.window||window,this._messageListener(),this.domToLoadPhone&&this._createPhoneIframe()}var n,t,i;return n=e,(t=[{key:"_resetData",value:function(){this.phoneWindow=null,this.integrationSettings={},this.userSettings={},this.phoneLoginState=!1}},{key:"_createPhoneIframe",value:function(){var e="";switch(this.size){case"big":e="height:666px; width:376px;";break;case"small":e="height:600px; width:376px;";break;case"auto":e="height:100%; width:100%;"}try{document.querySelector(this.domToLoadPhone).innerHTML='<iframe allow="microphone; autoplay; clipboard-read; clipboard-write" src="'.concat(this.getUrlToLoad(),'" style="').concat(e,'"></iframe>')}catch(e){this._log("error","[AircallEverywhere] [iframe creation] ".concat(this.domToLoadPhone," not be found. Error:"),e)}}},{key:"_messageListener",value:function(){var e=this;this.w.addEventListener("message",(function(n){if(e._log("info","[AircallEverywhere] [event listener] received event",n),!n.data||!n.data.name||!/^apm_phone_/.test(n.data.name))return!1;if("apm_phone_loaded"!==n.data.name){if("apm_phone_integration_settings"===n.data.name&&n.data.value)return e.integrationSettings=n.data.value,void e.onLogin();if("apm_phone_logout"===n.data.name)return e._resetData(),void e.onLogout();for(var t in e.eventsRegistered)n.data.name==="apm_phone_".concat(t)&&e.eventsRegistered[t](n.data.value)}else e._handleInitMessage(n)}),!1)}},{key:"_handleInitMessage",value:function(e){this.phoneWindow={source:e.source,origin:e.origin},e.data.value&&(this.userSettings=e.data.value),this.phoneWindow.source.postMessage({name:"apm_app_isready"},this.phoneWindow.origin),this.integrationToLoad?this.phoneWindow.source.postMessage({name:"apm_app_get_settings",value:this.integrationToLoad},this.phoneWindow.origin):this.onLogin()}},{key:"_log",value:function(e){var n,t;if("string"!=typeof e)throw new Error("[AircallEverywhere] [_log] Must provide valid console action");if(this.debug){for(var o=arguments.length,r=new Array(o>1?o-1:0),i=1;i<o;i++)r[i-1]=arguments[i];console[e]?(n=console)[e].apply(n,r):(t=console).info.apply(t,r)}}},{key:"getUrlToLoad",value:function(){return"".concat(this.phoneUrl,"?integration=generic")}},{key:"on",value:function(e,n){if(!e||"function"!=typeof n)throw new Error("[AircallEverywhere] [on function] Invalid parameters format. Expected non empty string and function");this.eventsRegistered[e]=n}},{key:"_handleSendError",value:function(e,n){if(e&&e.code||(e={code:"unknown_error"}),e&&!e.message)switch(e.code){case"unknown_error":e.message="Unknown error. Contact aircall developers dev@aircall.io";break;case"no_event_name":e.message="Invalid parameter eventName. Expected an non empty string";break;case"not_ready":e.message='Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback';break;case"no_answer":e.message="No answer from the phone. Check if the phone is logged in";break;case"invalid_response":e.message="Invalid response from the phone. Contact aircall developers dev@aircall.io";break;default:e.message="Generic error message"}this._log("error","[AircallEverywhere] [send function] ".concat(e.message)),"function"==typeof n&&n(!1,e)}},{key:"send",value:function(e,n,t){var o=this;if("function"!=typeof n||t||(t=n,n=void 0),!e)return this._handleSendError({code:"no_event_name"},t),!1;if(!this.phoneWindow||!this.phoneWindow.source)return this._handleSendError({code:"not_ready"},t),!1;var r=null;this.phoneWindow.source.postMessage({name:"apm_app_".concat(e),value:n},this.phoneWindow.origin),this.on("".concat(e,"_response"),(function(n){o.removeListener("".concat(e,"_response")),clearTimeout(r),n&&!1===n.success?o._handleSendError({code:n.errorCode,message:n.errorMessage},t):n&&!0===n.success?"function"==typeof t&&t(!0,n.data):o._handleSendError({code:"invalid_response"},t)})),r=setTimeout((function(){o.removeListener("".concat(e,"_response")),o._handleSendError({code:"no_answer"},t)}),2e3)}},{key:"removeListener",value:function(e){var n=this;return!!this.eventsRegistered[e]&&(Object.keys(this.eventsRegistered).filter((function(n){return n===e})).forEach((function(e){return delete n.eventsRegistered[e]})),!0)}},{key:"isLoggedIn",value:function(e){this.send("is_logged_in",(function(n){e(n)}))}}])&&r(n.prototype,t),i&&r(n,i),e}();n.default=i}]);
+module.exports=function(e){var n={};function t(o){if(n[o])return n[o].exports;var i=n[o]={i:o,l:!1,exports:{}};return e[o].call(i.exports,i,i.exports,t),i.l=!0,i.exports}return t.m=e,t.c=n,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:o})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(t.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var i in e)t.d(o,i,function(n){return e[n]}.bind(null,i));return o},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},t.p="",t(t.s=0)}([function(e,n,t){e.exports=t(1)},function(e,n,t){"use strict";function o(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}function i(e,n){for(var t=0;t<n.length;t++){var o=n[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}t.r(n);var r=function(){function e(){var n=this,t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{debug:!0};o(this,e),this.phoneWindow=null,this.integrationSettings={},this.path=null,this.userSettings={},this.eventsRegistered={},this.phoneLoginState=!1;var i=/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;this.phoneUrl=void 0!==t.phoneUrl&&!0===i.test(t.phoneUrl)?t.phoneUrl:"https://phone.aircall.io",this.domToLoadPhone=t.domToLoadPhone,this.integrationToLoad=t.integrationToLoad,this.path=t.path,this.debug=t.debug,this.size=t.size||"big",this.onLogin=function(){if("function"==typeof t.onLogin&&!1===n.phoneLoginState){n.phoneLoginState=!0;var e={user:n.userSettings};Object.keys(n.integrationSettings).length>0&&(e.settings=n.integrationSettings),t.onLogin(e)}},this.onLogout=function(){"function"==typeof t.onLogout&&t.onLogout()},this.w=t.window||window,this._messageListener(),this.domToLoadPhone&&this._createPhoneIframe()}var n,t,r;return n=e,(t=[{key:"_resetData",value:function(){this.phoneWindow=null,this.path=null,this.integrationSettings={},this.userSettings={},this.phoneLoginState=!1}},{key:"_createPhoneIframe",value:function(){var e="";switch(this.size){case"big":e="height:666px; width:376px;";break;case"small":e="height:600px; width:376px;";break;case"auto":e="height:100%; width:100%;"}try{document.querySelector(this.domToLoadPhone).innerHTML='<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="'.concat(this.getUrlToLoad(),'" style="').concat(e,'"></iframe>')}catch(e){this._log("error","[AircallEverywhere] [iframe creation] ".concat(this.domToLoadPhone," not be found. Error:"),e)}}},{key:"_messageListener",value:function(){var e=this;this.w.addEventListener("message",(function(n){if(e._log("info","[AircallEverywhere] [event listener] received event",n),!n.data||!n.data.name||!/^apm_phone_/.test(n.data.name))return!1;if("apm_phone_loaded"!==n.data.name){if("apm_phone_integration_settings"===n.data.name&&n.data.value)return e.integrationSettings=n.data.value,void e.onLogin();if("apm_phone_logout"===n.data.name)return e._resetData(),void e.onLogout();for(var t in e.eventsRegistered)n.data.name==="apm_phone_".concat(t)&&e.eventsRegistered[t](n.data.value)}else e._handleInitMessage(n)}),!1)}},{key:"_handleInitMessage",value:function(e){this.phoneWindow={source:e.source,origin:e.origin},e.data.value&&(this.userSettings=e.data.value),this.phoneWindow.source.postMessage({name:"apm_app_isready",path:this.path},this.phoneWindow.origin),this.integrationToLoad?this.phoneWindow.source.postMessage({name:"apm_app_get_settings",value:this.integrationToLoad},this.phoneWindow.origin):this.onLogin()}},{key:"_log",value:function(e){var n,t;if("string"!=typeof e)throw new Error("[AircallEverywhere] [_log] Must provide valid console action");if(this.debug){for(var o=arguments.length,i=new Array(o>1?o-1:0),r=1;r<o;r++)i[r-1]=arguments[r];console[e]?(n=console)[e].apply(n,i):(t=console).info.apply(t,i)}}},{key:"getUrlToLoad",value:function(){return"".concat(this.phoneUrl,"?integration=generic")}},{key:"on",value:function(e,n){if(!e||"function"!=typeof n)throw new Error("[AircallEverywhere] [on function] Invalid parameters format. Expected non empty string and function");this.eventsRegistered[e]=n}},{key:"_handleSendError",value:function(e,n){if(e&&e.code||(e={code:"unknown_error"}),e&&!e.message)switch(e.code){case"unknown_error":e.message="Unknown error. Contact aircall developers dev@aircall.io";break;case"no_event_name":e.message="Invalid parameter eventName. Expected an non empty string";break;case"not_ready":e.message='Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback';break;case"no_answer":e.message="No answer from the phone. Check if the phone is logged in";break;case"invalid_response":e.message="Invalid response from the phone. Contact aircall developers dev@aircall.io";break;default:e.message="Generic error message"}this._log("error","[AircallEverywhere] [send function] ".concat(e.message)),"function"==typeof n&&n(!1,e)}},{key:"send",value:function(e,n,t){var o=this;if("function"!=typeof n||t||(t=n,n=void 0),!e)return this._handleSendError({code:"no_event_name"},t),!1;if(!this.phoneWindow||!this.phoneWindow.source)return this._handleSendError({code:"not_ready"},t),!1;var i=null;this.phoneWindow.source.postMessage({name:"apm_app_".concat(e),value:n},this.phoneWindow.origin),this.on("".concat(e,"_response"),(function(n){o.removeListener("".concat(e,"_response")),clearTimeout(i),n&&!1===n.success?o._handleSendError({code:n.errorCode,message:n.errorMessage},t):n&&!0===n.success?"function"==typeof t&&t(!0,n.data):o._handleSendError({code:"invalid_response"},t)})),i=setTimeout((function(){o.removeListener("".concat(e,"_response")),o._handleSendError({code:"no_answer"},t)}),2e3)}},{key:"removeListener",value:function(e){var n=this;return!!this.eventsRegistered[e]&&(Object.keys(this.eventsRegistered).filter((function(n){return n===e})).forEach((function(e){return delete n.eventsRegistered[e]})),!0)}},{key:"isLoggedIn",value:function(e){this.send("is_logged_in",(function(n){e(n)}))}}])&&i(n.prototype,t),r&&i(n,r),e}();n.default=r}]);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/demo.scss":
-/*!*******************************************************************************************************************************************************************************************************!*\
-  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/home/circleci/aircall-everywhere/demo/demo.scss ***!
-  \*******************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!../../demo/demo.scss":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/dist/cjs.js!/home/circleci/aircall-everywhere/demo/demo.scss ***!
+  \*****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "../../node_modules/css-loader/dist/runtime/api.js")(false);
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "../../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(true);
 // Module
-exports.push([module.i, "/* VARIABLES */\n/* FONTS */\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Light.otf\") format(\"opentype\");\n  font-weight: 300;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Regular.otf\") format(\"opentype\");\n  font-weight: 500;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Medium.otf\") format(\"opentype\");\n  font-weight: 600;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-SemiBold.otf\") format(\"opentype\");\n  font-weight: 700;\n  font-style: normal; }\n\n/* GLOBAL */\n* {\n  box-sizing: border-box; }\n  * ::-moz-selection {\n    background: rgba(162, 228, 184, 0.3); }\n  * ::selection {\n    background: rgba(162, 228, 184, 0.3); }\n\nhtml,\nbody {\n  height: 100%;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased; }\n\nbody {\n  font-family: 'Fellix', Helvetica, Arial, sans-serif;\n  font-size: 15px;\n  color: #4b5054;\n  line-height: 1.4; }\n\nh1,\nh2,\nh3 {\n  font-weight: 700;\n  color: #000000; }\n\nh1 {\n  font-size: 42px; }\n\nh2 {\n  font-size: 32px; }\n\nh3 {\n  font-size: 20px; }\n\n.d-none {\n  display: none !important; }\n\n.d-flex {\n  display: flex !important; }\n\n/* HEADER */\nnav {\n  height: 90px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  background-color: #fff;\n  padding: 10px 2vw;\n  justify-content: space-between;\n  box-shadow: 0 1px 1px #f4f4f4;\n  z-index: 10; }\n  nav .nav-content {\n    display: flex;\n    align-items: center; }\n    nav .nav-content a {\n      margin: 0 1vw;\n      text-decoration: none;\n      font-weight: 600;\n      color: #4b5054;\n      transition: color 0.1s ease-in-out; }\n      nav .nav-content a:hover {\n        color: #00b388; }\n      nav .nav-content a#link-aircall {\n        display: flex; }\n        nav .nav-content a#link-aircall img {\n          margin: auto 0;\n          position: relative; }\n      nav .nav-content a#phone-aircall {\n        width: 30px;\n        display: flex;\n        cursor: pointer; }\n        nav .nav-content a#phone-aircall img {\n          width: 30px;\n          margin: auto; }\n\n/* PHONE */\n#phone-container {\n  position: fixed;\n  top: 65px;\n  right: 10px;\n  z-index: 30; }\n  #phone-container .arrow-up {\n    position: absolute;\n    right: 3.3vw;\n    top: -5px;\n    width: 0;\n    height: 0;\n    border-left: 5px solid transparent;\n    border-right: 5px solid transparent;\n    border-bottom: 5px solid #afafa9; }\n  #phone-container #phone {\n    border-radius: 4px;\n    background-color: #fff;\n    border: 1px solid #afafa9;\n    overflow: hidden;\n    box-shadow: 0 5px 10px #10182060; }\n    #phone-container #phone iframe {\n      border-radius: 4px; }\n\n/* CONTENT */\n.jumbotron {\n  padding: 180px 10vw 0; }\n  .jumbotron h1 {\n    text-align: center;\n    color: #000000; }\n  .jumbotron p {\n    margin-top: 20px;\n    font-size: 20px;\n    text-align: center; }\n\ncode {\n  padding: 2px 4px;\n  background: #f4f4f4;\n  border-radius: 4px;\n  font-family: \"Operator\", Menlo, DejaVu Sans Mono, Monaco, Consolas, \"Courier New\", monospace;\n  font-size: 0.9em; }\n\npre {\n  font-family: \"Operator\", Menlo, DejaVu Sans Mono, Monaco, Consolas, \"Courier New\", monospace; }\n  pre.prettyprint {\n    width: 100% !important;\n    margin: 0 !important;\n    padding: 16px !important;\n    border-radius: 4px !important;\n    background: #40464d;\n    color: #d9d9d6;\n    overflow: hidden; }\n    pre.prettyprint code {\n      background: transparent; }\n\n.container {\n  position: relative;\n  padding: 3vw;\n  max-width: 1200px;\n  margin: auto; }\n  .container h2 {\n    margin-top: 40px; }\n    .container h2::before {\n      display: block;\n      height: 1px;\n      width: 100%;\n      margin-bottom: 40px;\n      background: #f4f4f4;\n      content: ''; }\n  .container a {\n    color: #00b388;\n    text-decoration: none;\n    font-weight: 600;\n    transition: color 0.1s ease-in-out; }\n    .container a:hover {\n      color: #006c5b; }\n  .container .row {\n    display: flex;\n    align-items: stretch;\n    padding: 20px 0; }\n    .container .row:last-child {\n      padding-bottom: 0; }\n    .container .row .left {\n      position: relative;\n      width: 60%;\n      padding-right: 4vw; }\n      .container .row .left p {\n        margin-bottom: 1em; }\n      .container .row .left pre.prettyprint {\n        background-color: #40464d !important;\n        width: auto !important;\n        flex-grow: 1; }\n      .container .row .left .button {\n        margin-bottom: 20px; }\n    .container .row .right {\n      width: 40%; }\n  .container #installation {\n    padding-top: 40px; }\n  .container #waiting-events {\n    margin: 40px 0; }\n  .container #dial-button {\n    margin-top: 40px; }\n  .container #call-events-log label {\n    position: relative;\n    display: block;\n    margin: 20px 0; }\n    .container #call-events-log label > span {\n      display: block;\n      background-color: #003b4c;\n      font-family: \"Operator\", Menlo, DejaVu Sans Mono, Monaco, Consolas, \"Courier New\", monospace;\n      color: #fff;\n      padding: 10px 40px 10px 30px;\n      position: relative;\n      cursor: pointer; }\n      .container #call-events-log label > span::after {\n        position: absolute;\n        content: '+';\n        color: #fff;\n        right: 30px;\n        top: 10px; }\n  .container #call-events-log pre.prettyprint {\n    display: none;\n    height: 0;\n    overflow: hidden; }\n  .container #call-events-log input {\n    display: none; }\n    .container #call-events-log input:checked + label pre.prettyprint {\n      height: auto;\n      display: block; }\n    .container #call-events-log input:checked + label > span::after {\n      content: '-'; }\n\n.button {\n  display: block;\n  background-color: #00b388;\n  color: #fff;\n  font-weight: 600;\n  font-size: 15px;\n  border: none;\n  border-radius: 4px;\n  padding: 12px 20px;\n  cursor: pointer;\n  outline: none;\n  transition: background-color 0.1s ease-in-out; }\n  .button:hover {\n    background-color: #006c5b; }\n  .button:disabled {\n    background-color: #afafa9;\n    color: #fff;\n    cursor: not-allowed; }\n\n.alert {\n  margin: 20px auto;\n  padding: 10px 14px;\n  font-size: 0.95em;\n  border-radius: 4px; }\n  .alert.alert-success {\n    color: #00b388;\n    box-shadow: 0 0 0 1px #00b388; }\n  .alert.alert-danger {\n    color: #ff5c39;\n    box-shadow: 0 0 0 1px #ff5c39; }\n  .alert.alert-warning {\n    color: #ff854c;\n    box-shadow: 0 0 0 1px #ff854c; }\n\n@media only screen and (max-width: 800px) {\n  .container .row {\n    flex-direction: column; }\n    .container .row .left {\n      width: 100%;\n      padding: 0; }\n    .container .row .right {\n      width: 100%; } }\n", ""]);
-
+___CSS_LOADER_EXPORT___.push([module.i, "/* VARIABLES */\n/* FONTS */\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Light.otf\") format(\"opentype\");\n  font-weight: 300;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Regular.otf\") format(\"opentype\");\n  font-weight: 500;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-Medium.otf\") format(\"opentype\");\n  font-weight: 600;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Fellix';\n  src: url(\"https://cdn.aircall.io/fonts/Fellix-SemiBold.otf\") format(\"opentype\");\n  font-weight: 700;\n  font-style: normal; }\n\n/* GLOBAL */\n* {\n  box-sizing: border-box; }\n  * ::-moz-selection {\n    background: rgba(162, 228, 184, 0.3); }\n  * ::selection {\n    background: rgba(162, 228, 184, 0.3); }\n\nhtml,\nbody {\n  height: 100%;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased; }\n\nbody {\n  font-family: 'Fellix', Helvetica, Arial, sans-serif;\n  font-size: 15px;\n  color: #4b5054;\n  line-height: 1.4; }\n\nh1,\nh2,\nh3 {\n  font-weight: 700;\n  color: #000000; }\n\nh1 {\n  font-size: 42px; }\n\nh2 {\n  font-size: 32px; }\n\nh3 {\n  font-size: 20px; }\n\n.d-none {\n  display: none !important; }\n\n.d-flex {\n  display: flex !important; }\n\n/* HEADER */\nnav {\n  height: 90px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  background-color: #fff;\n  padding: 10px 2vw;\n  justify-content: space-between;\n  box-shadow: 0 1px 1px #f4f4f4;\n  z-index: 10; }\n  nav .nav-content {\n    display: flex;\n    align-items: center; }\n    nav .nav-content a {\n      margin: 0 1vw;\n      text-decoration: none;\n      font-weight: 600;\n      color: #4b5054;\n      transition: color 0.1s ease-in-out; }\n      nav .nav-content a:hover {\n        color: #00b388; }\n      nav .nav-content a#link-aircall {\n        display: flex; }\n        nav .nav-content a#link-aircall img {\n          margin: auto 0;\n          position: relative; }\n      nav .nav-content a#phone-aircall {\n        width: 30px;\n        display: flex;\n        cursor: pointer; }\n        nav .nav-content a#phone-aircall img {\n          width: 30px;\n          margin: auto; }\n\n/* PHONE */\n#phone-container {\n  position: fixed;\n  top: 65px;\n  right: 10px;\n  z-index: 30; }\n  #phone-container .arrow-up {\n    position: absolute;\n    right: 3.3vw;\n    top: -5px;\n    width: 0;\n    height: 0;\n    border-left: 5px solid transparent;\n    border-right: 5px solid transparent;\n    border-bottom: 5px solid #afafa9; }\n  #phone-container #phone {\n    border-radius: 4px;\n    background-color: #fff;\n    border: 1px solid #afafa9;\n    overflow: hidden;\n    box-shadow: 0 5px 10px #10182060; }\n    #phone-container #phone iframe {\n      border-radius: 4px; }\n\n/* CONTENT */\n.jumbotron {\n  padding: 180px 10vw 0; }\n  .jumbotron h1 {\n    text-align: center;\n    color: #000000; }\n  .jumbotron p {\n    margin-top: 20px;\n    font-size: 20px;\n    text-align: center; }\n\ncode {\n  padding: 2px 4px;\n  background: #f4f4f4;\n  border-radius: 4px;\n  font-family: \"Operator\", Menlo, DejaVu Sans Mono, Monaco, Consolas, \"Courier New\", monospace;\n  font-size: 0.9em; }\n\npre {\n  font-family: \"Operator\", Menlo, DejaVu Sans Mono, Monaco, Consolas, \"Courier New\", monospace; }\n  pre.prettyprint {\n    width: 100% !important;\n    margin: 0 !important;\n    padding: 16px !important;\n    border-radius: 4px !important;\n    background: #40464d;\n    color: #d9d9d6;\n    overflow: hidden; }\n    pre.prettyprint code {\n      background: transparent; }\n\n.container {\n  position: relative;\n  padding: 3vw;\n  max-width: 1200px;\n  margin: auto; }\n  .container h2 {\n    margin-top: 40px; }\n    .container h2::before {\n      display: block;\n      height: 1px;\n      width: 100%;\n      margin-bottom: 40px;\n      background: #f4f4f4;\n      content: ''; }\n  .container a {\n    color: #00b388;\n    text-decoration: none;\n    font-weight: 600;\n    transition: color 0.1s ease-in-out; }\n    .container a:hover {\n      color: #006c5b; }\n  .container .row {\n    display: flex;\n    align-items: stretch;\n    padding: 20px 0; }\n    .container .row:last-child {\n      padding-bottom: 0; }\n    .container .row .left {\n      position: relative;\n      width: 60%;\n      padding-right: 4vw; }\n      .container .row .left p {\n        margin-bottom: 1em; }\n      .container .row .left pre.prettyprint {\n        background-color: #40464d !important;\n        width: auto !important;\n        flex-grow: 1; }\n      .container .row .left .button {\n        margin-bottom: 20px; }\n    .container .row .right {\n      width: 40%; }\n  .container #installation {\n    padding-top: 40px; }\n  .container #waiting-events {\n    margin: 40px 0; }\n  .container #dial-button {\n    margin-top: 40px; }\n  .container #call-events-log label {\n    position: relative;\n    display: block;\n    margin: 20px 0; }\n    .container #call-events-log label > span {\n      display: block;\n      background-color: #003b4c;\n      font-family: \"Operator\", Menlo, DejaVu Sans Mono, Monaco, Consolas, \"Courier New\", monospace;\n      color: #fff;\n      padding: 10px 40px 10px 30px;\n      position: relative;\n      cursor: pointer; }\n      .container #call-events-log label > span::after {\n        position: absolute;\n        content: '+';\n        color: #fff;\n        right: 30px;\n        top: 10px; }\n  .container #call-events-log pre.prettyprint {\n    display: none;\n    height: 0;\n    overflow: hidden; }\n  .container #call-events-log input {\n    display: none; }\n    .container #call-events-log input:checked + label pre.prettyprint {\n      height: auto;\n      display: block; }\n    .container #call-events-log input:checked + label > span::after {\n      content: '-'; }\n\n.button {\n  display: block;\n  background-color: #00b388;\n  color: #fff;\n  font-weight: 600;\n  font-size: 15px;\n  border: none;\n  border-radius: 4px;\n  padding: 12px 20px;\n  cursor: pointer;\n  outline: none;\n  transition: background-color 0.1s ease-in-out; }\n  .button:hover {\n    background-color: #006c5b; }\n  .button:disabled {\n    background-color: #afafa9;\n    color: #fff;\n    cursor: not-allowed; }\n\n.alert {\n  margin: 20px auto;\n  padding: 10px 14px;\n  font-size: 0.95em;\n  border-radius: 4px; }\n  .alert.alert-success {\n    color: #00b388;\n    box-shadow: 0 0 0 1px #00b388; }\n  .alert.alert-danger {\n    color: #ff5c39;\n    box-shadow: 0 0 0 1px #ff5c39; }\n  .alert.alert-warning {\n    color: #ff854c;\n    box-shadow: 0 0 0 1px #ff854c; }\n\n@media only screen and (max-width: 800px) {\n  .container .row {\n    flex-direction: column; }\n    .container .row .left {\n      width: 100%;\n      padding: 0; }\n    .container .row .right {\n      width: 100%; } }\n", "",{"version":3,"sources":["webpack://../../demo/demo.scss"],"names":[],"mappings":"AAAA,cAAA;AAoBA,UAAA;AAcA;EACE,qBAAqB;EACrB,4EAA4E;EAC5E,gBAAgB;EAChB,kBAAkB,EAAA;;AAGpB;EACE,qBAAqB;EACrB,8EAA8E;EAC9E,gBAAgB;EAChB,kBAAkB,EAAA;;AAGpB;EACE,qBAAqB;EACrB,6EAA6E;EAC7E,gBAAgB;EAChB,kBAAkB,EAAA;;AAGpB;EACE,qBAAqB;EACrB,+EAA+E;EAC/E,gBAAgB;EAChB,kBAAkB,EAAA;;AAGpB,WAAA;AACA;EACE,sBAAsB,EAAA;EADxB;IAGI,oCAAoC,EAAA;EAHxC;IAMI,oCAAoC,EAAA;;AAIxC;;EAEE,YAAY;EACZ,kCAAkC;EAClC,mCAAmC,EAAA;;AAGrC;EACE,mDAAmD;EACnD,eAlDmB;EAmDnB,cA7DyB;EA8DzB,gBAAgB,EAAA;;AAGlB;;;EAGE,gBAAgB;EAChB,cApE+B,EAAA;;AAuEjC;EACE,eAlEiB,EAAA;;AAqEnB;EACE,eArEiB,EAAA;;AAwEnB;EACE,eAxEiB,EAAA;;AA2EnB;EACE,wBAAwB,EAAA;;AAG1B;EACE,wBAAwB,EAAA;;AAG1B,WAAA;AAEA;EACE,YAFe;EAGf,eAAe;EACf,MAAM;EACN,OAAO;EACP,QAAQ;EACR,aAAa;EACb,sBAlHU;EAmHV,iBAAiB;EACjB,8BAA8B;EAC9B,6BApHwB;EAqHxB,WAAW,EAAA;EAXb;IAcI,aAAa;IACb,mBAAmB,EAAA;IAfvB;MAkBM,aAAa;MACb,qBAAqB;MACrB,gBAAgB;MAChB,cAnHqB;MAoHrB,kCAAkC,EAAA;MAtBxC;QAyBQ,cA3IO,EAAA;MAkHf;QA6BQ,aAAa,EAAA;QA7BrB;UA+BU,cAAc;UACd,kBAAkB,EAAA;MAhC5B;QAqCQ,WAAW;QACX,aAAa;QACb,eAAe,EAAA;QAvCvB;UA0CU,WAAW;UACX,YAAY,EAAA;;AAOtB,UAAA;AAEA;EACE,eAAe;EACf,SAAS;EACT,WAAW;EACX,WAAW,EAAA;EAJb;IAOI,kBAAkB;IAClB,YAAY;IACZ,SAAS;IACT,QAAQ;IACR,SAAS;IACT,kCAAkC;IAClC,mCAAmC;IACnC,gCAlLW,EAAA;EAoKf;IAkBI,kBAxKe;IAyKf,sBAlLQ;IAmLR,yBAxLW;IAyLX,gBAAgB;IAChB,gCAAgC,EAAA;IAtBpC;MAyBM,kBA/Ka,EAAA;;AAoLnB,YAAA;AAGA;EACE,qBAA+B,EAAA;EADjC;IAII,kBAAkB;IAClB,cAvL6B,EAAA;EAkLjC;IASI,gBAAgB;IAChB,eApLe;IAqLf,kBAAkB,EAAA;;AAItB;EACE,gBAAgB;EAChB,mBAhNwB;EAiNxB,kBAzMiB;EA0MjB,4FAjMS;EAkMT,gBAAgB,EAAA;;AAIlB;EACE,4FAvMS,EAAA;EAsMX;IAII,sBAAsB;IACtB,oBAAoB;IACpB,wBAAwB;IACxB,6BAAwC;IACxC,mBA1NqB;IA2NrB,cA1NqB;IA2NrB,gBAAgB,EAAA;IAVpB;MAaM,uBAAuB,EAAA;;AAM7B;EACE,kBAAkB;EAClB,YAAY;EACZ,iBAAiB;EACjB,YAAY,EAAA;EAJd;IAOI,gBAAgB,EAAA;IAPpB;MAUM,cAAc;MACd,WAAW;MACX,WAAW;MACX,mBAAmB;MACnB,mBAxPoB;MAyPpB,WAAW,EAAA;EAfjB;IAoBI,cAtQW;IAuQX,qBAAqB;IACrB,gBAAgB;IAChB,kCAAkC,EAAA;IAvBtC;MA0BM,cA3QQ,EAAA;EAiPd;IAgCI,aAAa;IACb,oBAAoB;IACpB,eAAe,EAAA;IAlCnB;MAqCM,iBAAiB,EAAA;IArCvB;MAyCM,kBAAkB;MAClB,UAAU;MACV,kBAAkB,EAAA;MA3CxB;QA8CQ,kBAAkB,EAAA;MA9C1B;QAkDQ,oCAA6C;QAC7C,sBAAsB;QACtB,YAAY,EAAA;MApDpB;QAwDQ,mBAAmB,EAAA;IAxD3B;MA6DM,UAAU,EAAA;EA7DhB;IAmEI,iBAAiB,EAAA;EAnErB;IAuEI,cAAc,EAAA;EAvElB;IA2EI,gBAAgB,EAAA;EA3EpB;IAiFM,kBAAkB;IAClB,cAAc;IACd,cAAc,EAAA;IAnFpB;MAsFQ,cAAc;MACd,yBA/TM;MAgUN,4FAjTG;MAkTH,WApUI;MAqUJ,4BAA4B;MAC5B,kBAAkB;MAClB,eAAe,EAAA;MA5FvB;QA+FU,kBAAkB;QAClB,YAAY;QACZ,WA5UE;QA6UF,WAAW;QACX,SAAS,EAAA;EAnGnB;IAyGM,aAAa;IACb,SAAS;IACT,gBAAgB,EAAA;EA3GtB;IA+GM,aAAa,EAAA;IA/GnB;MAmHU,YAAY;MACZ,cAAc,EAAA;IApHxB;MAwHU,YAAY,EAAA;;AAQtB;EACE,cAAc;EACd,yBApXa;EAqXb,WA9WU;EA+WV,gBAAgB;EAChB,eAzVmB;EA0VnB,YAAY;EACZ,kBAzWiB;EA0WjB,kBAAkB;EAClB,eAAe;EACf,aAAa;EACb,6CAA6C,EAAA;EAX/C;IAcI,yBA/XU,EAAA;EAiXd;IAkBI,yBAlYW;IAmYX,WA9XQ;IA+XR,mBAAmB,EAAA;;AAKvB;EACE,iBAAiB;EACjB,kBAAkB;EAClB,iBAAiB;EACjB,kBA/XiB,EAAA;EA2XnB;IAOI,cAlZW;IAmZX,6BAnZW,EAAA;EA2Yf;IAYI,cAlZS;IAmZT,6BAnZS,EAAA;EAsYb;IAiBI,cAtZY;IAuZZ,6BAvZY,EAAA;;AA2ZhB;EACE;IACE,sBAAsB,EAAA;IADxB;MAII,WAAW;MACX,UAAU,EAAA;IALd;MASI,WAAW,EAAA,EACZ","sourcesContent":["/* VARIABLES */\n\n$green: #00b388;\n$duck: #006c5b;\n$smoke: #afafa9;\n$midnight: #101820;\n$neon: #307fe2;\n$red: #ff5c39;\n$orange: #ff854c;\n$white: #fff;\n$smoke-lighten-80: #f4f4f4;\n\n$cyan: #003b4c;\n$cyan-dark: #00242d;\n\n$code-background: #40464d;\n$code-font-color: #d9d9d6;\n\n$border-radius: 4px;\n\n/* FONTS */\n\n$font-family-color: #4b5054;\n$font-family-title-color: #000000;\n\n$font-family-sans-serif: 'Fellix', sans-serif !default;\n$font-family-monospace: 'Operator', Menlo, DejaVu Sans Mono, Monaco, Consolas, 'Courier New',\n  monospace !default;\n\n$font-size-h1: 42px;\n$font-size-h2: 32px;\n$font-size-h3: 20px;\n$font-size-base: 15px;\n\n@font-face {\n  font-family: 'Fellix';\n  src: url('https://cdn.aircall.io/fonts/Fellix-Light.otf') format('opentype');\n  font-weight: 300;\n  font-style: normal;\n}\n\n@font-face {\n  font-family: 'Fellix';\n  src: url('https://cdn.aircall.io/fonts/Fellix-Regular.otf') format('opentype');\n  font-weight: 500;\n  font-style: normal;\n}\n\n@font-face {\n  font-family: 'Fellix';\n  src: url('https://cdn.aircall.io/fonts/Fellix-Medium.otf') format('opentype');\n  font-weight: 600;\n  font-style: normal;\n}\n\n@font-face {\n  font-family: 'Fellix';\n  src: url('https://cdn.aircall.io/fonts/Fellix-SemiBold.otf') format('opentype');\n  font-weight: 700;\n  font-style: normal;\n}\n\n/* GLOBAL */\n* {\n  box-sizing: border-box;\n  ::-moz-selection {\n    background: rgba(162, 228, 184, 0.3);\n  }\n  ::selection {\n    background: rgba(162, 228, 184, 0.3);\n  }\n}\n\nhtml,\nbody {\n  height: 100%;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n}\n\nbody {\n  font-family: 'Fellix', Helvetica, Arial, sans-serif;\n  font-size: $font-size-base;\n  color: $font-family-color;\n  line-height: 1.4;\n}\n\nh1,\nh2,\nh3 {\n  font-weight: 700;\n  color: $font-family-title-color;\n}\n\nh1 {\n  font-size: $font-size-h1;\n}\n\nh2 {\n  font-size: $font-size-h2;\n}\n\nh3 {\n  font-size: $font-size-h3;\n}\n\n.d-none {\n  display: none !important;\n}\n\n.d-flex {\n  display: flex !important;\n}\n\n/* HEADER */\n$nav-height: 90px;\nnav {\n  height: $nav-height;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  background-color: $white;\n  padding: 10px 2vw;\n  justify-content: space-between;\n  box-shadow: 0 1px 1px $smoke-lighten-80;\n  z-index: 10;\n\n  .nav-content {\n    display: flex;\n    align-items: center;\n\n    a {\n      margin: 0 1vw;\n      text-decoration: none;\n      font-weight: 600;\n      color: $font-family-color;\n      transition: color 0.1s ease-in-out;\n\n      &:hover {\n        color: $green;\n      }\n\n      &#link-aircall {\n        display: flex;\n        img {\n          margin: auto 0;\n          position: relative;\n        }\n      }\n\n      &#phone-aircall {\n        width: 30px;\n        display: flex;\n        cursor: pointer;\n\n        img {\n          width: 30px;\n          margin: auto;\n        }\n      }\n    }\n  }\n}\n\n/* PHONE */\n\n#phone-container {\n  position: fixed;\n  top: 65px;\n  right: 10px;\n  z-index: 30;\n\n  .arrow-up {\n    position: absolute;\n    right: 3.3vw;\n    top: -5px;\n    width: 0;\n    height: 0;\n    border-left: 5px solid transparent;\n    border-right: 5px solid transparent;\n    border-bottom: 5px solid $smoke;\n  }\n\n  #phone {\n    border-radius: $border-radius;\n    background-color: $white;\n    border: 1px solid $smoke;\n    overflow: hidden;\n    box-shadow: 0 5px 10px #10182060;\n\n    iframe {\n      border-radius: $border-radius;\n    }\n  }\n}\n\n/* CONTENT */\n\n// Jumbotron\n.jumbotron {\n  padding: $nav-height * 2 10vw 0;\n\n  h1 {\n    text-align: center;\n    color: $font-family-title-color;\n  }\n\n  p {\n    margin-top: 20px;\n    font-size: $font-size-h3;\n    text-align: center;\n  }\n}\n\ncode {\n  padding: 2px 4px;\n  background: $smoke-lighten-80;\n  border-radius: $border-radius;\n  font-family: $font-family-monospace;\n  font-size: 0.9em;\n}\n\n// Code snippets\npre {\n  font-family: $font-family-monospace;\n\n  &.prettyprint {\n    width: 100% !important;\n    margin: 0 !important;\n    padding: 16px !important;\n    border-radius: $border-radius !important;\n    background: $code-background;\n    color: $code-font-color;\n    overflow: hidden;\n\n    code {\n      background: transparent;\n    }\n  }\n}\n\n// Container\n.container {\n  position: relative;\n  padding: 3vw;\n  max-width: 1200px;\n  margin: auto;\n\n  h2 {\n    margin-top: 40px;\n\n    &::before {\n      display: block;\n      height: 1px;\n      width: 100%;\n      margin-bottom: 40px;\n      background: $smoke-lighten-80;\n      content: '';\n    }\n  }\n\n  a {\n    color: $green;\n    text-decoration: none;\n    font-weight: 600;\n    transition: color 0.1s ease-in-out;\n\n    &:hover {\n      color: $duck;\n    }\n  }\n\n  // rows\n  .row {\n    display: flex;\n    align-items: stretch;\n    padding: 20px 0;\n\n    &:last-child {\n      padding-bottom: 0;\n    }\n\n    .left {\n      position: relative;\n      width: 60%;\n      padding-right: 4vw;\n\n      p {\n        margin-bottom: 1em;\n      }\n\n      pre.prettyprint {\n        background-color: $code-background !important;\n        width: auto !important;\n        flex-grow: 1;\n      }\n\n      .button {\n        margin-bottom: 20px;\n      }\n    }\n\n    .right {\n      width: 40%;\n    }\n  }\n\n  // specific stuff\n  #installation {\n    padding-top: 40px;\n  }\n\n  #waiting-events {\n    margin: 40px 0;\n  }\n\n  #dial-button {\n    margin-top: 40px;\n  }\n\n  // call events logs\n  #call-events-log {\n    label {\n      position: relative;\n      display: block;\n      margin: 20px 0;\n\n      > span {\n        display: block;\n        background-color: $cyan;\n        font-family: $font-family-monospace;\n        color: $white;\n        padding: 10px 40px 10px 30px;\n        position: relative;\n        cursor: pointer;\n\n        &::after {\n          position: absolute;\n          content: '+';\n          color: $white;\n          right: 30px;\n          top: 10px;\n        }\n      }\n    }\n\n    pre.prettyprint {\n      display: none;\n      height: 0;\n      overflow: hidden;\n    }\n\n    input {\n      display: none;\n\n      &:checked + label {\n        pre.prettyprint {\n          height: auto;\n          display: block;\n        }\n\n        > span::after {\n          content: '-';\n        }\n      }\n    }\n  }\n}\n\n// Buttons\n.button {\n  display: block;\n  background-color: $green;\n  color: $white;\n  font-weight: 600;\n  font-size: $font-size-base;\n  border: none;\n  border-radius: $border-radius;\n  padding: 12px 20px;\n  cursor: pointer;\n  outline: none;\n  transition: background-color 0.1s ease-in-out;\n\n  &:hover {\n    background-color: $duck;\n  }\n\n  &:disabled {\n    background-color: $smoke;\n    color: $white;\n    cursor: not-allowed;\n  }\n}\n\n// Alerts\n.alert {\n  margin: 20px auto;\n  padding: 10px 14px;\n  font-size: 0.95em;\n  border-radius: $border-radius;\n\n  &.alert-success {\n    color: $green;\n    box-shadow: 0 0 0 1px $green;\n  }\n\n  &.alert-danger {\n    color: $red;\n    box-shadow: 0 0 0 1px $red;\n  }\n\n  &.alert-warning {\n    color: $orange;\n    box-shadow: 0 0 0 1px $orange;\n  }\n}\n\n@media only screen and (max-width: 800px) {\n  .container .row {\n    flex-direction: column;\n\n    .left {\n      width: 100%;\n      padding: 0;\n    }\n\n    .right {\n      width: 100%;\n    }\n  }\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/lib/loader.js!../../demo/reset.scss":
-/*!********************************************************************************************************************************************************************************************************!*\
-  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/lib/loader.js!/home/circleci/aircall-everywhere/demo/reset.scss ***!
-  \********************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!../../demo/reset.scss":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/css-loader/dist/cjs.js!/home/circleci/aircall-everywhere/node_modules/sass-loader/dist/cjs.js!/home/circleci/aircall-everywhere/demo/reset.scss ***!
+  \******************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "../../node_modules/css-loader/dist/runtime/api.js")(false);
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "../../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(true);
 // Module
-exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml,\nbody,\ndiv,\nspan,\napplet,\nobject,\niframe,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\np,\nblockquote,\npre,\na,\nabbr,\nacronym,\naddress,\nbig,\ncite,\ncode,\ndel,\ndfn,\nem,\nimg,\nins,\nkbd,\nq,\ns,\nsamp,\nsmall,\nstrike,\nstrong,\nsub,\nsup,\ntt,\nvar,\nb,\nu,\ni,\ncenter,\ndl,\ndt,\ndd,\nol,\nul,\nli,\nfieldset,\nform,\nlabel,\nlegend,\ntable,\ncaption,\ntbody,\ntfoot,\nthead,\ntr,\nth,\ntd,\narticle,\naside,\ncanvas,\ndetails,\nembed,\nfigure,\nfigcaption,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\noutput,\nruby,\nsection,\nsummary,\ntime,\nmark,\naudio,\nvideo {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\nsection {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol,\nul {\n  list-style: none; }\n\nblockquote,\nq {\n  quotes: none; }\n\nblockquote:before,\nblockquote:after,\nq:before,\nq:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n", ""]);
-
+___CSS_LOADER_EXPORT___.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml,\nbody,\ndiv,\nspan,\napplet,\nobject,\niframe,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\np,\nblockquote,\npre,\na,\nabbr,\nacronym,\naddress,\nbig,\ncite,\ncode,\ndel,\ndfn,\nem,\nimg,\nins,\nkbd,\nq,\ns,\nsamp,\nsmall,\nstrike,\nstrong,\nsub,\nsup,\ntt,\nvar,\nb,\nu,\ni,\ncenter,\ndl,\ndt,\ndd,\nol,\nul,\nli,\nfieldset,\nform,\nlabel,\nlegend,\ntable,\ncaption,\ntbody,\ntfoot,\nthead,\ntr,\nth,\ntd,\narticle,\naside,\ncanvas,\ndetails,\nembed,\nfigure,\nfigcaption,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\noutput,\nruby,\nsection,\nsummary,\ntime,\nmark,\naudio,\nvideo {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\nsection {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol,\nul {\n  list-style: none; }\n\nblockquote,\nq {\n  quotes: none; }\n\nblockquote:before,\nblockquote:after,\nq:before,\nq:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n", "",{"version":3,"sources":["webpack://../../demo/reset.scss"],"names":[],"mappings":"AAAA;;;CAGC;AAED;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAiFE,SAAS;EACT,UAAU;EACV,SAAS;EACT,eAAe;EACf,aAAa;EACb,wBAAwB,EAAA;;AAE1B,gDAAA;AACA;;;;;;;;;;;EAWE,cAAc,EAAA;;AAEhB;EACE,cAAc,EAAA;;AAEhB;;EAEE,gBAAgB,EAAA;;AAElB;;EAEE,YAAY,EAAA;;AAEd;;;;EAIE,WAAW;EACX,aAAa,EAAA;;AAEf;EACE,yBAAyB;EACzB,iBAAiB,EAAA","sourcesContent":["/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml,\nbody,\ndiv,\nspan,\napplet,\nobject,\niframe,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\np,\nblockquote,\npre,\na,\nabbr,\nacronym,\naddress,\nbig,\ncite,\ncode,\ndel,\ndfn,\nem,\nimg,\nins,\nkbd,\nq,\ns,\nsamp,\nsmall,\nstrike,\nstrong,\nsub,\nsup,\ntt,\nvar,\nb,\nu,\ni,\ncenter,\ndl,\ndt,\ndd,\nol,\nul,\nli,\nfieldset,\nform,\nlabel,\nlegend,\ntable,\ncaption,\ntbody,\ntfoot,\nthead,\ntr,\nth,\ntd,\narticle,\naside,\ncanvas,\ndetails,\nembed,\nfigure,\nfigcaption,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\noutput,\nruby,\nsection,\nsummary,\ntime,\nmark,\naudio,\nvideo {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\nsection {\n  display: block;\n}\nbody {\n  line-height: 1;\n}\nol,\nul {\n  list-style: none;\n}\nblockquote,\nq {\n  quotes: none;\n}\nblockquote:before,\nblockquote:after,\nq:before,\nq:after {\n  content: '';\n  content: none;\n}\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
@@ -406,6 +418,7 @@ exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 
   Author Tobias Koppers @sokra
 */
 // css base code, injected by the css-loader
+// eslint-disable-next-line func-names
 module.exports = function (useSourceMap) {
   var list = []; // return the list of modules as css string
 
@@ -414,44 +427,51 @@ module.exports = function (useSourceMap) {
       var content = cssWithMappingToString(item, useSourceMap);
 
       if (item[2]) {
-        return '@media ' + item[2] + '{' + content + '}';
-      } else {
-        return content;
+        return "@media ".concat(item[2], " {").concat(content, "}");
       }
+
+      return content;
     }).join('');
   }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
 
 
-  list.i = function (modules, mediaQuery) {
+  list.i = function (modules, mediaQuery, dedupe) {
     if (typeof modules === 'string') {
+      // eslint-disable-next-line no-param-reassign
       modules = [[null, modules, '']];
     }
 
     var alreadyImportedModules = {};
 
-    for (var i = 0; i < this.length; i++) {
-      var id = this[i][0];
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
 
-      if (id != null) {
-        alreadyImportedModules[id] = true;
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
       }
     }
 
-    for (i = 0; i < modules.length; i++) {
-      var item = modules[i]; // skip already imported module
-      // this implementation is not 100% perfect for weird media query combinations
-      // when a module is imported multiple times with different media queries.
-      // I hope this will never occur (Hey this way we have smaller bundles)
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = [].concat(modules[_i]);
 
-      if (item[0] == null || !alreadyImportedModules[item[0]]) {
-        if (mediaQuery && !item[2]) {
-          item[2] = mediaQuery;
-        } else if (mediaQuery) {
-          item[2] = '(' + item[2] + ') and (' + mediaQuery + ')';
-        }
-
-        list.push(item);
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
       }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
     }
   };
 
@@ -459,7 +479,8 @@ module.exports = function (useSourceMap) {
 };
 
 function cssWithMappingToString(item, useSourceMap) {
-  var content = item[1] || '';
+  var content = item[1] || ''; // eslint-disable-next-line prefer-destructuring
+
   var cssMapping = item[3];
 
   if (!cssMapping) {
@@ -469,7 +490,7 @@ function cssWithMappingToString(item, useSourceMap) {
   if (useSourceMap && typeof btoa === 'function') {
     var sourceMapping = toComment(cssMapping);
     var sourceURLs = cssMapping.sources.map(function (source) {
-      return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
     });
     return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
   }
@@ -481,518 +502,289 @@ function cssWithMappingToString(item, useSourceMap) {
 function toComment(sourceMap) {
   // eslint-disable-next-line no-undef
   var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-  var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-  return '/*# ' + data + ' */';
+  var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+  return "/*# ".concat(data, " */");
 }
 
 /***/ }),
 
-/***/ "../../node_modules/style-loader/lib/addStyles.js":
-/*!************************************************************************************!*\
-  !*** /home/circleci/aircall-everywhere/node_modules/style-loader/lib/addStyles.js ***!
-  \************************************************************************************/
+/***/ "../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/*!************************************************************************************************************!*\
+  !*** /home/circleci/aircall-everywhere/node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
+"use strict";
 
-var stylesInDom = {};
 
-var	memoize = function (fn) {
-	var memo;
+var isOldIE = function isOldIE() {
+  var memo;
+  return function memorize() {
+    if (typeof memo === 'undefined') {
+      // Test for IE <= 9 as proposed by Browserhacks
+      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+      // Tests for existence of standard globals is to allow style-loader
+      // to operate correctly into non-standard environments
+      // @see https://github.com/webpack-contrib/style-loader/issues/177
+      memo = Boolean(window && document && document.all && !window.atob);
+    }
 
-	return function () {
-		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-		return memo;
-	};
-};
+    return memo;
+  };
+}();
 
-var isOldIE = memoize(function () {
-	// Test for IE <= 9 as proposed by Browserhacks
-	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-	// Tests for existence of standard globals is to allow style-loader
-	// to operate correctly into non-standard environments
-	// @see https://github.com/webpack-contrib/style-loader/issues/177
-	return window && document && document.all && !window.atob;
-});
+var getTarget = function getTarget() {
+  var memo = {};
+  return function memorize(target) {
+    if (typeof memo[target] === 'undefined') {
+      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
 
-var getTarget = function (target, parent) {
-  if (parent){
-    return parent.querySelector(target);
+      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+        try {
+          // This will throw an exception if access to iframe is blocked
+          // due to cross-origin restrictions
+          styleTarget = styleTarget.contentDocument.head;
+        } catch (e) {
+          // istanbul ignore next
+          styleTarget = null;
+        }
+      }
+
+      memo[target] = styleTarget;
+    }
+
+    return memo[target];
+  };
+}();
+
+var stylesInDom = [];
+
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+
+  for (var i = 0; i < stylesInDom.length; i++) {
+    if (stylesInDom[i].identifier === identifier) {
+      result = i;
+      break;
+    }
   }
-  return document.querySelector(target);
-};
 
-var getElement = (function (fn) {
-	var memo = {};
+  return result;
+}
 
-	return function(target, parent) {
-                // If passing function in options, then use it for resolve "head" element.
-                // Useful for Shadow Root style i.e
-                // {
-                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
-                // }
-                if (typeof target === 'function') {
-                        return target();
-                }
-                if (typeof memo[target] === "undefined") {
-			var styleTarget = getTarget.call(this, target, parent);
-			// Special case to return head of iframe instead of iframe itself
-			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-				try {
-					// This will throw an exception if access to iframe is blocked
-					// due to cross-origin restrictions
-					styleTarget = styleTarget.contentDocument.head;
-				} catch(e) {
-					styleTarget = null;
-				}
-			}
-			memo[target] = styleTarget;
-		}
-		return memo[target]
-	};
-})();
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var index = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3]
+    };
+
+    if (index !== -1) {
+      stylesInDom[index].references++;
+      stylesInDom[index].updater(obj);
+    } else {
+      stylesInDom.push({
+        identifier: identifier,
+        updater: addStyle(obj, options),
+        references: 1
+      });
+    }
+
+    identifiers.push(identifier);
+  }
+
+  return identifiers;
+}
+
+function insertStyleElement(options) {
+  var style = document.createElement('style');
+  var attributes = options.attributes || {};
+
+  if (typeof attributes.nonce === 'undefined') {
+    var nonce =  true ? __webpack_require__.nc : undefined;
+
+    if (nonce) {
+      attributes.nonce = nonce;
+    }
+  }
+
+  Object.keys(attributes).forEach(function (key) {
+    style.setAttribute(key, attributes[key]);
+  });
+
+  if (typeof options.insert === 'function') {
+    options.insert(style);
+  } else {
+    var target = getTarget(options.insert || 'head');
+
+    if (!target) {
+      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+    }
+
+    target.appendChild(style);
+  }
+
+  return style;
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+var replaceText = function replaceText() {
+  var textStore = [];
+  return function replace(index, replacement) {
+    textStore[index] = replacement;
+    return textStore.filter(Boolean).join('\n');
+  };
+}();
+
+function applyToSingletonTag(style, index, remove, obj) {
+  var css = remove ? '' : obj.media ? "@media ".concat(obj.media, " {").concat(obj.css, "}") : obj.css; // For old IE
+
+  /* istanbul ignore if  */
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = replaceText(index, css);
+  } else {
+    var cssNode = document.createTextNode(css);
+    var childNodes = style.childNodes;
+
+    if (childNodes[index]) {
+      style.removeChild(childNodes[index]);
+    }
+
+    if (childNodes.length) {
+      style.insertBefore(cssNode, childNodes[index]);
+    } else {
+      style.appendChild(cssNode);
+    }
+  }
+}
+
+function applyToTag(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute('media', media);
+  } else {
+    style.removeAttribute('media');
+  }
+
+  if (sourceMap && typeof btoa !== 'undefined') {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
 
 var singleton = null;
-var	singletonCounter = 0;
-var	stylesInsertedAtTop = [];
-
-var	fixUrls = __webpack_require__(/*! ./urls */ "../../node_modules/style-loader/lib/urls.js");
-
-module.exports = function(list, options) {
-	if (typeof DEBUG !== "undefined" && DEBUG) {
-		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-	}
-
-	options = options || {};
-
-	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
-
-	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-	// tags it will allow on a page
-	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
-
-	// By default, add <style> tags to the <head> element
-        if (!options.insertInto) options.insertInto = "head";
-
-	// By default, add <style> tags to the bottom of the target
-	if (!options.insertAt) options.insertAt = "bottom";
-
-	var styles = listToStyles(list, options);
-
-	addStylesToDom(styles, options);
-
-	return function update (newList) {
-		var mayRemove = [];
-
-		for (var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-
-			domStyle.refs--;
-			mayRemove.push(domStyle);
-		}
-
-		if(newList) {
-			var newStyles = listToStyles(newList, options);
-			addStylesToDom(newStyles, options);
-		}
-
-		for (var i = 0; i < mayRemove.length; i++) {
-			var domStyle = mayRemove[i];
-
-			if(domStyle.refs === 0) {
-				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
-
-				delete stylesInDom[domStyle.id];
-			}
-		}
-	};
-};
-
-function addStylesToDom (styles, options) {
-	for (var i = 0; i < styles.length; i++) {
-		var item = styles[i];
-		var domStyle = stylesInDom[item.id];
-
-		if(domStyle) {
-			domStyle.refs++;
-
-			for(var j = 0; j < domStyle.parts.length; j++) {
-				domStyle.parts[j](item.parts[j]);
-			}
-
-			for(; j < item.parts.length; j++) {
-				domStyle.parts.push(addStyle(item.parts[j], options));
-			}
-		} else {
-			var parts = [];
-
-			for(var j = 0; j < item.parts.length; j++) {
-				parts.push(addStyle(item.parts[j], options));
-			}
-
-			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-		}
-	}
-}
-
-function listToStyles (list, options) {
-	var styles = [];
-	var newStyles = {};
-
-	for (var i = 0; i < list.length; i++) {
-		var item = list[i];
-		var id = options.base ? item[0] + options.base : item[0];
-		var css = item[1];
-		var media = item[2];
-		var sourceMap = item[3];
-		var part = {css: css, media: media, sourceMap: sourceMap};
-
-		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
-		else newStyles[id].parts.push(part);
-	}
-
-	return styles;
-}
-
-function insertStyleElement (options, style) {
-	var target = getElement(options.insertInto)
-
-	if (!target) {
-		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
-	}
-
-	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
-
-	if (options.insertAt === "top") {
-		if (!lastStyleElementInsertedAtTop) {
-			target.insertBefore(style, target.firstChild);
-		} else if (lastStyleElementInsertedAtTop.nextSibling) {
-			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
-		} else {
-			target.appendChild(style);
-		}
-		stylesInsertedAtTop.push(style);
-	} else if (options.insertAt === "bottom") {
-		target.appendChild(style);
-	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
-		var nextSibling = getElement(options.insertAt.before, target);
-		target.insertBefore(style, nextSibling);
-	} else {
-		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
-	}
-}
-
-function removeStyleElement (style) {
-	if (style.parentNode === null) return false;
-	style.parentNode.removeChild(style);
-
-	var idx = stylesInsertedAtTop.indexOf(style);
-	if(idx >= 0) {
-		stylesInsertedAtTop.splice(idx, 1);
-	}
-}
-
-function createStyleElement (options) {
-	var style = document.createElement("style");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-
-	if(options.attrs.nonce === undefined) {
-		var nonce = getNonce();
-		if (nonce) {
-			options.attrs.nonce = nonce;
-		}
-	}
-
-	addAttrs(style, options.attrs);
-	insertStyleElement(options, style);
-
-	return style;
-}
-
-function createLinkElement (options) {
-	var link = document.createElement("link");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-	options.attrs.rel = "stylesheet";
-
-	addAttrs(link, options.attrs);
-	insertStyleElement(options, link);
-
-	return link;
-}
-
-function addAttrs (el, attrs) {
-	Object.keys(attrs).forEach(function (key) {
-		el.setAttribute(key, attrs[key]);
-	});
-}
-
-function getNonce() {
-	if (false) {}
-
-	return __webpack_require__.nc;
-}
-
-function addStyle (obj, options) {
-	var style, update, remove, result;
-
-	// If a transform function was defined, run it on the css
-	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
-
-	    if (result) {
-	    	// If transform returns a value, use that instead of the original css.
-	    	// This allows running runtime transformations on the css.
-	    	obj.css = result;
-	    } else {
-	    	// If the transform function returns a falsy value, don't add this css.
-	    	// This allows conditional loading of css
-	    	return function() {
-	    		// noop
-	    	};
-	    }
-	}
-
-	if (options.singleton) {
-		var styleIndex = singletonCounter++;
-
-		style = singleton || (singleton = createStyleElement(options));
-
-		update = applyToSingletonTag.bind(null, style, styleIndex, false);
-		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
-
-	} else if (
-		obj.sourceMap &&
-		typeof URL === "function" &&
-		typeof URL.createObjectURL === "function" &&
-		typeof URL.revokeObjectURL === "function" &&
-		typeof Blob === "function" &&
-		typeof btoa === "function"
-	) {
-		style = createLinkElement(options);
-		update = updateLink.bind(null, style, options);
-		remove = function () {
-			removeStyleElement(style);
-
-			if(style.href) URL.revokeObjectURL(style.href);
-		};
-	} else {
-		style = createStyleElement(options);
-		update = applyToTag.bind(null, style);
-		remove = function () {
-			removeStyleElement(style);
-		};
-	}
-
-	update(obj);
-
-	return function updateStyle (newObj) {
-		if (newObj) {
-			if (
-				newObj.css === obj.css &&
-				newObj.media === obj.media &&
-				newObj.sourceMap === obj.sourceMap
-			) {
-				return;
-			}
-
-			update(obj = newObj);
-		} else {
-			remove();
-		}
-	};
-}
-
-var replaceText = (function () {
-	var textStore = [];
-
-	return function (index, replacement) {
-		textStore[index] = replacement;
-
-		return textStore.filter(Boolean).join('\n');
-	};
-})();
-
-function applyToSingletonTag (style, index, remove, obj) {
-	var css = remove ? "" : obj.css;
-
-	if (style.styleSheet) {
-		style.styleSheet.cssText = replaceText(index, css);
-	} else {
-		var cssNode = document.createTextNode(css);
-		var childNodes = style.childNodes;
-
-		if (childNodes[index]) style.removeChild(childNodes[index]);
-
-		if (childNodes.length) {
-			style.insertBefore(cssNode, childNodes[index]);
-		} else {
-			style.appendChild(cssNode);
-		}
-	}
-}
-
-function applyToTag (style, obj) {
-	var css = obj.css;
-	var media = obj.media;
-
-	if(media) {
-		style.setAttribute("media", media)
-	}
-
-	if(style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		while(style.firstChild) {
-			style.removeChild(style.firstChild);
-		}
-
-		style.appendChild(document.createTextNode(css));
-	}
-}
-
-function updateLink (link, options, obj) {
-	var css = obj.css;
-	var sourceMap = obj.sourceMap;
-
-	/*
-		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
-		and there is no publicPath defined then lets turn convertToAbsoluteUrls
-		on by default.  Otherwise default to the convertToAbsoluteUrls option
-		directly
-	*/
-	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
-
-	if (options.convertToAbsoluteUrls || autoFixUrls) {
-		css = fixUrls(css);
-	}
-
-	if (sourceMap) {
-		// http://stackoverflow.com/a/26603875
-		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-	}
-
-	var blob = new Blob([css], { type: "text/css" });
-
-	var oldSrc = link.href;
-
-	link.href = URL.createObjectURL(blob);
-
-	if(oldSrc) URL.revokeObjectURL(oldSrc);
-}
-
-
-/***/ }),
-
-/***/ "../../node_modules/style-loader/lib/urls.js":
-/*!*******************************************************************************!*\
-  !*** /home/circleci/aircall-everywhere/node_modules/style-loader/lib/urls.js ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-/**
- * When source maps are enabled, `style-loader` uses a link element with a data-uri to
- * embed the css on the page. This breaks all relative urls because now they are relative to a
- * bundle instead of the current page.
- *
- * One solution is to only use full urls, but that may be impossible.
- *
- * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
- *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
- *
- */
-
-module.exports = function (css) {
-  // get current location
-  var location = typeof window !== "undefined" && window.location;
-
-  if (!location) {
-    throw new Error("fixUrls requires window.location");
+var singletonCounter = 0;
+
+function addStyle(obj, options) {
+  var style;
+  var update;
+  var remove;
+
+  if (options.singleton) {
+    var styleIndex = singletonCounter++;
+    style = singleton || (singleton = insertStyleElement(options));
+    update = applyToSingletonTag.bind(null, style, styleIndex, false);
+    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+  } else {
+    style = insertStyleElement(options);
+    update = applyToTag.bind(null, style, options);
+
+    remove = function remove() {
+      removeStyleElement(style);
+    };
   }
 
-	// blank or null?
-	if (!css || typeof css !== "string") {
-	  return css;
+  update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
+
+      update(obj = newObj);
+    } else {
+      remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+  // tags it will allow on a page
+
+  if (!options.singleton && typeof options.singleton !== 'boolean') {
+    options.singleton = isOldIE();
   }
 
-  var baseUrl = location.protocol + "//" + location.host;
-  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
 
-	// convert each url(...)
-	/*
-	This regular expression is just a way to recursively match brackets within
-	a string.
+    if (Object.prototype.toString.call(newList) !== '[object Array]') {
+      return;
+    }
 
-	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
-	   (  = Start a capturing group
-	     (?:  = Start a non-capturing group
-	         [^)(]  = Match anything that isn't a parentheses
-	         |  = OR
-	         \(  = Match a start parentheses
-	             (?:  = Start another non-capturing groups
-	                 [^)(]+  = Match anything that isn't a parentheses
-	                 |  = OR
-	                 \(  = Match a start parentheses
-	                     [^)(]*  = Match anything that isn't a parentheses
-	                 \)  = Match a end parentheses
-	             )  = End Group
-              *\) = Match anything and then a close parens
-          )  = Close non-capturing group
-          *  = Match anything
-       )  = Close capturing group
-	 \)  = Match a close parens
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDom[index].references--;
+    }
 
-	 /gi  = Get all matches, not the first.  Be case insensitive.
-	 */
-	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
-		// strip quotes (if they exist)
-		var unquotedOrigUrl = origUrl
-			.trim()
-			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
-			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+    var newLastIdentifiers = modulesToDom(newList, options);
 
-		// already a full url? no change
-		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
-		  return fullMatch;
-		}
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
 
-		// convert the url to a full url
-		var newUrl;
+      var _index = getIndexByIdentifier(_identifier);
 
-		if (unquotedOrigUrl.indexOf("//") === 0) {
-		  	//TODO: should we add protocol?
-			newUrl = unquotedOrigUrl;
-		} else if (unquotedOrigUrl.indexOf("/") === 0) {
-			// path should be relative to the base url
-			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
-		} else {
-			// path should be relative to current directory
-			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
-		}
+      if (stylesInDom[_index].references === 0) {
+        stylesInDom[_index].updater();
 
-		// send back the fixed url(...)
-		return "url(" + JSON.stringify(newUrl) + ")";
-	});
+        stylesInDom.splice(_index, 1);
+      }
+    }
 
-	// send back the fixed css
-	return fixedCss;
+    lastIdentifiers = newLastIdentifiers;
+  };
 };
-
 
 /***/ }),
 

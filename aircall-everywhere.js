@@ -118,6 +118,7 @@ class AircallPhone {
     // window object of loaded aircall phone
     this.phoneWindow = null;
     this.integrationSettings = {};
+    this.path = null;
     this.userSettings = {};
     this.eventsRegistered = {};
 
@@ -132,6 +133,7 @@ class AircallPhone {
         : 'https://phone.aircall.io';
     this.domToLoadPhone = opts.domToLoadPhone;
     this.integrationToLoad = opts.integrationToLoad;
+    this.path = opts.path;
     this.debug = opts.debug;
 
     // 3 different sizes: big/small/auto
@@ -141,7 +143,7 @@ class AircallPhone {
       if (typeof opts.onLogin === 'function' && this.phoneLoginState === false) {
         this.phoneLoginState = true;
         const data = {
-          user: this.userSettings
+          user: this.userSettings,
         };
         if (Object.keys(this.integrationSettings).length > 0) {
           data.settings = this.integrationSettings;
@@ -169,6 +171,7 @@ class AircallPhone {
 
   _resetData() {
     this.phoneWindow = null;
+    this.path = null;
     this.integrationSettings = {};
     this.userSettings = {};
     this.phoneLoginState = false;
@@ -191,7 +194,7 @@ class AircallPhone {
     // we get the passed dom
     try {
       const el = document.querySelector(this.domToLoadPhone);
-      el.innerHTML = `<iframe allow="microphone; autoplay; clipboard-read; clipboard-write" src="${this.getUrlToLoad()}" style="${sizeStyle}"></iframe>`;
+      el.innerHTML = `<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="${this.getUrlToLoad()}" style="${sizeStyle}"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
       this._log(
@@ -205,7 +208,7 @@ class AircallPhone {
   _messageListener() {
     this.w.addEventListener(
       'message',
-      event => {
+      (event) => {
         this._log('info', '[AircallEverywhere] [event listener] received event', event);
         // we test if our format object is present. if not, we stop
         const matchPrefixRegex = /^apm_phone_/;
@@ -251,7 +254,7 @@ class AircallPhone {
     // we keep the source
     this.phoneWindow = {
       source: event.source,
-      origin: event.origin
+      origin: event.origin,
     };
 
     if (!!event.data.value) {
@@ -259,7 +262,10 @@ class AircallPhone {
     }
 
     // we answer init
-    this.phoneWindow.source.postMessage({ name: 'apm_app_isready' }, this.phoneWindow.origin);
+    this.phoneWindow.source.postMessage(
+      { name: 'apm_app_isready', path: this.path },
+      this.phoneWindow.origin
+    );
 
     // we ask for integration settings
     if (!!this.integrationToLoad) {
@@ -304,7 +310,7 @@ class AircallPhone {
     if (!error || !error.code) {
       // should not happen, unknown error
       error = {
-        code: 'unknown_error'
+        code: 'unknown_error',
       };
     }
     // errors sent by the phone for specific events are not handled since they should have their code AND message
@@ -365,7 +371,7 @@ class AircallPhone {
       );
 
       // we wait for a response to this message
-      this.on(`${eventName}_response`, response => {
+      this.on(`${eventName}_response`, (response) => {
         // we have a response, we remove listener and return the callback
         this.removeListener(`${eventName}_response`);
         clearTimeout(responseTimeout);
@@ -405,14 +411,14 @@ class AircallPhone {
     }
 
     Object.keys(this.eventsRegistered)
-      .filter(key => key === eventName)
-      .forEach(key => delete this.eventsRegistered[key]);
+      .filter((key) => key === eventName)
+      .forEach((key) => delete this.eventsRegistered[key]);
     return true;
   }
 
   isLoggedIn(callback) {
     // we simply send an event and send its result.
-    this.send('is_logged_in', success => {
+    this.send('is_logged_in', (success) => {
       callback(success);
     });
   }
