@@ -476,7 +476,7 @@ describe('Aircall SDK Library', () => {
     let ap;
 
     beforeEach(() => {
-      ap = new AircallPhone();
+      ap = new AircallPhone({ debug: false });
       ap.phoneWindow = {
         origin: '*',
         source: {
@@ -613,7 +613,7 @@ describe('Aircall SDK Library', () => {
   describe('isLoggedIn function', () => {
     let ap;
 
-    beforeEach(() => (ap = new AircallPhone()));
+    beforeEach(() => (ap = new AircallPhone({ debug: false })));
 
     it('should exists', () => {
       expect(ap.isLoggedIn).toBeDefined();
