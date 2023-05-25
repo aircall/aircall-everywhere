@@ -24,7 +24,7 @@ module.exports = () => {
   };
 
   const _devServer = {
-    contentBase: path.join(__dirname, '../../demo_dist'),
+    static: path.join(__dirname, '../../demo_dist'),
     compress: true,
     port: 8080,
   };
@@ -101,6 +101,5 @@ module.exports = () => {
     mode: _mode,
     target: _target,
     context: _context,
-    watch: true,
   };
 };
