@@ -188,7 +188,7 @@ You can remove a listener added by `on` with this method.
 ## `<iframe>` authorizations
 
 > **Notice Regarding Iframing Authorization:** for *Security* purpose We are now whitelisting domains that are iframing us. If you are a customer, Please contact [support](https://support.aircall.io/) in order to whitelist your requested domains.<br> 
-If you are a *Partner* creating an integration, you can ask for permission using app.ecosystem@aircall.io.
+If you are a *partner* creating an integration, you can ask for permission using app.ecosystem@aircall.io.
 
 Please be aware that `aircall-everywhere` will generate an iframe with following `allow` attributes.
 
