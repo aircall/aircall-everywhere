@@ -187,6 +187,9 @@ You can remove a listener added by `on` with this method.
 
 ## `<iframe>` authorizations
 
+> **Notice Regarding Iframing Authorization:** for *security* purpose, we are now whitelisting domains that are iframing us. If you are a customer, please contact [support](https://support.aircall.io/) in order to whitelist your requested domain(s).<br> 
+If you are a *partner* creating an integration, you can ask for permission using app.ecosystem@aircall.io.
+
 Please be aware that `aircall-everywhere` will generate an iframe with following `allow` attributes.
 
 ```html
@@ -217,7 +220,7 @@ The clipboard API is not accessible through `<iframe>` since Chrome v81 and a po
 
 # Development
 
-You can run the demo webpage with:
+You can run the demo webpage with this command:
 `yarn start`
 
 tests are available:
