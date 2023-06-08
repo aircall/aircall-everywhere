@@ -4,7 +4,7 @@
 name: Node.js CI
 
 on:
-  pull_request:
+  push:
     branches: ['master']
 
 jobs:
@@ -22,27 +22,22 @@ jobs:
           key: aircall-everywhere-node-modules{{ checksum "package.json" }}
       - run: npm ci
 
-  test:
+  approve:
     runs-on: ubuntu-latest
     needs: bootstrap
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: trstringer/manual-approval@v1
         with:
-          node-version: '18.x'
-          cache: 'npm'
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: aircall-everywhere-node-modules{{ checksum "package.json" }}
-      - name: Test
-        run: npm test
+          secret: ${{ secrets.BOT_CREDENTIALS_GITHUB }}
+          approvers: litil
+          minimum-approvals: 1
+          issue-title: 'Deploying to prod from master'
+          issue-body: 'Please approve or deny the deployment of the latest version'
+          exclude-workflow-initiator-as-approver: false
 
-  coverage:
+  npm-publish:
     runs-on: ubuntu-latest
-    needs: test
-    env:
-      BOT_CREDENTIALS_GITHUB: ${{ secrets.BOT_CREDENTIALS_GITHUB }}
+    needs: approve
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -53,23 +48,9 @@ jobs:
         with:
           path: node_modules
           key: aircall-everywhere-node-modules{{ checksum "package.json" }}
-      - run: sudo apt-get install libjq1 jq bc
-      - run: npm run coverage
-      - run: export PATH="$PATH:~/.local/bin"
-      - run: bash ./scripts/post-coverage-to-github.sh $GITHUB_HEAD_REF
-
-  build-prod:
-    runs-on: ubuntu-latest
-    needs: bootstrap
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-          cache: 'npm'
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: aircall-everywhere-node-modules{{ checksum "package.json" }}
-      - name: Build
-        run: npm run build
+      - run: npm run build
+      - run: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/aircall-everywhere/.npmrc
+      - run: git config --global user.email "guillaume.p.lambert@gmail.com"
+      - run: git config --global user.name "Guillaume Lambert"
+      - run: npm publish

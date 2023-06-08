@@ -9,6 +9,6 @@ If it's a _feature_, list things to check and what's impacted
 
 - [ ] Your branch is based on `master`
 - [ ] Your code is unit tested
-- [ ] CircleCI builds are green (coverage and lint)
+- [ ] Github actions are green
 - [ ] Add team "CTI" as "Reviewer" for the PR
 - [ ] Name your PR with the convention `fix|feat|impr(<subject>): description`.
