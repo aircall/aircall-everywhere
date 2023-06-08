@@ -220,7 +220,7 @@ The clipboard API is not accessible through `<iframe>` since Chrome v81 and a po
 
 # Development
 
-You can run the demo webpage with:
+You can run the demo webpage with this command:
 `yarn start`
 
 tests are available:
