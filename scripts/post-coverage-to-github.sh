@@ -6,7 +6,7 @@
 # Usage: ./post-coverage-to-github.sh BRANCH_NAME
 #
 # Requires the following environment variables to be set
-#   - GITHUB_BOT_CREDENTIALS: with github credentials following this format: 'username:personal_token'
+#   - BOT_CREDENTIALS_GITHUB: with github credentials following this format: 'username:personal_token'
 #     (see https://github.com/settings/tokens to generate a new personal_token)
 
 
@@ -15,8 +15,8 @@
 ################################################################
 
 # Check if env variables are set set
-if [ -z ${GITHUB_BOT_CREDENTIALS} ]; then
-  echo "Environment variable GITHUB_BOT_CREDENTIALS is not set"
+if [ -z ${BOT_CREDENTIALS_GITHUB} ]; then
+  echo "Environment variable BOT_CREDENTIALS_GITHUB is not set"
   exit 1
 fi
 
@@ -35,7 +35,7 @@ BRANCH=$1
 # Retrieve pull requests matching current branch from GitHub
 PULL_REQUESTS_OUT=./pull_requests.json
 echo -n "Retrieving pull requests for branch ${BRANCH}... "
-curl -s -u "$GITHUB_BOT_CREDENTIALS" -H "Accept:application/vnd.github.v3+json" "https://api.github.com/repos/aircall/aircall-everywhere/pulls?head=aircall:${BRANCH}&state=open" > ${PULL_REQUESTS_OUT}
+curl -s -u "$BOT_CREDENTIALS_GITHUB" -H "Accept:application/vnd.github.v3+json" "https://api.github.com/repos/aircall/aircall-everywhere/pulls?head=aircall:${BRANCH}&state=open" > ${PULL_REQUESTS_OUT}
 
 # Github returns an error
 if jq -e 'type != "array" and has("message")' ${PULL_REQUESTS_OUT} > /dev/null; then
@@ -107,7 +107,7 @@ COMMENT_PAYLOAD="{\"body\": \"${LINE1}\n${EMOJI} ${LINE2}\"}"
 # Post comment
 COMMENT_OUT=./comment_out.json
 echo -n "Posting comment to Github... "
-curl -s -u "$GITHUB_BOT_CREDENTIALS" -H "Accept:application/vnd.github.v3+json" -H "Content-Type: application/json" -d "${COMMENT_PAYLOAD}" https://api.github.com/repos/aircall/aircall-everywhere/issues/${PULL_REQUEST_ID}/comments > ${COMMENT_OUT}
+curl -s -u "$BOT_CREDENTIALS_GITHUB" -H "Accept:application/vnd.github.v3+json" -H "Content-Type: application/json" -d "${COMMENT_PAYLOAD}" https://api.github.com/repos/aircall/aircall-everywhere/issues/${PULL_REQUEST_ID}/comments > ${COMMENT_OUT}
 
 # Github returns an error
 if jq -e 'type != "array" and has("message")' ${COMMENT_OUT} > /dev/null; then
