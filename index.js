@@ -1,3 +1,3 @@
-import AircallPhone from './src/javascripts/aircallPhone.js';
+import AircallWorkspace from './src/javascripts/aircallWorkspace.js';
 
-export default AircallPhone;
+export default AircallWorkspace;

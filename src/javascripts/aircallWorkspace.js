@@ -1,23 +1,23 @@
-class AircallPhone {
+class AircallWorkspace {
   constructor(opts = { debug: true }) {
     // internal vars
     // window object of loaded aircall phone
-    this.phoneWindow = null;
+    this.workspaceWindow = null;
     this.integrationSettings = {};
     this.path = null;
     this.userSettings = {};
     this.eventsRegistered = {};
 
-    this.phoneLoginState = false;
+    this.workspaceLoginState = false;
 
     const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 
     // options passed
-    this.phoneUrl =
-      opts.phoneUrl !== undefined && URL_REGEX.test(opts.phoneUrl) === true
-        ? opts.phoneUrl
-        : 'https://phone.aircall.io';
-    this.domToLoadPhone = opts.domToLoadPhone;
+    this.workspaceUrl =
+      opts.workspaceUrl !== undefined && URL_REGEX.test(opts.workspaceUrl) === true
+        ? opts.workspaceUrl
+        : 'https://workspace.aircall.io';
+    this.domToLoadWorkspace = opts.domToLoadWorkspace;
     this.integrationToLoad = opts.integrationToLoad;
     this.path = opts.path;
     this.debug = opts.debug;
@@ -26,8 +26,8 @@ class AircallPhone {
     this.size = opts.size || 'big';
 
     this.onLogin = () => {
-      if (typeof opts.onLogin === 'function' && this.phoneLoginState === false) {
-        this.phoneLoginState = true;
+      if (typeof opts.onLogin === 'function' && this.workspaceLoginState === false) {
+        this.workspaceLoginState = true;
         const data = {
           user: this.userSettings,
         };
@@ -49,21 +49,21 @@ class AircallPhone {
     // launch postmessage listener
     this._messageListener();
 
-    // load phone in specified dom
-    if (!!this.domToLoadPhone) {
-      this._createPhoneIframe();
+    // load workspace in specified dom
+    if (!!this.domToLoadWorkspace) {
+      this._createWorkspaceIframe();
     }
   }
 
   _resetData() {
-    this.phoneWindow = null;
+    this.workspaceWindow = null;
     this.path = null;
     this.integrationSettings = {};
     this.userSettings = {};
-    this.phoneLoginState = false;
+    this.workspaceLoginState = false;
   }
 
-  _createPhoneIframe() {
+  _createWorkspaceIframe() {
     let sizeStyle = '';
     switch (this.size) {
       case 'big':
@@ -79,13 +79,13 @@ class AircallPhone {
 
     // we get the passed dom
     try {
-      const el = document.querySelector(this.domToLoadPhone);
+      const el = document.querySelector(this.domToLoadWorkspace);
       el.innerHTML = `<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="${this.getUrlToLoad()}" style="${sizeStyle}"></iframe>`;
     } catch (e) {
       // couldnt query the dom wanted
       this._log(
         'error',
-        `[AircallEverywhere] [iframe creation] ${this.domToLoadPhone} not be found. Error:`,
+        `[AircallEverywhere] [iframe creation] ${this.domToLoadWorkspace} not be found. Error:`,
         e
       );
     }
@@ -138,7 +138,7 @@ class AircallPhone {
 
   _handleInitMessage(event) {
     // we keep the source
-    this.phoneWindow = {
+    this.workspaceWindow = {
       source: event.source,
       origin: event.origin,
     };
@@ -148,16 +148,16 @@ class AircallPhone {
     }
 
     // we answer init
-    this.phoneWindow.source.postMessage(
+    this.workspaceWindow.source.postMessage(
       { name: 'apm_app_isready', path: this.path },
-      this.phoneWindow.origin
+      this.workspaceWindow.origin
     );
 
     // we ask for integration settings
     if (!!this.integrationToLoad) {
-      this.phoneWindow.source.postMessage(
+      this.workspaceWindow.source.postMessage(
         { name: 'apm_app_get_settings', value: this.integrationToLoad },
-        this.phoneWindow.origin
+        this.workspaceWindow.origin
       );
     } else {
       // init callback now if present
@@ -180,7 +180,7 @@ class AircallPhone {
   }
 
   getUrlToLoad() {
-    return `${this.phoneUrl}?integration=generic`;
+    return `${this.workspaceUrl}?integration=generic`;
   }
 
   on(eventName, callback) {
@@ -199,7 +199,7 @@ class AircallPhone {
         code: 'unknown_error',
       };
     }
-    // errors sent by the phone for specific events are not handled since they should have their code AND message
+    // errors sent by the workspace for specific events are not handled since they should have their code AND message
     if (!!error && !error.message) {
       switch (error.code) {
         case 'unknown_error':
@@ -210,14 +210,14 @@ class AircallPhone {
           break;
         case 'not_ready':
           error.message =
-            'Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback';
+            'Aircall Workspace has not been identified yet or is not ready. Wait for "onLogin" callback';
           break;
         case 'no_answer':
-          error.message = 'No answer from the phone. Check if the phone is logged in';
+          error.message = 'No answer from the workspace. Check if the workspace is logged in';
           break;
         case 'invalid_response':
           error.message =
-            'Invalid response from the phone. Contact aircall developers dev@aircall.io';
+            'Invalid response from the workspace. Contact aircall developers dev@aircall.io';
           break;
         default:
           // specific error without a message. Should not happen
@@ -246,14 +246,14 @@ class AircallPhone {
       return false;
     }
 
-    if (!!this.phoneWindow && !!this.phoneWindow.source) {
+    if (!!this.workspaceWindow && !!this.workspaceWindow.source) {
       let responseTimeout = null;
       let timeoutLimit = 2000;
 
       // we send the message
-      this.phoneWindow.source.postMessage(
+      this.workspaceWindow.source.postMessage(
         { name: `apm_app_${eventName}`, value: data },
-        this.phoneWindow.origin
+        this.workspaceWindow.origin
       );
 
       // we wait for a response to this message
@@ -263,18 +263,18 @@ class AircallPhone {
         clearTimeout(responseTimeout);
         // we evaluate response
         if (!!response && response.success === false) {
-          // phone answers with an error
+          // workspace answers with an error
           this._handleSendError(
             { code: response.errorCode, message: response.errorMessage },
             callback
           );
         } else if (!!response && response.success === true) {
-          // phone answer a succes with its response
+          // workspace answer a succes with its response
           if (typeof callback === 'function') {
             callback(true, response.data);
           }
         } else {
-          // phone answer is invalid
+          // workspace answer is invalid
           this._handleSendError({ code: 'invalid_response' }, callback);
         }
       });
@@ -310,4 +310,4 @@ class AircallPhone {
   }
 }
 
-export default AircallPhone;
+export default AircallWorkspace;

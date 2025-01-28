@@ -150,7 +150,7 @@ nav {
         }
       }
 
-      &#phone-aircall {
+      &#workspace-aircall {
         width: 30px;
         display: flex;
         cursor: pointer;
@@ -166,7 +166,7 @@ nav {
 
 /* PHONE */
 
-#phone-container {
+#workspace-container {
   position: fixed;
   top: 65px;
   right: 10px;
@@ -183,7 +183,7 @@ nav {
     border-bottom: 5px solid $smoke;
   }
 
-  #phone {
+  #workspace {
     border-radius: $border-radius;
     background-color: $white;
     border: 1px solid $smoke;
