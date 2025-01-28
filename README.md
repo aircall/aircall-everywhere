@@ -21,9 +21,9 @@ You need to create an instance to use the library. The constructor has a setting
 Example:
 
 ```javascript
-import AircallPhone from 'aircall-everywhere';
+import AircallWorkspace from 'aircall-everywhere';
 
-const aircallPhone = new AircallPhone({
+const aircallWorkspace = new AircallWorkspace({
   onLogin: (settings) => {
     console.log('workspace loaded');
     doStuff();
@@ -136,7 +136,7 @@ All numbers are sent in the `e.164` format.
 Example:
 
 ```javascript
-aircallPhone.on('incoming_call', (callInfos) => {
+aircallWorkspace.on('incoming_call', (callInfos) => {
   console.log(`Call from ${callInfos.from} to ${callInfos.to}`);
   doStuff();
 });
@@ -147,7 +147,7 @@ aircallPhone.on('incoming_call', (callInfos) => {
 Example:
 
 ```javascript
-aircallPhone.send('dial_number', { phone_number: number }, (success, data) => {
+aircallWorkspace.send('dial_number', { phone_number: number }, (success, data) => {
   console.log('success of dial:', success);
 });
 ```
@@ -161,10 +161,10 @@ The callback of the `send` method has two arguments:
 All generic errors from `send`:
 
 - `no_event_name`: the event name sent is not valid
-- `not_ready`: Phone is not loaded or logged in yet
-- `no_answer`: Phone didn't answer, most likely not logged in
+- `not_ready`: Workspace is not loaded or logged in yet
+- `no_answer`: Workspace didn't answer, most likely not logged in
 - `does_not_exists`: The event sent does not exists
-- `invalid_response`: Phone sent an malformed answer, should not happen
+- `invalid_response`: Workspace sent an malformed answer, should not happen
 - `unknown_error`: Should not happen
 
 List of events:
@@ -172,12 +172,12 @@ List of events:
 - `dial_number`: with `{phone_number: <number>}` argument, you can ask the workspace to dial the number.
   Specific errors for this event:
 
-  - `in_call`: Phone is on a call, retry after the call is ended
+  - `in_call`: Workspace is on a call, retry after the call is ended
 
 - `exit_keyboard`: with no argument, you can ask the workspace to exit the keyboard view if it is on.
   Specific errors for this event:
   - `in_call`: Workspace is on a call, retry after the call is ended
-  - `not_in_keyboard`: Phone is not on keyboard screen, so it can't exit the keyboard :D
+  - `not_in_keyboard`: Workspace is not on keyboard screen, so it can't exit the keyboard :D
 
 more events to come...
 
