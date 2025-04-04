@@ -464,7 +464,7 @@ describe('Aircall SDK Library', () => {
           success === false &&
           data.code === 'not_ready' &&
           data.message ===
-            'Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback'
+            'Aircall Workspace has not been identified yet or is not ready. Wait for "onLogin" callback'
         ) {
           done();
         }
@@ -508,7 +508,7 @@ describe('Aircall SDK Library', () => {
       expect(ap.eventsRegistered.my_event_response).toBeDefined();
     });
 
-    it('should timeout if no response sent by the phone', () => {
+    it('should timeout if no response sent by the workspace', () => {
       ap.send('my_event', { foo: 'bar' });
       jest.spyOn(ap, '_handleSendError').mockImplementation();
       jest.advanceTimersByTime(2001);
@@ -619,7 +619,7 @@ describe('Aircall SDK Library', () => {
       expect(ap.isLoggedIn).toBeDefined();
     });
 
-    it('should send an event to the phone', () => {
+    it('should send an event to the workspace', () => {
       let cb = () => {};
       jest.spyOn(ap, 'send').mockImplementation();
       ap.isLoggedIn(cb);

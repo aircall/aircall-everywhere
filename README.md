@@ -223,10 +223,10 @@ You can run the demo webpage with:
 tests are available:
 `yarn test`
 `yarn test-watch`
-`yarn coverage`
 
 to create a new version:
-`yarn version --patch|--minor|--major` and create a PR. The CI will publish the new version after manual approval.
+`yarn version --patch|--minor|--major` and create a PR.
+The CI will publish a new version after a github release.
 
 # Code coverage
 

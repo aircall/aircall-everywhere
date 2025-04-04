@@ -14,9 +14,9 @@
   </head>
 
   <body>
-    <div id="phone-container" class="d-none">
+    <div id="workspace-container" class="d-none">
       <div class="arrow-up"></div>
-      <div id="phone"></div>
+      <div id="workspace"></div>
     </div>
 
     <nav>
@@ -31,7 +31,7 @@
         <a href="https://github.com/aircall/aircall-everywhere" target="_blank">
           Github repository
         </a>
-        <a id="phone-aircall" class="d-none">
+        <a id="workspace-aircall" class="d-none">
           <img src="images/aircall-icon.svg" />
         </a>
       </div>
@@ -44,8 +44,8 @@
           Building an integration with Aircall &<br />want your customers to make calls directly
           from it?
           <br />
-          Aircall Everywhere lets you embed the Phone app <br />inside your website in a few small
-          steps!
+          Aircall Everywhere lets you embed the Workspace app <br />inside your website in a few
+          small steps!
         </p>
       </div>
 
@@ -63,37 +63,37 @@
           <div class="right">
             <pre class="prettyprint"><code>npm install -s aircall-everywhere
 
-import AircallPhone from 'aircall-everywhere'</code></pre>
+import AircallWorkspace from 'aircall-everywhere'</code></pre>
           </div>
         </div>
 
-        <h2>Load Aircall Phone</h2>
+        <h2>Load Aircall Workspace</h2>
 
         <div class="row">
           <div class="left">
             <p>Informations about the Agent logged in are retrieved on load.</p>
             <p>
-              Click on the button to load the Aircall Phone. You will then be able to toggle it via
-              the phone icon in the header of this page.
+              Click on the button to load the Aircall Workspace. You will then be able to toggle it
+              via the workspace icon in the header of this page.
             </p>
             <p>
-              Detailed specifications of the <code>AircallPhone</code> construction are available on
-              our
+              Detailed specifications of the <code>AircallWorkspace</code> construction are
+              available on our
               <a href="https://github.com/aircall/aircall-everywhere#constructor"
                 >GitHub repository</a
               >.
             </p>
 
-            <button class="button" id="load-phone-button">Load phone</button>
+            <button class="button" id="load-workspace-button">Load workspace</button>
             <pre class="prettyprint"><code id="user-info">// user informations</code></pre>
 
-            <div class="alert alert-danger" id="phone-loading">
-              Phone is not loaded or logged in.
+            <div class="alert alert-danger" id="workspace-loading">
+              Workspace is not loaded or logged in.
             </div>
           </div>
           <div class="right">
-            <pre class="prettyprint"><code>const phone = new AircallPhone({
-  domToLoadPhone: '#phone',
+            <pre class="prettyprint"><code>const aircallWorkspace = new AircallWorkspace({
+  domToLoadWorkspace: '#workspace',
   onLogin: settings => {
     // ...
   },
@@ -127,40 +127,40 @@ import AircallPhone from 'aircall-everywhere'</code></pre>
             <div class="alert alert-warning" id="call-events">Not in a call</div>
           </div>
           <div class="right">
-            <pre class="prettyprint"><code>phone.on('incoming_call', callInfos => {
+            <pre class="prettyprint"><code>workspace.on('incoming_call', callInfos => {
   // ...
 });
 
-phone.on('call_end_ringtone', callInfos => {
+aircallWorkspace.on('call_end_ringtone', callInfos => {
   // ...
 });
 
-phone.on('call_ended', callInfos => {
+aircallWorkspace.on('call_ended', callInfos => {
   // ...
 });
 
-phone.on('comment_saved', callInfos => {
+aircallWorkspace.on('comment_saved', callInfos => {
   // ...
 });
 
-phone.on('outgoing_call', callInfos => {
+aircallWorkspace.on('outgoing_call', callInfos => {
   // ...
 });
 
-phone.on('outgoing_answered', callInfos => {
+aircallWorkspace.on('outgoing_answered', callInfos => {
   // ...
 });</code></pre>
           </div>
         </div>
 
-        <h2>Events to the phone</h2>
+        <h2>Events to the workspace</h2>
         <div class="row">
           <div class="left">
             <p>You can send events to get information or perform actions.</p>
-            <p>Make sure the phone is loaded before sending events to it!</p>
+            <p>Make sure the workspace is loaded before sending events to it!</p>
 
             <button type="button" class="button" id="is-login-button" disabled>
-              Is Phone logged in?
+              Is Workspace logged in?
             </button>
             <pre class="prettyprint"><code id="is-login-info">// isLoggedIn result</code></pre>
 
@@ -174,7 +174,7 @@ phone.on('outgoing_answered', callInfos => {
             </div>
           </div>
           <div class="right">
-            <pre class="prettyprint"><code>phone.isLoggedIn(response => {
+            <pre class="prettyprint"><code>aircallWorkspace.isLoggedIn(response => {
   // ...
 });
 
@@ -182,7 +182,7 @@ const payload = {
   phone_number: '+33123456789'
 };
 
-phone.send(
+aircallWorkspace.send(
   'dial_number',
   payload,
   (success, data) => {

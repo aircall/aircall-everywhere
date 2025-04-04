@@ -1,26 +1,28 @@
 /* demo.js */
-import AircallPhone from 'aircall-everywhere';
+import AircallWorkspace from 'aircall-everywhere';
 
 import './reset.scss';
 import './demo.scss';
 
-// Show phone
-const setPhoneVisibility = (visible) => {
-  const phoneContainer = document.querySelector('#phone-container');
+console.log('demo time!');
+
+// Show workspace
+const setAircallWorkspaceVisibility = (visible) => {
+  const workspaceContainer = document.querySelector('#workspace-container');
   if (!!visible) {
-    phoneContainer.classList.remove('d-none');
+    workspaceContainer.classList.remove('d-none');
   } else {
-    phoneContainer.classList.add('d-none');
+    workspaceContainer.classList.add('d-none');
   }
 };
 
-// toogle phone
-const togglePhoneVisibility = () => {
-  const phoneContainer = document.querySelector('#phone-container');
-  if (phoneContainer.classList.contains('d-none')) {
-    setPhoneVisibility(true);
+// toogle workspace
+const toggleWorkspaceVisibility = () => {
+  const workspaceContainer = document.querySelector('#workspace-container');
+  if (workspaceContainer.classList.contains('d-none')) {
+    setAircallWorkspaceVisibility(true);
   } else {
-    setPhoneVisibility(false);
+    setAircallWorkspaceVisibility(false);
   }
 };
 
@@ -60,58 +62,58 @@ const addCallLog = (id, payload, log) => {
 };
 
 // our buttons elements
-const loadPhoneButton = document.querySelector('#load-phone-button');
+const loadWorkspaceButton = document.querySelector('#load-workspace-button');
 const dialButton = document.querySelector('#dial-button');
 const isLoginButton = document.querySelector('#is-login-button');
 
-// loading phone button clicked
-loadPhoneButton.addEventListener(
+// loading workspace button clicked
+loadWorkspaceButton.addEventListener(
   'click',
   () => {
-    // we show the phone
-    // phone icon
-    const phoneButtonIcon = document.querySelector('#phone-aircall');
-    phoneButtonIcon.classList.remove('d-none');
-    // phone visibility
-    setPhoneVisibility(true);
+    // we show the workspace
+    // workspace icon
+    const workspaceButtonIcon = document.querySelector('#workspace-aircall');
+    workspaceButtonIcon.classList.remove('d-none');
+    // workspace visibility
+    setAircallWorkspaceVisibility(true);
 
     // we add listener to toogle via icon
-    phoneButtonIcon.addEventListener('click', () => {
-      togglePhoneVisibility();
+    workspaceButtonIcon.addEventListener('click', () => {
+      toggleWorkspaceVisibility();
     });
 
-    // we don't allow to load phone again
-    loadPhoneButton.disabled = true;
-    // we allow the send events to phone related buttons
+    // we don't allow to load workspace again
+    loadWorkspaceButton.disabled = true;
+    // we allow the send events to workspace related buttons
     dialButton.disabled = false;
     isLoginButton.disabled = false;
 
-    // we load the phone via the library
-    const phone = new AircallPhone({
-      domToLoadPhone: '#phone',
+    // we load the workspace via the library
+    const aircallWorkspace = new AircallWorkspace({
+      domToLoadWorkspace: '#workspace',
       onLogin: (settings) => {
         // we set data and status
         setStatusData('#user-info', settings, '// user informations');
-        setStatusMessage('#phone-loading', 'success', 'Phone is loaded and ready to use!');
+        setStatusMessage('#workspace-loading', 'success', 'Workspace is loaded and ready to use!');
       },
       onLogout: () => {
         // we reset data and status
         setStatusData('#user-info', '', '// user informations');
-        setStatusMessage('#phone-loading', 'danger', 'Phone is not loaded or logged in');
+        setStatusMessage('#workspace-loading', 'danger', 'Workspace is not loaded or logged in');
       },
     });
 
     // listeners
     // incoming call
-    phone.on('incoming_call', (callInfos) => {
-      setPhoneVisibility(true);
+    aircallWorkspace.on('incoming_call', (callInfos) => {
+      setAircallWorkspaceVisibility(true);
       const message = `Incoming call from ${callInfos.from} to ${callInfos.to} ringing!`;
       addCallLog('incoming_call', callInfos, message);
       setStatusMessage('#call-events', 'success', message);
     });
 
     // ringtone ended
-    phone.on('call_end_ringtone', (callInfos) => {
+    aircallWorkspace.on('call_end_ringtone', (callInfos) => {
       const message = `Ringing ended. call was ${callInfos.answer_status}`;
       addCallLog('call_end_ringtone', callInfos, message);
       setStatusMessage(
@@ -122,28 +124,28 @@ loadPhoneButton.addEventListener(
     });
 
     // call ended
-    phone.on('call_ended', (callInfos) => {
+    aircallWorkspace.on('call_ended', (callInfos) => {
       const message = `Call ended. Lasted ${callInfos.duration} seconds`;
       addCallLog('call_ended', callInfos, message);
       setStatusMessage('#call-events', 'warning', message);
     });
 
     // comment saved
-    phone.on('comment_saved', (callInfos) => {
+    aircallWorkspace.on('comment_saved', (callInfos) => {
       const message = 'Comment about the last call saved';
       addCallLog('comment_saved', callInfos, message);
       setStatusMessage('#call-events', 'success', message);
     });
 
     // outgoing call
-    phone.on('outgoing_call', (callInfos) => {
+    aircallWorkspace.on('outgoing_call', (callInfos) => {
       const message = `Outgoing call from ${callInfos.from} to ${callInfos.to} ...`;
       addCallLog('outgoing_call', callInfos, message);
       setStatusMessage('#call-events', 'success', message);
     });
 
     // outgoing call answered
-    phone.on('outgoing_answered', (callInfos) => {
+    aircallWorkspace.on('outgoing_answered', (callInfos) => {
       const message = 'Outgoing call answered!';
       addCallLog('outgoing_answered', callInfos, message);
       setStatusMessage('#call-events', 'success', message);
@@ -153,8 +155,8 @@ loadPhoneButton.addEventListener(
     dialButton.addEventListener(
       'click',
       () => {
-        phone.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
-          setPhoneVisibility(true);
+        aircallWorkspace.send('dial_number', { phone_number: '+33123456789' }, (success, data) => {
+          setAircallWorkspaceVisibility(true);
           setStatusData('#dial-info', data, `// first argument\n${success}\n// second argument`);
           !!success
             ? setStatusMessage('#send-event-status-box', 'success', 'Dialing action was a success!')
@@ -168,7 +170,7 @@ loadPhoneButton.addEventListener(
     isLoginButton.addEventListener(
       'click',
       () => {
-        phone.isLoggedIn((response) => {
+        aircallWorkspace.isLoggedIn((response) => {
           setStatusData('#is-login-info', response, `// isLoggedIn result`);
           response
             ? setStatusMessage('#send-event-status-box', 'success', 'User is logged in')

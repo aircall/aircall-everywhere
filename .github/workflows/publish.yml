@@ -1,0 +1,50 @@
+name: Publish NPM and Github Pages.
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16.0.x'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+        env:
+          NODE_ENV: development
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Build
+        run: yarn build
+
+      - name: Configure Git User
+        run: |
+          git config --global user.email "alan.chauchet@gmail.com"
+          git config --global user.name "Alan Chauchet"
+
+      - name: Configure npm Authentication
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build Demo
+        run: yarn build:docs
+
+      - name: Deploy Demo to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: demo_dist
