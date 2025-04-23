@@ -30,7 +30,7 @@ jobs:
       - name: Configure Git User
         run: |
           git config --global user.email "guillaume.lambert@aircall.io"
-          git config --global user.name "Alan Chauchet"
+          git config --global user.name "Guillaume Lambert"
 
       - name: Configure npm Authentication
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
