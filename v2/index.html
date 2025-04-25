@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><title>Aircall Everywhere</title><link rel="icon" href="https://cdn.aircall.io/icos/favicon.ico"/><style>img{max-height:100px}</style></head><body><div id="workspace-container" class="d-none"><div class="arrow-up"></div><div id="workspace"></div></div><nav><div class="nav-content"><a href="#" id="link-aircall"><img src="images/aircall-logo.svg"/></a></div><div class="nav-content"><a href="https://developer.aircall.io/api-references">API References </a><a href="https://github.com/aircall/aircall-everywhere" target="_blank">Github repository </a><a id="workspace-aircall" class="d-none"><img src="images/aircall-icon.svg"/></a></div></nav><main role="main"><div class="jumbotron"><h1>Aircall Everywhere SDK</h1><p>Building an integration with Aircall &<br/>want your customers to make calls directly from it?<br/>Aircall Everywhere lets you embed the Workspace app<br/>inside your website in a few small steps!</p></div><div class="container"><h2 id="installation">Installation</h2><div class="row"><div class="left"><p>You just have to add this repository in your project, and then import the library in your code.</p><p>Check the following demo on how to use this library!</p></div><div class="right"><pre class="prettyprint"><code>npm install -s aircall-everywhere
+
+import AircallWorkspace from 'aircall-everywhere'</code></pre></div></div><h2>Load Aircall Workspace</h2><div class="row"><div class="left"><p>Informations about the Agent logged in are retrieved on load.</p><p>Click on the button to load the Aircall Workspace. You will then be able to toggle it via the workspace icon in the header of this page.</p><p>Detailed specifications of the <code>AircallWorkspace</code> construction are available on our <a href="https://github.com/aircall/aircall-everywhere#constructor">GitHub repository</a>.</p><button class="button" id="load-workspace-button">Load workspace</button><pre class="prettyprint"><code id="user-info">// user informations</code></pre><div class="alert alert-danger" id="workspace-loading">Workspace is not loaded or logged in.</div></div><div class="right"><pre class="prettyprint"><code>const aircallWorkspace = new AircallWorkspace({
+  domToLoadWorkspace: '#workspace',
+  onLogin: settings => {
+    // ...
+  },
+  onLogout: () => {
+    // ...
+  }
+});</code></pre></div></div><h2>Call lifecycle events</h2><div class="row"><div class="left"><p>There are multiple events happening during the lifecycle of a phone call. Try making an outbound or inbound call to see what happens!</p><p>The list of all available events is documented on our <a href="https://github.com/aircall/aircall-everywhere#on--send" title="Aircall Everywhere - Github">Github repo</a>.</p><p id="waiting-events">Waiting for events...</p><div id="call-events-log"></div><div class="alert alert-warning" id="call-events">Not in a call</div></div><div class="right"><pre class="prettyprint"><code>workspace.on('incoming_call', callInfos => {
+  // ...
+});
+
+aircallWorkspace.on('call_end_ringtone', callInfos => {
+  // ...
+});
+
+aircallWorkspace.on('call_ended', callInfos => {
+  // ...
+});
+
+aircallWorkspace.on('comment_saved', callInfos => {
+  // ...
+});
+
+aircallWorkspace.on('outgoing_call', callInfos => {
+  // ...
+});
+
+aircallWorkspace.on('outgoing_answered', callInfos => {
+  // ...
+});</code></pre></div></div><h2>Events to the workspace</h2><div class="row"><div class="left"><p>You can send events to get information or perform actions.</p><p>Make sure the workspace is loaded before sending events to it!</p><button type="button" class="button" id="is-login-button" disabled="disabled">Is Workspace logged in?</button><pre class="prettyprint"><code id="is-login-info">// isLoggedIn result</code></pre><button type="button" class="button" id="dial-button" disabled="disabled">Dial +33 1 23 45 67 89</button><pre class="prettyprint"><code id="dial-info">// dial_number result</code></pre><div class="alert alert-warning" id="send-event-status-box">Waiting events to be sent...</div></div><div class="right"><pre class="prettyprint"><code>aircallWorkspace.isLoggedIn(response => {
+  // ...
+});
+
+const payload = {
+  phone_number: '+33123456789'
+};
+
+aircallWorkspace.send(
+  'dial_number',
+  payload,
+  (success, data) => {
+    // ...
+  }
+);
+</code></pre></div></div><div class="row"><div class="left"><p>Do you need more info? Read our documentation on <a href="https://github.com/aircall/aircall-everywhere">GitHub</a>. The source code of this demo page is also available <a href="https://github.com/aircall/aircall-everywhere/blob/master/demo/demo.js">here</a>.</p></div><div class="right"><pre class="prettyprint"><code>console.log('Have fun!');
+</code></pre></div></div></div></main><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script><script src="demo.js"></script></body></html>
