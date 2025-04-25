@@ -1,5 +1,5 @@
 /* tests index */
-import AircallPhone from '../../src/javascripts/aircallPhone.js';
+import AircallWorkspace from '../../src/javascripts/aircallWorkspace.js';
 import { HTMLElements, querySpy } from '../mocks.js';
 
 jest.useFakeTimers();
@@ -11,16 +11,16 @@ describe('Aircall SDK Library', () => {
   });
 
   it('should be initialized', () => {
-    const ap = new AircallPhone();
+    const ap = new AircallWorkspace();
     expect(ap).toBeDefined();
   });
 
   describe('constructor', () => {
     it('should set the options passed', () => {
-      const ap = new AircallPhone({
-        phoneUrl: 'https://phone.aircall-staging.com',
+      const ap = new AircallWorkspace({
+        workspaceUrl: 'https://workspace.aircall-staging.com',
         path: 'zendesk',
-        domToLoadPhone: '#phone',
+        domToLoadWorkspace: '#workspace',
         integrationToLoad: 'zendesk',
         size: 'small',
         onLogin: () => {
@@ -31,9 +31,9 @@ describe('Aircall SDK Library', () => {
         },
         debug: false,
       });
-      expect(ap.phoneUrl).toBeDefined();
+      expect(ap.workspaceUrl).toBeDefined();
       expect(ap.path).toBeDefined();
-      expect(ap.domToLoadPhone).toBeDefined();
+      expect(ap.domToLoadWorkspace).toBeDefined();
       expect(ap.integrationToLoad).toBeDefined();
       expect(ap.size).toBeDefined();
       expect(ap.debug).toBeDefined();
@@ -41,108 +41,108 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should default debug mode to true', () => {
-      const ap = new AircallPhone();
+      const ap = new AircallWorkspace();
       expect(ap.debug).toBeDefined();
       expect(ap.debug).toEqual(true);
     });
 
     it('should launch _messageListener', () => {
-      jest.spyOn(AircallPhone.prototype, '_messageListener').mockImplementation();
-      const ap = new AircallPhone();
-      expect(AircallPhone.prototype._messageListener).toHaveBeenCalled();
+      jest.spyOn(AircallWorkspace.prototype, '_messageListener').mockImplementation();
+      const ap = new AircallWorkspace();
+      expect(AircallWorkspace.prototype._messageListener).toHaveBeenCalled();
     });
 
-    it('should launch _createPhoneIframe if a dom is specified', () => {
-      jest.spyOn(AircallPhone.prototype, '_createPhoneIframe').mockImplementation();
-      const ap = new AircallPhone({
-        domToLoadPhone: '#phone',
+    it('should launch _createWorkspaceIframe if a dom is specified', () => {
+      jest.spyOn(AircallWorkspace.prototype, '_createWorkspaceIframe').mockImplementation();
+      const ap = new AircallWorkspace({
+        domToLoadWorkspace: '#workspace',
       });
-      expect(AircallPhone.prototype._createPhoneIframe).toHaveBeenCalled();
+      expect(AircallWorkspace.prototype._createWorkspaceIframe).toHaveBeenCalled();
     });
 
     it('should set a specific url if it is a valid url', () => {
-      const ap = new AircallPhone({
-        phoneUrl: 'https://toto.toto.com',
+      const ap = new AircallWorkspace({
+        workspaceUrl: 'https://toto.toto.com',
       });
-      expect(ap.phoneUrl).toEqual('https://toto.toto.com');
+      expect(ap.workspaceUrl).toEqual('https://toto.toto.com');
     });
   });
 
   describe('_resetData function', () => {
     let ap;
 
-    beforeEach(() => (ap = new AircallPhone()));
+    beforeEach(() => (ap = new AircallWorkspace()));
 
     it('should exists', () => {
       expect(ap._resetData).toBeDefined();
     });
 
-    it('should reset specific data about phone instance', () => {
-      ap.phoneWindow = {};
+    it('should reset specific data about workspace instance', () => {
+      ap.workspaceWindow = {};
       ap.integrationSettings = {
         toto: 'tata',
       };
       ap.userSettings = {
         email: 'toto@toto.fr',
       };
-      ap.phoneLoginState = true;
+      ap.workspaceLoginState = true;
       ap.path = 'salesforce';
       ap._resetData();
-      expect(ap.phoneWindow).toBe(null);
+      expect(ap.workspaceWindow).toBe(null);
       expect(ap.path).toBe(null);
       expect(ap.integrationSettings).toEqual({});
       expect(ap.userSettings).toEqual({});
-      expect(ap.phoneLoginState).toBe(false);
+      expect(ap.workspaceLoginState).toBe(false);
     });
   });
 
-  describe('_createPhoneIframe function', () => {
+  describe('_createWorkspaceIframe function', () => {
     let ap;
 
-    beforeEach(() => (ap = new AircallPhone()));
+    beforeEach(() => (ap = new AircallWorkspace()));
 
     it('should exists', () => {
-      expect(ap._createPhoneIframe).toBeDefined();
+      expect(ap._createWorkspaceIframe).toBeDefined();
     });
 
     it('should set an iframe inside the specified dom', () => {
-      ap.domToLoadPhone = '#phone';
-      ap._createPhoneIframe();
-      expect(HTMLElements['#phone'].innerHTML).toEqual(
-        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="https://phone.aircall.io?integration=generic" style="height:666px; width:376px;"></iframe>'
+      ap.domToLoadWorkspace = '#workspace';
+      ap._createWorkspaceIframe();
+      expect(HTMLElements['#workspace'].innerHTML).toEqual(
+        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="https://workspace.aircall.io?integration=generic" style="height:666px; width:376px;"></iframe>'
       );
     });
 
     it('should set an iframe with small size depending on the size option', () => {
-      ap.domToLoadPhone = '#phone';
+      ap.domToLoadWorkspace = '#workspace';
       ap.size = 'small';
-      ap._createPhoneIframe();
-      expect(HTMLElements['#phone'].innerHTML).toEqual(
-        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="https://phone.aircall.io?integration=generic" style="height:600px; width:376px;"></iframe>'
+      ap._createWorkspaceIframe();
+      expect(HTMLElements['#workspace'].innerHTML).toEqual(
+        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="https://workspace.aircall.io?integration=generic" style="height:600px; width:376px;"></iframe>'
       );
     });
 
     it('should set an iframe with auto size depending on the size option', () => {
-      ap.domToLoadPhone = '#phone';
+      ap.domToLoadWorkspace = '#workspace';
       ap.size = 'auto';
-      ap._createPhoneIframe();
-      expect(HTMLElements['#phone'].innerHTML).toEqual(
-        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="https://phone.aircall.io?integration=generic" style="height:100%; width:100%;"></iframe>'
+      ap._createWorkspaceIframe();
+      expect(HTMLElements['#workspace'].innerHTML).toEqual(
+        '<iframe allow="microphone; autoplay; clipboard-read; clipboard-write; hid" src="https://workspace.aircall.io?integration=generic" style="height:100%; width:100%;"></iframe>'
       );
     });
 
     it('should throw an error if dom doesnt exist', () => {
-      ap.domToLoadPhone = '#phone';
+      ap.domToLoadWorkspace = '#workspace';
       document.querySelector = () => {
         return null;
       };
-      expect(ap._createPhoneIframe).toThrow();
+      expect(ap._createWorkspaceIframe).toThrow();
     });
   });
 
   describe('_messageListener function', () => {
     it('should exists', () => {
-      const ap = new AircallPhone();
+      const ap = new AircallWorkspace();
       expect(ap._messageListener).toBeDefined();
     });
 
@@ -153,7 +153,7 @@ describe('Aircall SDK Library', () => {
 
       jest.spyOn(win, 'addEventListener').mockImplementation();
 
-      const ap = new AircallPhone({ window: win });
+      const ap = new AircallWorkspace({ window: win });
       expect(win.addEventListener).toHaveBeenCalled();
     });
 
@@ -168,7 +168,7 @@ describe('Aircall SDK Library', () => {
         },
       };
 
-      const ap = new AircallPhone({ window: win });
+      const ap = new AircallWorkspace({ window: win });
       jest.advanceTimersByTime(101);
     });
 
@@ -181,7 +181,7 @@ describe('Aircall SDK Library', () => {
         },
       };
 
-      const ap = new AircallPhone({ window: win });
+      const ap = new AircallWorkspace({ window: win });
       jest.spyOn(ap, '_handleInitMessage').mockImplementation();
       jest.advanceTimersByTime(101);
       expect(ap._handleInitMessage).toHaveBeenCalled();
@@ -196,7 +196,7 @@ describe('Aircall SDK Library', () => {
         },
       };
 
-      const ap = new AircallPhone({ window: win });
+      const ap = new AircallWorkspace({ window: win });
       jest.advanceTimersByTime(101);
       expect(ap.integrationSettings).toEqual({ foo: 'bar' });
     });
@@ -210,7 +210,7 @@ describe('Aircall SDK Library', () => {
         },
       };
 
-      const ap = new AircallPhone({
+      const ap = new AircallWorkspace({
         window: win,
         onLogin: (data) => {
           if (data.settings.foo === 'bar') {
@@ -230,7 +230,7 @@ describe('Aircall SDK Library', () => {
         },
       };
 
-      const ap = new AircallPhone({
+      const ap = new AircallWorkspace({
         window: win,
       });
       jest.spyOn(ap, '_resetData').mockImplementation();
@@ -247,7 +247,7 @@ describe('Aircall SDK Library', () => {
         },
       };
 
-      const ap = new AircallPhone({
+      const ap = new AircallWorkspace({
         window: win,
         onLogout: () => {
           done();
@@ -264,7 +264,7 @@ describe('Aircall SDK Library', () => {
           }, 100);
         },
       };
-      const ap = new AircallPhone({ window: win });
+      const ap = new AircallWorkspace({ window: win });
       ap.eventsRegistered = {
         my_event: () => {
           done();
@@ -280,7 +280,7 @@ describe('Aircall SDK Library', () => {
   describe('_handleInitMessage function', () => {
     let ap;
 
-    beforeEach(() => (ap = new AircallPhone()));
+    beforeEach(() => (ap = new AircallWorkspace()));
 
     it('should exists', () => {
       expect(ap._handleInitMessage).toBeDefined();
@@ -331,7 +331,7 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should launch onLogin callback if there is no integration to load, with user data', (done) => {
-      const app = new AircallPhone({
+      const app = new AircallWorkspace({
         onLogin: (settings) => {
           if (settings.user.email === 'toto@toto.fr') {
             done();
@@ -356,7 +356,7 @@ describe('Aircall SDK Library', () => {
   describe('getUrlToLoad function', () => {
     let ap;
 
-    beforeEach(() => (ap = new AircallPhone()));
+    beforeEach(() => (ap = new AircallWorkspace()));
 
     it('should exists', () => {
       expect(ap.getUrlToLoad).toBeDefined();
@@ -366,7 +366,7 @@ describe('Aircall SDK Library', () => {
   describe('on function', () => {
     let ap;
 
-    beforeEach(() => (ap = new AircallPhone()));
+    beforeEach(() => (ap = new AircallWorkspace()));
 
     it('should exists', () => {
       expect(ap.on).toBeDefined();
@@ -394,7 +394,7 @@ describe('Aircall SDK Library', () => {
     let ap;
 
     beforeEach(() => {
-      ap = new AircallPhone();
+      ap = new AircallWorkspace();
       jest.spyOn(console, 'error').mockImplementation();
     });
 
@@ -412,21 +412,21 @@ describe('Aircall SDK Library', () => {
     it('should log correct standard error message for error code not_ready', () => {
       ap._handleSendError({ code: 'not_ready' });
       expect(console.error).toHaveBeenCalledWith(
-        '[AircallEverywhere] [send function] Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback'
+        '[AircallEverywhere] [send function] Aircall Workspace has not been identified yet or is not ready. Wait for "onLogin" callback'
       );
     });
 
     it('should log correct standard error message for error code no_answer', () => {
       ap._handleSendError({ code: 'no_answer' });
       expect(console.error).toHaveBeenCalledWith(
-        '[AircallEverywhere] [send function] No answer from the phone. Check if the phone is logged in'
+        '[AircallEverywhere] [send function] No answer from the workspace. Check if the workspace is logged in'
       );
     });
 
     it('should log correct standard error message for error code invalid_response', () => {
       ap._handleSendError({ code: 'invalid_response' });
       expect(console.error).toHaveBeenCalledWith(
-        '[AircallEverywhere] [send function] Invalid response from the phone. Contact aircall developers dev@aircall.io'
+        '[AircallEverywhere] [send function] Invalid response from the workspace. Contact aircall developers dev@aircall.io'
       );
     });
 
@@ -464,7 +464,7 @@ describe('Aircall SDK Library', () => {
           success === false &&
           data.code === 'not_ready' &&
           data.message ===
-            'Aircall Phone has not been identified yet or is not ready. Wait for "onLogin" callback'
+            'Aircall Workspace has not been identified yet or is not ready. Wait for "onLogin" callback'
         ) {
           done();
         }
@@ -476,8 +476,8 @@ describe('Aircall SDK Library', () => {
     let ap;
 
     beforeEach(() => {
-      ap = new AircallPhone({ debug: false });
-      ap.phoneWindow = {
+      ap = new AircallWorkspace({ debug: false });
+      ap.workspaceWindow = {
         origin: '*',
         source: {
           postMessage: (event, target) => {},
@@ -490,7 +490,7 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should send a postMessage with the right event name', (done) => {
-      ap.phoneWindow = {
+      ap.workspaceWindow = {
         origin: '*',
         source: {
           postMessage: (event, target) => {
@@ -508,7 +508,7 @@ describe('Aircall SDK Library', () => {
       expect(ap.eventsRegistered.my_event_response).toBeDefined();
     });
 
-    it('should timeout if no response sent by the phone', () => {
+    it('should timeout if no response sent by the workspace', () => {
       ap.send('my_event', { foo: 'bar' });
       jest.spyOn(ap, '_handleSendError').mockImplementation();
       jest.advanceTimersByTime(2001);
@@ -564,15 +564,15 @@ describe('Aircall SDK Library', () => {
       expect(ap._handleSendError).toHaveBeenCalledWith({ code: 'no_event_name' }, undefined);
     });
 
-    it('should return and call _handleSendError without phoneWindow defined', () => {
+    it('should return and call _handleSendError without workspaceWindow defined', () => {
       jest.spyOn(ap, '_handleSendError').mockImplementation();
-      ap.phoneWindow = {};
+      ap.workspaceWindow = {};
       expect(ap.send('toto')).toBe(false);
       expect(ap._handleSendError).toHaveBeenCalledWith({ code: 'not_ready' }, undefined);
     });
 
     it('should use second argument as callback if it is a function and no 3rd one', (done) => {
-      ap.phoneWindow = {};
+      ap.workspaceWindow = {};
       ap.send('toto', () => {
         done();
       });
@@ -582,7 +582,7 @@ describe('Aircall SDK Library', () => {
   describe('removeListener function', () => {
     let ap;
 
-    beforeEach(() => (ap = new AircallPhone()));
+    beforeEach(() => (ap = new AircallWorkspace()));
 
     it('should exists', () => {
       expect(ap.removeListener).toBeDefined();
@@ -613,20 +613,20 @@ describe('Aircall SDK Library', () => {
   describe('isLoggedIn function', () => {
     let ap;
 
-    beforeEach(() => (ap = new AircallPhone({ debug: false })));
+    beforeEach(() => (ap = new AircallWorkspace({ debug: false })));
 
     it('should exists', () => {
       expect(ap.isLoggedIn).toBeDefined();
     });
 
-    it('should send an event to the phone', () => {
+    it('should send an event to the workspace', () => {
       let cb = () => {};
       jest.spyOn(ap, 'send').mockImplementation();
       ap.isLoggedIn(cb);
       expect(ap.send).toHaveBeenCalledWith('is_logged_in', expect.any(Function));
     });
 
-    it('should execute callback with response from the phone', (done) => {
+    it('should execute callback with response from the workspace', (done) => {
       let cb = () => {
         done();
       };
@@ -641,12 +641,12 @@ describe('Aircall SDK Library', () => {
     });
 
     it('should exist', () => {
-      const ap = new AircallPhone();
+      const ap = new AircallWorkspace();
       expect(ap._log).toBeDefined();
     });
 
     it('when `debug`=true, prints passed args with specified console action', () => {
-      const ap = new AircallPhone({ debug: true });
+      const ap = new AircallWorkspace({ debug: true });
       ap._log('info', 'some info');
       ap._log('error', 'some error');
 
@@ -655,27 +655,27 @@ describe('Aircall SDK Library', () => {
     });
 
     it('can print multiple arguments', () => {
-      const ap = new AircallPhone({ debug: true });
+      const ap = new AircallWorkspace({ debug: true });
       ap._log('info', 'some info', 'some more info');
 
       expect(console.info).toHaveBeenCalledWith('some info', 'some more info');
     });
 
     it('defaults to info() if incorrect action is passed', () => {
-      const ap = new AircallPhone({ debug: true });
+      const ap = new AircallWorkspace({ debug: true });
       ap._log('foo', 'some info');
 
       expect(console.info).toHaveBeenCalledWith('some info');
     });
 
     it('throws error when non-string action is passed', () => {
-      const ap = new AircallPhone({ debug: true });
+      const ap = new AircallWorkspace({ debug: true });
 
       expect(() => ap._log(() => {}, 'some info')).toThrow();
     });
 
     it('when `debug`=false, it does not print to console', () => {
-      const ap = new AircallPhone({ debug: false });
+      const ap = new AircallWorkspace({ debug: false });
       ap._log('info', 'some info');
       ap._log('error', 'some error');
 

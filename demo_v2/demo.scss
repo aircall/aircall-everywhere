@@ -1,0 +1,433 @@
+/* VARIABLES */
+
+$green: #00b388;
+$duck: #006c5b;
+$smoke: #afafa9;
+$midnight: #101820;
+$neon: #307fe2;
+$red: #ff5c39;
+$orange: #ff854c;
+$white: #fff;
+$smoke-lighten-80: #f4f4f4;
+
+$cyan: #003b4c;
+$cyan-dark: #00242d;
+
+$code-background: #40464d;
+$code-font-color: #d9d9d6;
+
+$border-radius: 4px;
+
+/* FONTS */
+
+$font-family-color: #4b5054;
+$font-family-title-color: #000000;
+
+$font-family-sans-serif: 'Fellix', sans-serif !default;
+$font-family-monospace: 'Operator', Menlo, DejaVu Sans Mono, Monaco, Consolas, 'Courier New',
+  monospace !default;
+
+$font-size-h1: 42px;
+$font-size-h2: 32px;
+$font-size-h3: 20px;
+$font-size-base: 15px;
+
+@font-face {
+  font-family: 'Fellix';
+  src: url('https://cdn.aircall.io/fonts/Fellix-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fellix';
+  src: url('https://cdn.aircall.io/fonts/Fellix-Regular.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fellix';
+  src: url('https://cdn.aircall.io/fonts/Fellix-Medium.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fellix';
+  src: url('https://cdn.aircall.io/fonts/Fellix-SemiBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* GLOBAL */
+* {
+  box-sizing: border-box;
+  ::-moz-selection {
+    background: rgba(162, 228, 184, 0.3);
+  }
+  ::selection {
+    background: rgba(162, 228, 184, 0.3);
+  }
+}
+
+html,
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Fellix', Helvetica, Arial, sans-serif;
+  font-size: $font-size-base;
+  color: $font-family-color;
+  line-height: 1.4;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  color: $font-family-title-color;
+}
+
+h1 {
+  font-size: $font-size-h1;
+}
+
+h2 {
+  font-size: $font-size-h2;
+}
+
+h3 {
+  font-size: $font-size-h3;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+/* HEADER */
+$nav-height: 90px;
+nav {
+  height: $nav-height;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background-color: $white;
+  padding: 10px 2vw;
+  justify-content: space-between;
+  box-shadow: 0 1px 1px $smoke-lighten-80;
+  z-index: 10;
+
+  .nav-content {
+    display: flex;
+    align-items: center;
+
+    a {
+      margin: 0 1vw;
+      text-decoration: none;
+      font-weight: 600;
+      color: $font-family-color;
+      transition: color 0.1s ease-in-out;
+
+      &:hover {
+        color: $green;
+      }
+
+      &#link-aircall {
+        display: flex;
+        img {
+          margin: auto 0;
+          position: relative;
+        }
+      }
+
+      &#workspace-aircall {
+        width: 30px;
+        display: flex;
+        cursor: pointer;
+
+        img {
+          width: 30px;
+          margin: auto;
+        }
+      }
+    }
+  }
+}
+
+/* PHONE */
+
+#workspace-container {
+  position: fixed;
+  top: 65px;
+  right: 10px;
+  z-index: 30;
+
+  .arrow-up {
+    position: absolute;
+    right: 3.3vw;
+    top: -5px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid $smoke;
+  }
+
+  #workspace {
+    border-radius: $border-radius;
+    background-color: $white;
+    border: 1px solid $smoke;
+    overflow: hidden;
+    box-shadow: 0 5px 10px #10182060;
+
+    iframe {
+      border-radius: $border-radius;
+    }
+  }
+}
+
+/* CONTENT */
+
+// Jumbotron
+.jumbotron {
+  padding: $nav-height * 2 10vw 0;
+
+  h1 {
+    text-align: center;
+    color: $font-family-title-color;
+  }
+
+  p {
+    margin-top: 20px;
+    font-size: $font-size-h3;
+    text-align: center;
+  }
+}
+
+code {
+  padding: 2px 4px;
+  background: $smoke-lighten-80;
+  border-radius: $border-radius;
+  font-family: $font-family-monospace;
+  font-size: 0.9em;
+}
+
+// Code snippets
+pre {
+  font-family: $font-family-monospace;
+
+  &.prettyprint {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 16px !important;
+    border-radius: $border-radius !important;
+    background: $code-background;
+    color: $code-font-color;
+    overflow: hidden;
+
+    code {
+      background: transparent;
+    }
+  }
+}
+
+// Container
+.container {
+  position: relative;
+  padding: 3vw;
+  max-width: 1200px;
+  margin: auto;
+
+  h2 {
+    margin-top: 40px;
+
+    &::before {
+      display: block;
+      height: 1px;
+      width: 100%;
+      margin-bottom: 40px;
+      background: $smoke-lighten-80;
+      content: '';
+    }
+  }
+
+  a {
+    color: $green;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.1s ease-in-out;
+
+    &:hover {
+      color: $duck;
+    }
+  }
+
+  // rows
+  .row {
+    display: flex;
+    align-items: stretch;
+    padding: 20px 0;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    .left {
+      position: relative;
+      width: 60%;
+      padding-right: 4vw;
+
+      p {
+        margin-bottom: 1em;
+      }
+
+      pre.prettyprint {
+        background-color: $code-background !important;
+        width: auto !important;
+        flex-grow: 1;
+      }
+
+      .button {
+        margin-bottom: 20px;
+      }
+    }
+
+    .right {
+      width: 40%;
+    }
+  }
+
+  // specific stuff
+  #installation {
+    padding-top: 40px;
+  }
+
+  #waiting-events {
+    margin: 40px 0;
+  }
+
+  #dial-button {
+    margin-top: 40px;
+  }
+
+  // call events logs
+  #call-events-log {
+    label {
+      position: relative;
+      display: block;
+      margin: 20px 0;
+
+      > span {
+        display: block;
+        background-color: $cyan;
+        font-family: $font-family-monospace;
+        color: $white;
+        padding: 10px 40px 10px 30px;
+        position: relative;
+        cursor: pointer;
+
+        &::after {
+          position: absolute;
+          content: '+';
+          color: $white;
+          right: 30px;
+          top: 10px;
+        }
+      }
+    }
+
+    pre.prettyprint {
+      display: none;
+      height: 0;
+      overflow: hidden;
+    }
+
+    input {
+      display: none;
+
+      &:checked + label {
+        pre.prettyprint {
+          height: auto;
+          display: block;
+        }
+
+        > span::after {
+          content: '-';
+        }
+      }
+    }
+  }
+}
+
+// Buttons
+.button {
+  display: block;
+  background-color: $green;
+  color: $white;
+  font-weight: 600;
+  font-size: $font-size-base;
+  border: none;
+  border-radius: $border-radius;
+  padding: 12px 20px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.1s ease-in-out;
+
+  &:hover {
+    background-color: $duck;
+  }
+
+  &:disabled {
+    background-color: $smoke;
+    color: $white;
+    cursor: not-allowed;
+  }
+}
+
+// Alerts
+.alert {
+  margin: 20px auto;
+  padding: 10px 14px;
+  font-size: 0.95em;
+  border-radius: $border-radius;
+
+  &.alert-success {
+    color: $green;
+    box-shadow: 0 0 0 1px $green;
+  }
+
+  &.alert-danger {
+    color: $red;
+    box-shadow: 0 0 0 1px $red;
+  }
+
+  &.alert-warning {
+    color: $orange;
+    box-shadow: 0 0 0 1px $orange;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .container .row {
+    flex-direction: column;
+
+    .left {
+      width: 100%;
+      padding: 0;
+    }
+
+    .right {
+      width: 100%;
+    }
+  }
+}

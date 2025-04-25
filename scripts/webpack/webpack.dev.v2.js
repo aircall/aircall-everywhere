@@ -7,10 +7,12 @@ module.exports = () => {
   let _mode = null;
   let _output = null;
 
+  const demoPath = path.join(__dirname, '../../demo_v2');
+  const demoDistPath = path.join(__dirname, '../../demo_v2_dist');
+
   const _entry = {
-    demo: [path.join(__dirname, '../../demo/demo.js')],
-    // We want to import the previous version 1.8.0 form npm.
-    // 'aircall-everywhere': [path.join(__dirname, '../../index.js')],
+    demo: [`${demoPath}/demo.js`],
+    'aircall-everywhere': [path.join(__dirname, '../../index.js')],
   };
 
   const _devtool = 'source-map';
@@ -22,19 +24,22 @@ module.exports = () => {
   const _resolve = {
     modules: ['node_modules', './'],
     extensions: ['.js'],
+    alias: {
+      'aircall-everywhere': path.resolve(__dirname, '../../index.js'),
+    },
   };
 
   const _devServer = {
-    contentBase: path.join(__dirname, '../../demo_dist'),
+    contentBase: demoDistPath,
     compress: true,
-    port: 8080,
+    port: 8081,
   };
 
   const _plugins = [
     new HtmlWebpackPlugin({
       filename: 'index.html',
       inject: true,
-      template: path.join(__dirname, '../../demo/index.html'),
+      template: `${demoPath}/index.html`,
       chunks: ['demo'],
       minify: {
         removeComments: true,
@@ -50,7 +55,7 @@ module.exports = () => {
       },
     }),
     new CopyWebpackPlugin({
-      patterns: [{ from: path.join(__dirname, '../../demo/images'), to: 'images/' }],
+      patterns: [{ from: `${demoPath}/images`, to: 'images/' }],
     }),
   ];
 
@@ -88,7 +93,7 @@ module.exports = () => {
   };
 
   _output = {
-    path: path.resolve(__dirname, '../../demo_dist'),
+    path: demoDistPath,
     filename: '[name].js',
   };
 

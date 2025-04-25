@@ -1,3 +1,4 @@
+# This file is no longer used, it is kept for reference.
 version: 2.1
 
 restore-workspace: &restore-workspace

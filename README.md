@@ -8,11 +8,11 @@
 
 You need to create an instance to use the library. The constructor has a settings argument:
 
-- `onLogin`: Callback function after the phone is fully loaded, logged in, and the connexion between the phone and the CRM is established. This callback will triggers everytime the user logs again. User details and integration settings if any are passed as parameters.
-- `onLogout`: Callback function after the user logs out of the phone. It will triggers everytime the user logs out.
+- `onLogin`: Callback function after the workspace is fully loaded, logged in, and the connexion between the workspace and the CRM is established. This callback will triggers everytime the user logs again. User details and integration settings if any are passed as parameters.
+- `onLogout`: Callback function after the user logs out of the workspace. It will triggers everytime the user logs out.
 - `integrationToLoad`: You can specify a CRM from which specific settings can be retrieved. Only `zendesk` or `hubspot` available for now. You can ignore this if you have your own CRM.
-- `domToLoadPhone`: You must specify in which element you want to load the phone. Query selector string.
-- `size`: You can specify a preset for the size of the phone loaded. 3 possibilities:
+- `domToLoadWorkspace`: You must specify in which element you want to load the workspace. Query selector string.
+- `size`: You can specify a preset for the size of the workspace loaded. 3 possibilities:
   - `big`: 666px by 376px. Recommanded and default value
   - `small`: 600px by 376px
   - `auto`: 100% width and height. Not recommanded
@@ -21,15 +21,15 @@ You need to create an instance to use the library. The constructor has a setting
 Example:
 
 ```javascript
-import AircallPhone from 'aircall-everywhere';
+import AircallWorkspace from 'aircall-everywhere';
 
-const aircallPhone = new AircallPhone({
+const aircallWorkspace = new AircallWorkspace({
   onLogin: (settings) => {
-    console.log('phone loaded');
+    console.log('workspace loaded');
     doStuff();
   },
   onLogout: () => {},
-  domToLoadPhone: '#phone',
+  domToLoadWorkspace: '#workspace',
   integrationToLoad: 'zendesk',
   size: 'big',
 });
@@ -53,23 +53,23 @@ Settings passed in the `onLogin` callback contains info about the user and integ
 
 ## isLoggedIn method
 
-In addition to the `onLogin` and `onLogout` callbacks, a `isLoggedIn` method is provided that will directly asks the phone about its status. The result is a boolean.
+In addition to the `onLogin` and `onLogout` callbacks, a `isLoggedIn` method is provided that will directly asks the workspace about its status. The result is a boolean.
 
 Example:
 
 ```javascript
-aircallPhone.isLoggedIn((res) => {
+aircallWorkspace.isLoggedIn((res) => {
   console.log('login status:', res);
 });
 ```
 
 ## on & send
 
-You can send messages to the phone and listen messages coming from it.
+You can send messages to the workspace and listen messages coming from it.
 
-### events from the phone:
+### events from the workspace:
 
-All events from the phone with the payload associated:
+All events from the workspace with the payload associated:
 
 - `incoming_call`: there is an incoming call, ringing.
   ```javascript
@@ -114,7 +114,7 @@ All events from the phone with the payload associated:
     call_id: 12345
   }
   ```
-- `external_dial`: a dial has been made from outside of the phone (api/extension)
+- `external_dial`: a dial has been made from outside of the workspace (api/extension)
   ```javascript
   {
     phone_number: '+15557543010';
@@ -136,18 +136,18 @@ All numbers are sent in the `e.164` format.
 Example:
 
 ```javascript
-aircallPhone.on('incoming_call', (callInfos) => {
+aircallWorkspace.on('incoming_call', (callInfos) => {
   console.log(`Call from ${callInfos.from} to ${callInfos.to}`);
   doStuff();
 });
 ```
 
-### events the phone listens to:
+### events the workspace listens to:
 
 Example:
 
 ```javascript
-aircallPhone.send('dial_number', { phone_number: number }, (success, data) => {
+aircallWorkspace.send('dial_number', { phone_number: number }, (success, data) => {
   console.log('success of dial:', success);
 });
 ```
@@ -155,29 +155,29 @@ aircallPhone.send('dial_number', { phone_number: number }, (success, data) => {
 The callback of the `send` method has two arguments:
 
 - success of the request
-- if the request is successful, data from the response sent by the phone
+- if the request is successful, data from the response sent by the workspace
 - if the request is not successful, an error object with an error code and error message:
 
 All generic errors from `send`:
 
 - `no_event_name`: the event name sent is not valid
-- `not_ready`: Phone is not loaded or logged in yet
-- `no_answer`: Phone didn't answer, most likely not logged in
+- `not_ready`: Workspace is not loaded or logged in yet
+- `no_answer`: Workspace didn't answer, most likely not logged in
 - `does_not_exists`: The event sent does not exists
-- `invalid_response`: Phone sent an malformed answer, should not happen
+- `invalid_response`: Workspace sent an malformed answer, should not happen
 - `unknown_error`: Should not happen
 
 List of events:
 
-- `dial_number`: with `{phone_number: <number>}` argument, you can ask the phone to dial the number.
+- `dial_number`: with `{phone_number: <number>}` argument, you can ask the workspace to dial the number.
   Specific errors for this event:
 
-  - `in_call`: Phone is on a call, retry after the call is ended
+  - `in_call`: Workspace is on a call, retry after the call is ended
 
-- `exit_keyboard`: with no argument, you can ask the phone to exit the keyboard view if it is on.
+- `exit_keyboard`: with no argument, you can ask the workspace to exit the keyboard view if it is on.
   Specific errors for this event:
-  - `in_call`: Phone is on a call, retry after the call is ended
-  - `not_in_keyboard`: Phone is not on keyboard screen, so it can't exit the keyboard :D
+  - `in_call`: Workspace is on a call, retry after the call is ended
+  - `not_in_keyboard`: Workspace is not on keyboard screen, so it can't exit the keyboard :D
 
 more events to come...
 
@@ -192,7 +192,7 @@ Please be aware that `aircall-everywhere` will generate an iframe with following
 ```html
 <iframe
   allow="microphone; autoplay; clipboard-read; clipboard-write; hid"
-  src="https://phone.aircall.io?integration=generic"
+  src="https://workspace.aircall.io?integration=generic"
   style="height:100%; width:100%;"
 >
 </iframe>
@@ -206,7 +206,7 @@ If you need to embed `aircall-everywhere` in an `<iframe>` you own, please be su
   <!-- iframe generated by aircall-everywhere -->
   <iframe
     allow="microphone; autoplay; clipboard-read; clipboard-write; hid"
-    src="https://phone.aircall.io?integration=generic"
+    src="https://workspace.aircall.io?integration=generic"
     style="height:100%; width:100%;"
   >
   </iframe>
@@ -223,10 +223,10 @@ You can run the demo webpage with:
 tests are available:
 `yarn test`
 `yarn test-watch`
-`yarn coverage`
 
 to create a new version:
-`yarn version --patch|--minor|--major` and create a PR. The CI will publish the new version after manual approval.
+`yarn version --patch|--minor|--major` and create a PR.
+The CI will publish a new version after a github release.
 
 # Code coverage
 

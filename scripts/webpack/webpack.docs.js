@@ -9,7 +9,8 @@ module.exports = () => {
 
   const _entry = {
     demo: [path.join(__dirname, '../../demo/demo.js')],
-    'aircall-everywhere': [path.join(__dirname, '../../index.js')],
+    // Uses the published version of the library 1.8.0 (phone)
+    // 'aircall-everywhere': [path.join(__dirname, '../../index.js')],
   };
 
   const _devtool = 'source-map';
@@ -71,6 +72,9 @@ module.exports = () => {
           },
           {
             loader: 'sass-loader', // compiles Sass to CSS
+            options: {
+              implementation: require('sass'), // Use Dart Sass instead of Node Sass
+            },
           },
         ],
       },

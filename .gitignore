@@ -4,3 +4,5 @@ demo_dist/
 node_modules
 .DS_Store
 npm-debug.log
+.history
+demo_dist_v2
