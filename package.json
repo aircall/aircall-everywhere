@@ -1,6 +1,6 @@
 {
   "name": "aircall-everywhere",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.4",
   "description": "Library to embed and communicate with aircall-workspace in any webpage",
   "main": "dist/index.js",
   "scripts": {
