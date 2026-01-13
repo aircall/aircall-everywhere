@@ -632,6 +632,15 @@ describe('Aircall SDK Library', () => {
       };
       ap.isLoggedIn(cb);
     });
+
+    it('should pass error data to callback when workspace is not ready', (done) => {
+      ap.workspaceWindow = null;
+      ap.isLoggedIn((success, data) => {
+        if (success === false && data.code === 'not_ready') {
+          done();
+        }
+      });
+    });
   });
 
   describe('_log function', () => {
