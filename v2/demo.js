@@ -1107,8 +1107,8 @@ class AircallWorkspace {
 
   isLoggedIn(callback) {
     // we simply send an event and send its result.
-    this.send('is_logged_in', (success) => {
-      callback(success);
+    this.send('is_logged_in', (success, data) => {
+      callback(success, data);
     });
   }
 }
