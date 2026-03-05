@@ -6,17 +6,11 @@
 
 ## Constructor
 
-You need to create an instance to use the library. The constructor has a settings argument:
+You need to create an instance to use the library. The constructor accepts the following options:
 
-- `onLogin`: Callback function after the workspace is fully loaded, logged in, and the connexion between the workspace and the CRM is established. This callback will triggers everytime the user logs again. User details and integration settings if any are passed as parameters.
-- `onLogout`: Callback function after the user logs out of the workspace. It will triggers everytime the user logs out.
-- `integrationToLoad`: You can specify a CRM from which specific settings can be retrieved. Only `zendesk` or `hubspot` available for now. You can ignore this if you have your own CRM.
 - `domToLoadWorkspace`: You must specify in which element you want to load the workspace. Query selector string.
-- `size`: You can specify a preset for the size of the workspace loaded. 3 possibilities:
-  - `big`: 666px by 376px. Recommanded and default value
-  - `small`: 600px by 376px
-  - `auto`: 100% width and height. Not recommanded.
-- `debug`: Enables or disables logging. Defaults to `true`
+- `onLogin`: (Optional) Callback function after the workspace is fully loaded, logged in, and the connection between the workspace and the CRM is established. This callback will trigger every time the user logs in. User details and integration settings, if any, are passed as parameters.
+- `onLogout`: (Optional) Callback function after the user logs out of the workspace.
 
 Example:
 
@@ -24,14 +18,12 @@ Example:
 import AircallWorkspace from 'aircall-everywhere';
 
 const aircallWorkspace = new AircallWorkspace({
+  domToLoadWorkspace: '#workspace',
   onLogin: (settings) => {
     console.log('workspace loaded');
     doStuff();
   },
   onLogout: () => {},
-  domToLoadWorkspace: '#workspace',
-  integrationToLoad: 'zendesk',
-  size: 'big',
 });
 ```
 
