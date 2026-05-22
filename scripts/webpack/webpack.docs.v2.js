@@ -83,7 +83,7 @@ module.exports = () => {
   };
 
   _output = {
-    path: path.resolve(__dirname, '../../demo_dist/v2'),
+    path: path.resolve(__dirname, '../../demo_dist'),
     filename: '[name].js',
   };
 

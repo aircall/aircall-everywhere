@@ -1,13 +1,13 @@
 {
   "name": "aircall-everywhere",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Library to embed and communicate with aircall-workspace in any webpage",
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --config scripts/webpack/webpack.dev.js --open",
     "start:v2": "webpack-dev-server --config scripts/webpack/webpack.dev.v2.js --open",
     "build": "webpack --config scripts/webpack/webpack.build.js",
-    "build:docs": "webpack --config scripts/webpack/webpack.docs.js && webpack --config scripts/webpack/webpack.docs.v2.js",
+    "build:docs": "webpack --config scripts/webpack/webpack.docs.v2.js && webpack --config scripts/webpack/webpack.docs.js",
     "test": "jest",
     "test-watch": "jest --watch"
   },
