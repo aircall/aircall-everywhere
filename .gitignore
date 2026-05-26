@@ -6,3 +6,5 @@ node_modules
 npm-debug.log
 .history
 demo_dist_v2
+.local-preview/
+.vscode/
