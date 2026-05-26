@@ -7,4 +7,4 @@ npm-debug.log
 .history
 demo_dist_v2
 .local-preview/
-.vscode/
+.vscode/.vscode/settings.json
